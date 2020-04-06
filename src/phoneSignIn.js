@@ -71,15 +71,19 @@ function PhoneSignIn() {
 
   // Handle the button press
   async function signInWithPhoneNumber() {
-    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-    setConfirm(confirmation);
+    try {
+      const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+      setConfirm(confirmation);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async function confirmCode() {
     try {
       await confirm.confirm(code);
-    } catch (error) {
-      console.log('Invalid code.');
+    } catch (err) {
+      console.log(err);
     }
   }
 
