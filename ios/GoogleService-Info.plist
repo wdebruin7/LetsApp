@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>12428685884-tvsafek1l8ukqf2731k0521ml74rvk9k.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.12428685884-tvsafek1l8ukqf2731k0521ml74rvk9k</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>12428685884-tfa4um7t8r2ga6gu6gpu67uc05vb0f49.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAk4qjpdv89R1Rr4cGrRWL2FGCcwZtrQ3g</string>
+	<key>GCM_SENDER_ID</key>
+	<string>12428685884</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.DeBruinDesign.LetsApp</string>
+	<key>PROJECT_ID</key>
+	<string>whos-in-267720</string>
+	<key>STORAGE_BUCKET</key>
+	<string>whos-in-267720.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:12428685884:ios:5fc222b9d97f2ef3c54939</string>
+	<key>DATABASE_URL</key>
+	<string>https://whos-in-267720.firebaseio.com</string>
+</dict>
+</plist>
