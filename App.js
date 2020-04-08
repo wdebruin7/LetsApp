@@ -1,51 +1,28 @@
 import React from 'react';
-import {SafeAreaView, Text, StyleSheet, Button, View} from 'react-native';
-import auth from '@react-native-firebase/auth';
-import {useAuth} from './src/auth';
-import PhoneSignIn from './src/phoneSignIn';
+import {SafeAreaView, View, ActivityIndicator, Text} from 'react-native';
+import AppContainer from './src/navigation';
+import {useAuth} from './src/firebase/auth';
+import {UserProvider} from './src/firebase/userContext';
 
 const App = () => {
-  const {initializing, user} = useAuth();
+  const {user, initializing} = useAuth();
 
   if (initializing) {
     return (
-      <SafeAreaView style={styles.safeView}>
-        <View style={styles.container}>
-          <Text>Initializing</Text>
-        </View>
-      </SafeAreaView>
-    );
-  }
-
-  if (user) {
-    return (
-      <SafeAreaView style={styles.safeView}>
-        <View style={styles.container}>
-          <Text>Welcome user</Text>
-          <Button title="Sign Out" onPress={() => auth().signOut()} />
+      <SafeAreaView>
+        <View>
+          <ActivityIndicator />
+          <Text>Hold on while we get things set up...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={styles.safeView}>
-      <View style={styles.container}>
-        <PhoneSignIn />
-      </View>
-    </SafeAreaView>
+    <UserProvider value={{user}}>
+      <AppContainer />
+    </UserProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  safeView: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default App;
