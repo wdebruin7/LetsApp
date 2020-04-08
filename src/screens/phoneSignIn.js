@@ -10,6 +10,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import {useSession} from '../firebase/auth';
 
 const normalizePhoneNumber = (value, previousValue) => {
   if (!value) return value;
@@ -51,12 +52,13 @@ const validatePhoneNumber = (value) => {
   return error;
 };
 
-function PhoneSignIn() {
+function PhoneSignIn({navigation}) {
   // If null, no SMS has been sent
   const [confirm, setConfirm] = useState(null);
   const [code, setCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [error, setError] = useState('');
+  const user = useSession();
 
   const handleNumberChange = (text) => {
     setPhoneNumber(normalizePhoneNumber(text), phoneNumber);
@@ -86,6 +88,10 @@ function PhoneSignIn() {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  if (user) {
+    navigation.navigate('App');
   }
 
   if (!confirm) {

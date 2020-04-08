@@ -19,7 +19,7 @@ const App = () => {
   }
 
   return (
-    <UserProvider value={user}>
+    <UserProvider value={{user}}>
       <AppContainer />
     </UserProvider>
   );

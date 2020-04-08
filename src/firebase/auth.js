@@ -1,6 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
-import userContext from './userContext';
+import {userContext} from './userContext';
 
 const useSession = () => {
   const {user} = useContext(userContext);
