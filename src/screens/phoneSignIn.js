@@ -7,6 +7,7 @@ import {
   Keyboard,
   View,
   Text,
+  SafeAreaView,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 
@@ -89,32 +90,47 @@ function PhoneSignIn() {
 
   if (!confirm) {
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={styles.container}>
-          <Button title="Phone Number Sign In" onPress={handleSubmit} />
-          <TextInput
-            value={phoneNumber}
-            onChangeText={handleNumberChange}
-            style={styles.textInput}
-            keyboardType="phone-pad"
-            maxLength={15}
-            placeholder="+1 650-555-1234"
-          />
-          {error ? <Text>{error}</Text> : null}
-        </View>
-      </TouchableWithoutFeedback>
+      <SafeAreaView style={styles.safeView}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View style={styles.container}>
+            <Button title="Phone Number Sign In" onPress={handleSubmit} />
+            <TextInput
+              value={phoneNumber}
+              onChangeText={handleNumberChange}
+              style={styles.textInput}
+              keyboardType="phone-pad"
+              maxLength={15}
+              placeholder="+1 650-555-1234"
+            />
+            {error ? <Text>{error}</Text> : null}
+          </View>
+        </TouchableWithoutFeedback>
+      </SafeAreaView>
     );
   }
 
   return (
-    <>
-      <Button title="Confirm Code" onPress={() => confirmCode()} />
-      <TextInput value={code} onChangeText={setCode} style={styles.textInput} />
-    </>
+    <SafeAreaView style={styles.safeView}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.container}>
+          <Button title="Confirm Code" onPress={() => confirmCode()} />
+          <TextInput
+            value={code}
+            onChangeText={setCode}
+            style={styles.textInput}
+            placeholder="123456"
+            keyboardType="number-pad"
+          />
+        </View>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeView: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
