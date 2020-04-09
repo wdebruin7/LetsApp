@@ -1,8 +1,8 @@
 import React from 'react';
 import {SafeAreaView, View, ActivityIndicator, Text} from 'react-native';
-import AppContainer from './src/navigation';
-import {useAuth} from './src/firebase/auth';
-import {UserProvider} from './src/firebase/userContext';
+import AppContainer from './navigation';
+import {useAuth} from './firebase/auth';
+import {UserProvider} from './firebase/userContext';
 
 const App = () => {
   const {user, initializing} = useAuth();
