@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "12428685884",
+    "firebase_url": "https://whos-in-267720.firebaseio.com",
+    "project_id": "whos-in-267720",
+    "storage_bucket": "whos-in-267720.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:12428685884:android:8399bc8ef45638b1c54939",
+        "android_client_info": {
+          "package_name": "com.debruindesign.letsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "12428685884-tfa4um7t8r2ga6gu6gpu67uc05vb0f49.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.debruindesign.letsapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "12428685884-epfitv2v2t7hl9lbgrp6su88v0jl0tj1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf5aETyBlUQgXCfbB1OEfdpy8oQu-5d_4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "12428685884-epfitv2v2t7hl9lbgrp6su88v0jl0tj1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "12428685884-tvsafek1l8ukqf2731k0521ml74rvk9k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.DeBruinDesign.LetsApp",
+                "app_store_id": "1505884988"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
