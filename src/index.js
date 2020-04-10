@@ -12,7 +12,7 @@ const App = () => {
       <SafeAreaView>
         <View>
           <ActivityIndicator />
-          <Text>Hold on while we get things set up...</Text>
+          <Text>Hold on a minute while we get things set up...</Text>
         </View>
       </SafeAreaView>
     );
