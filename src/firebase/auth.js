@@ -33,20 +33,20 @@ const useAuth = () => {
 
   useEffect(() => {
     if (!state.user || state.user.uid === undefined) return;
-    const subscriber = firestore()
-      .collection('Users')
+    const unsubscriber = firestore()
+      .collection('users')
       .doc(state.user.uid)
       .onSnapshot(
         (documentSnapshot) => {
-          console.log('User data: ', documentSnapshot.data());
+          dispatch(updateUserData(documentSnapshot.data()));
         },
         (error) => {
           console.log(error);
         },
       );
 
-    return () => subscriber();
-  }, [state]);
+    return () => unsubscriber();
+  }, [state.user]);
 
   return state;
 };
