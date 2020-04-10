@@ -1,5 +1,6 @@
 import React, {useContext, useReducer, useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import {userContext} from './userContext';
 import userReducer from '../reducers/userReducer';
 import {setUser, updateUserData} from '../actions/userActions';
@@ -29,6 +30,23 @@ const useAuth = () => {
     const unsubscribe = auth().onAuthStateChanged(onChange);
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (!state.user || state.user.uid === undefined) return;
+    const subscriber = firestore()
+      .collection('Users')
+      .doc(state.user.uid)
+      .onSnapshot(
+        (documentSnapshot) => {
+          console.log('User data: ', documentSnapshot.data());
+        },
+        (error) => {
+          console.log(error);
+        },
+      );
+
+    return () => subscriber();
+  }, [state]);
 
   return state;
 };
