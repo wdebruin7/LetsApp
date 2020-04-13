@@ -1,4 +1,4 @@
-import React, {useContext, useReducer, useEffect} from 'react';
+import {useContext, useReducer, useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {sessionContext} from './sessionContext';
