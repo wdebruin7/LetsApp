@@ -10,17 +10,18 @@ import {
   SafeAreaView,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 import {useSession} from '../firebase/auth';
-import {normalizePhoneNumber} from '../functions/normalizePhoneNumber';
-import {validatePhoneNumber} from '../functions/validatePhoneNumber';
+import normalizePhoneNumber from '../functions/normalizePhoneNumber';
+import validatePhoneNumber from '../functions/validatePhoneNumber';
 
-function PhoneSignIn({navigation}) {
+const PhoneSignIn = () => {
   // If null, no SMS has been sent
-  const [confirm, setConfirm] = useState(null);
-  const [code, setCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [error, setError] = useState('');
   const session = useSession();
+
+  const {navigate} = useNavigation();
 
   const handleNumberChange = (text) => {
     setPhoneNumber(normalizePhoneNumber(text), phoneNumber);
@@ -37,63 +38,35 @@ function PhoneSignIn({navigation}) {
   // Handle the button press
   async function signInWithPhoneNumber() {
     try {
-      const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-      setConfirm(confirmation);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  async function confirmCode() {
-    try {
-      await confirm.confirm(code);
+      navigate('Verify', {phoneNumber});
     } catch (err) {
       console.log(err);
     }
   }
 
   if (session.user) {
-    navigation.navigate('App');
-  }
-
-  if (!confirm) {
-    return (
-      <SafeAreaView style={styles.safeView}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <View style={styles.container}>
-            <Button title="Phone Number Sign In" onPress={handleSubmit} />
-            <TextInput
-              value={phoneNumber}
-              onChangeText={handleNumberChange}
-              style={styles.textInput}
-              keyboardType="phone-pad"
-              maxLength={15}
-              placeholder="+1 650-555-1234"
-            />
-            {error ? <Text>{error}</Text> : null}
-          </View>
-        </TouchableWithoutFeedback>
-      </SafeAreaView>
-    );
+    navigate('App');
   }
 
   return (
     <SafeAreaView style={styles.safeView}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
-          <Button title="Confirm Code" onPress={() => confirmCode()} />
+          <Button title="Phone Number Sign In" onPress={handleSubmit} />
           <TextInput
-            value={code}
-            onChangeText={setCode}
+            value={phoneNumber}
+            onChangeText={handleNumberChange}
             style={styles.textInput}
-            placeholder="123456"
-            keyboardType="number-pad"
+            keyboardType="phone-pad"
+            maxLength={15}
+            placeholder="+1 650-555-1234"
           />
+          {error ? <Text>{error}</Text> : null}
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   safeView: {
