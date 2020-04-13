@@ -2,12 +2,12 @@ import React from 'react';
 import {SafeAreaView, View, ActivityIndicator, Text} from 'react-native';
 import AppContainer from './navigation';
 import {useAuth} from './firebase/auth';
-import {UserProvider} from './firebase/userContext';
+import {SessionProvider} from './firebase/sessionContext';
 
 const App = () => {
-  const {user, initializing} = useAuth();
+  const session = useAuth();
 
-  if (initializing) {
+  if (session.initializing) {
     return (
       <SafeAreaView>
         <View>
@@ -19,9 +19,9 @@ const App = () => {
   }
 
   return (
-    <UserProvider value={{user}}>
+    <SessionProvider value={session}>
       <AppContainer />
-    </UserProvider>
+    </SessionProvider>
   );
 };
 

@@ -4,9 +4,9 @@ import {SafeAreaView, Text} from 'react-native';
 import {useSession} from '../firebase/auth';
 
 const Initial = ({navigation, firebase}) => {
-  const user = useSession();
+  const session = useSession();
 
-  if (user === null) {
+  if (session.user === null) {
     navigation.navigate('Auth');
   } else {
     navigation.navigate('App');
