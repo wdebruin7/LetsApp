@@ -1,16 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, StyleSheet, Text, Button, View} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {useSession} from '../firebase/auth';
 
 const HomeScreen = ({navigation}) => {
-  const user = useSession();
+  const session = useSession();
+
+  useEffect(() => {
+    console.log(session);
+  }, [session]);
 
   const handleSignOut = async () => {
     auth().signOut();
   };
 
-  if (!user) {
+  if (!session.user) {
     navigation.navigate('Auth');
   }
 
