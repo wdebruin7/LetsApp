@@ -11,46 +11,8 @@ import {
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {useSession} from '../firebase/auth';
-
-const normalizePhoneNumber = (value, previousValue) => {
-  if (!value) return value;
-
-  const currentValue = value.replace(/[^\d]/g, '');
-  const currentValueLength = currentValue.length;
-
-  if (!previousValue || value.length > previousValue.length) {
-    if (currentValueLength < 1) {
-      return '';
-    }
-
-    if (currentValueLength < 2) {
-      return `+${currentValue.slice(0, 1)}`;
-    }
-
-    if (currentValueLength < 5) {
-      return `+${currentValue.slice(0, 1)} ${currentValue.slice(1)}`;
-    }
-
-    if (currentValueLength < 8) {
-      return `+${currentValue.slice(0, 1)} ${currentValue.slice(
-        1,
-        4,
-      )}-${currentValue.slice(4, 7)}`;
-    }
-
-    return `+${currentValue.slice(0, 1)} ${currentValue.slice(
-      1,
-      4,
-    )}-${currentValue.slice(4, 7)}-${currentValue.slice(7, 11)}`;
-  }
-};
-
-const validatePhoneNumber = (value) => {
-  let error = '';
-  if (!value) error = 'Required!';
-  else if (value.length != 15) error = 'Invalid Format';
-  return error;
-};
+import {normalizePhoneNumber} from '../functions/normalizePhoneNumber';
+import {validatePhoneNumber} from '../functions/validatePhoneNumber';
 
 function PhoneSignIn({navigation}) {
   // If null, no SMS has been sent
@@ -58,7 +20,7 @@ function PhoneSignIn({navigation}) {
   const [code, setCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [error, setError] = useState('');
-  const user = useSession();
+  const session = useSession();
 
   const handleNumberChange = (text) => {
     setPhoneNumber(normalizePhoneNumber(text), phoneNumber);
@@ -90,7 +52,7 @@ function PhoneSignIn({navigation}) {
     }
   }
 
-  if (user) {
+  if (session.user) {
     navigation.navigate('App');
   }
 
