@@ -63,7 +63,7 @@ const PhoneSignIn = () => {
           </View>
           <Image style ={!textFocus.isFocused ? styles.graphic : styles.graphic_hidden} source={require('../images/smartphone.png')}></Image>
           <View style={styles.verfificationBox}>
-            <View style={styles.title}></View>
+            <Text style={styles.title}>Verify your number</Text>
             <TextInput
             value={phoneNumber}
             onChangeText={handleNumberChange}
@@ -117,7 +117,8 @@ const styles = StyleSheet.create({
   },
   verfificationBox: {
     alignItems: 'center',
-    flex: 3
+    flex: 3,
+    margin: 20
   },
   textInput: {
     fontSize: 13,
@@ -130,6 +131,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#F1F3F6',
     paddingLeft: 20,
     margin: 20
+  },
+  title: {
+    fontSize: 18,
+    fontFamily: 'AppleSDGothicNeo-Regular',
+    color: '#0066FF',
+    fontWeight: 'bold'
   },
   button: {
     height: 53,
