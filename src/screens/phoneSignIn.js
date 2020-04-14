@@ -53,11 +53,11 @@ const PhoneSignIn = () => {
     <SafeAreaView style={styles.safeView}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
-          <View>
+          <View style={styles.header}>
             <Text style={styles.logo}>Let's</Text>
             <Text style={styles.subtitle}>Get started!</Text>
           </View>
-          <Image style ={styles.graphic} source={require('../images/smartphone 1.png')}></Image>
+          <Image style ={styles.graphic} source={require('../images/smartphone.png')}></Image>
           <View style={styles.verfificationBox}>
             <View style={styles.title}></View>
             <TextInput
@@ -83,6 +83,11 @@ const PhoneSignIn = () => {
 };
 
 const styles = StyleSheet.create({
+  header: {
+    flex: 1,
+    paddingTop: 50,
+    paddingBottom: 25
+  },
   safeView: {
     flex: 1,
     backgroundColor: '#FFFFFF'
@@ -101,11 +106,12 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   verfificationBox: {
-    alignItems: 'center'
+    alignItems: 'center',
+    flex: 3
   },
   textInput: {
     fontSize: 13,
@@ -116,7 +122,8 @@ const styles = StyleSheet.create({
     borderColor: '#F1F3F6',
     borderRadius: 25,
     backgroundColor: '#F1F3F6',
-    paddingLeft: 20
+    paddingLeft: 20,
+    margin: 20
   },
   button: {
     height: 53,
@@ -124,7 +131,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#0066FF',
     color: 'white',
     borderRadius: 5,
-    marginTop: 10,
     alignItems: 'center',
     justifyContent: 'center'
   },
