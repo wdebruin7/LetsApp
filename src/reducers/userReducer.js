@@ -1,12 +1,12 @@
-import types from '../actions/types';
+import userTypes from '../actions/userTypes';
 
 export default function userReducer(state, action) {
   switch (action.type) {
-    case types.SET:
+    case userTypes.SET:
       return {user: action.payload, initializing: false, userData: {}};
-    case types.REMOVE:
+    case userTypes.REMOVE:
       return {user: null, initializing: false, userData: {}};
-    case types.UPDATE:
+    case userTypes.UPDATE:
       return {...state, initializing: false, userData: action.payload};
     default:
       return state;

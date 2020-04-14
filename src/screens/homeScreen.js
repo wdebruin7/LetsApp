@@ -1,21 +1,33 @@
-import React, { useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Text, Button, View } from 'react-native';
+import React, {useEffect, useReducer} from 'react';
+import {SafeAreaView, StyleSheet, Text, Button, View} from 'react-native';
 import auth from '@react-native-firebase/auth';
-import { useSession } from '../firebase/auth';
-import { getActivities } from '../firebase';
+import {useSession} from '../firebase/auth';
+import {getActivities} from '../firebase';
+import activityReducer from '../reducers/activityReducer';
+import {updateActivity} from '../actions/activityActions';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({navigation}) => {
   const session = useSession();
+  const [activityState, activityDispatch] = useReducer(activityReducer, []);
 
   const handleSignOut = async () => {
     auth().signOut();
   };
 
   const onSnapshot = (querySnapshot) => {
-    querySnapshot.forEach((documentSnapshot) =>
-      console.log(documentSnapshot.data()),
-    );
+    querySnapshot.forEach((documentSnapshot) => {
+      activityDispatch(updateActivity(documentSnapshot.data()));
+    });
   };
+
+  useEffect(() => {
+    console.log('State:');
+    activityState.forEach((date) => {
+      date.activities.forEach((activity) => {
+        console.log(activity);
+      });
+    });
+  }, [activityState]);
 
   useEffect(() => {
     if (!session.userData || session.userData.groups === undefined) return;
