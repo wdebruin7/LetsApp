@@ -1,18 +1,32 @@
-import React, {useEffect} from 'react';
-import {SafeAreaView, StyleSheet, Text, Button, View} from 'react-native';
+import React, { useEffect } from 'react';
+import { SafeAreaView, StyleSheet, Text, Button, View } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import {useSession} from '../firebase/auth';
+import { useSession } from '../firebase/auth';
+import { getActivities } from '../firebase';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
   const session = useSession();
-
-  useEffect(() => {
-    console.log(session);
-  }, [session]);
 
   const handleSignOut = async () => {
     auth().signOut();
   };
+
+  const onSnapshot = (querySnapshot) => {
+    querySnapshot.forEach((documentSnapshot) =>
+      console.log(documentSnapshot.data()),
+    );
+  };
+
+  useEffect(() => {
+    if (!session.userData || session.userData.groups === undefined) return;
+    try {
+      const unsubscriber = getActivities(onSnapshot, session.userData.groups);
+      return () => unsubscriber();
+    } catch (err) {
+      console.log(err);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session]);
 
   if (!session.user) {
     navigation.navigate('Auth');
