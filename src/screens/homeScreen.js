@@ -1,6 +1,7 @@
 import React, {useEffect, useReducer} from 'react';
 import {SafeAreaView, StyleSheet, Text, Button, View} from 'react-native';
 import auth from '@react-native-firebase/auth';
+import {FlatList} from 'react-native-gesture-handler';
 import {useSession} from '../firebase/auth';
 import {getActivities} from '../firebase';
 import activityReducer from '../reducers/activityReducer';
@@ -16,18 +17,11 @@ const HomeScreen = ({navigation}) => {
 
   const onSnapshot = (querySnapshot) => {
     querySnapshot.forEach((documentSnapshot) => {
-      activityDispatch(updateActivity(documentSnapshot.data()));
+      activityDispatch(
+        updateActivity({...documentSnapshot.data(), id: documentSnapshot.id}),
+      );
     });
   };
-
-  useEffect(() => {
-    console.log('State:');
-    activityState.forEach((date) => {
-      date.activities.forEach((activity) => {
-        console.log(activity);
-      });
-    });
-  }, [activityState]);
 
   useEffect(() => {
     if (!session.userData || session.userData.groups === undefined) return;
@@ -49,6 +43,17 @@ const HomeScreen = ({navigation}) => {
       <View style={styles.container}>
         <Text>Welcome user!</Text>
         <Button title="sign out" onPress={handleSignOut} />
+        {activityState.length > 0 ? (
+          <FlatList
+            data={activityState}
+            renderItem={({item}) => (
+              <Text>
+                {item.date._seconds}, {item.activities.length}
+              </Text>
+            )}
+            keyExtractor={(item) => item.date}
+          />
+        ) : null}
       </View>
     </SafeAreaView>
   );
