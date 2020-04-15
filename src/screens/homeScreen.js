@@ -7,7 +7,7 @@ import {useActivities} from '../firebase';
 
 const HomeScreen = ({navigation}) => {
   const session = useSession();
-  const activityState = useActivities;
+  const activityState = useActivities();
 
   const handleSignOut = async () => {
     auth().signOut();
@@ -30,7 +30,7 @@ const HomeScreen = ({navigation}) => {
                 {item.date._seconds}, {item.activities.length}
               </Text>
             )}
-            keyExtractor={(item) => item.date}
+            keyExtractor={(item) => item.date._seconds.toString()}
           />
         ) : null}
       </View>
