@@ -1,4 +1,4 @@
-import { getActivities, getGroups } from './firestore';
-import { useSession, useAuth } from './auth';
+import {getActivities, getGroups, useActivities} from './firestore';
+import {useSession, useAuth} from './auth';
 
-export { getActivities, getGroups, useSession, useAuth };
+export {getActivities, getGroups, useSession, useAuth, useActivities};

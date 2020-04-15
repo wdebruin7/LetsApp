@@ -3,36 +3,15 @@ import {SafeAreaView, StyleSheet, Text, Button, View} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {FlatList} from 'react-native-gesture-handler';
 import {useSession} from '../firebase/auth';
-import {getActivities} from '../firebase';
-import activityReducer from '../reducers/activityReducer';
-import {updateActivity} from '../actions/activityActions';
+import {useActivities} from '../firebase';
 
 const HomeScreen = ({navigation}) => {
   const session = useSession();
-  const [activityState, activityDispatch] = useReducer(activityReducer, []);
+  const activityState = useActivities;
 
   const handleSignOut = async () => {
     auth().signOut();
   };
-
-  const onSnapshot = (querySnapshot) => {
-    querySnapshot.forEach((documentSnapshot) => {
-      activityDispatch(
-        updateActivity({...documentSnapshot.data(), id: documentSnapshot.id}),
-      );
-    });
-  };
-
-  useEffect(() => {
-    if (!session.userData || session.userData.groups === undefined) return;
-    try {
-      const unsubscriber = getActivities(onSnapshot, session.userData.groups);
-      return () => unsubscriber();
-    } catch (err) {
-      console.log(err);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session]);
 
   if (!session.user) {
     navigation.navigate('Auth');
