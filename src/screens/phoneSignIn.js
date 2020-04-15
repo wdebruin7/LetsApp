@@ -23,9 +23,7 @@ const PhoneSignIn = () => {
 
   const {navigate} = useNavigation();
 
-  const [textFocus, changeFocus] = useState({
-    isFocused: false
-  }); 
+  const [textFocus, changeFocus] = useState(false); 
 
   const handleNumberChange = (text) => {
     setPhoneNumber(normalizePhoneNumber(text), phoneNumber);
@@ -60,7 +58,7 @@ const PhoneSignIn = () => {
             <Text style={styles.logo}>Let's</Text>
             <Text style={styles.subtitle}>Get started!</Text>
           </View>
-          <Image style ={!textFocus.isFocused ? styles.graphic : styles.graphic_hidden} source={require('../images/smartphone.png')}></Image>
+          <Image style ={!textFocus ? styles.graphic : styles.graphic_hidden} source={require('../images/smartphone.png')}></Image>
           <View style={styles.verfificationBox}>
             <Text style={styles.title}>Verify your number</Text>
             <TextInput
@@ -71,8 +69,8 @@ const PhoneSignIn = () => {
             maxLength={15}
             placeholder="+1 650-555-1234"
             placeholderTextColor={'#8D8D8D'}
-            onFocus={() => changeFocus({isFocused: true})}
-            onBlur={() => changeFocus({isFocused: false})}
+            onFocus={() => changeFocus(true)}
+            onBlur={() => changeFocus(false)}
             />
             <TouchableWithoutFeedback onPress={handleSubmit}>
               <View style={styles.button}>

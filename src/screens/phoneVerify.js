@@ -17,9 +17,7 @@ import {useSession} from '../firebase/auth';
 const PhoneVerify = ({route}) => {
   const [confirmtionCode, setConfirmationCode] = useState('');
   const [confirm, setConfirm] = useState(null);
-  const [textFocus, changeFocus] = useState({
-    isFocused: false
-  }); 
+  const [textFocus, changeFocus] = useState(false); 
 
   const session = useSession();
 
@@ -61,7 +59,7 @@ const PhoneVerify = ({route}) => {
             <Text style={styles.logo}>Let's</Text>
             <Text style={styles.subtitle}>Get verified!</Text>
           </View>
-          <Image style ={!textFocus.isFocused ? styles.graphic : styles.graphic_hidden} source={require('../images/mailbox.png')}></Image>
+          <Image style ={!textFocus ? styles.graphic : styles.graphic_hidden} source={require('../images/mailbox.png')}></Image>
           <View style={styles.verfificationBox}>
             <Text style={styles.title}>Verification code</Text>
             <Text>Enter the code sent to</Text>
@@ -73,8 +71,8 @@ const PhoneVerify = ({route}) => {
             placeholder="123456"
             keyboardType="number-pad"
             placeholderTextColor={'#8D8D8D'}
-            onFocus={() => changeFocus({isFocused: true})}
-            onBlur={() => changeFocus({isFocused: false})}
+            onFocus={() => changeFocus(true)}
+            onBlur={() => changeFocus(false)}
             />
             <TouchableWithoutFeedback onPress={() => confirmCode()}>
               <View style={styles.button}>
