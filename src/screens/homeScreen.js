@@ -4,7 +4,8 @@ import auth from '@react-native-firebase/auth';
 import {FlatList} from 'react-native-gesture-handler';
 import {useSession} from '../firebase/auth';
 import {useActivities} from '../firebase';
-import ActivityListIem from '../components/activityListItem';
+import ActivityListComponent from '../components/activityListComponent';
+import ActivityDayComponent from '../components/activityDayComponent';
 
 const HomeScreen = ({navigation}) => {
   const session = useSession();
@@ -25,8 +26,8 @@ const HomeScreen = ({navigation}) => {
         <Button title="sign out" onPress={handleSignOut} />
         {activityState.length > 0 ? (
           <FlatList
-            data={activityState[0].activities}
-            renderItem={({item}) => <ActivityListIem activity={item} />}
+            data={activityState}
+            renderItem={({item}) => <ActivityDayComponent activityDay={item} />}
             keyExtractor={(item) => item.date._seconds.toString()}
           />
         ) : null}
@@ -38,6 +39,7 @@ const HomeScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   safeView: {
     flex: 1,
+    backgroundColor: '#FCFEFF',
   },
   container: {
     flex: 1,
