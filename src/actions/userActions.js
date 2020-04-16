@@ -1,15 +1,15 @@
-import types from './types';
+import userTypes from './userTypes';
 
 export function setUser(user) {
   return {
-    type: types.SET,
+    type: userTypes.SET,
     payload: user,
   };
 }
 
 export function updateUserData(userData) {
   return {
-    type: types.UPDATE,
+    type: userTypes.UPDATE,
     payload: userData,
   };
 }
