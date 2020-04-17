@@ -14,10 +14,11 @@ import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 import {useSession} from '../firebase/auth';
 import normalizePhoneNumber from '../functions/normalizePhoneNumber';
 import validatePhoneNumber from '../functions/validatePhoneNumber';
+import PhoneInput from 'react-native-phone-input';
 
 const PhoneSignIn = () => {
   // If null, no SMS has been sent
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('+1');
   const [error, setError] = useState('');
   const session = useSession();
 
@@ -61,17 +62,16 @@ const PhoneSignIn = () => {
           <Image style ={!textFocus ? styles.graphic : styles.graphic_hidden} source={require('../images/smartphone.png')}></Image>
           <View style={styles.verfificationBox}>
             <Text style={styles.title}>Verify your number</Text>
-            <TextInput
-            value={phoneNumber}
-            onChangeText={handleNumberChange}
-            style={styles.textInput}
-            keyboardType="phone-pad"
-            maxLength={15}
-            placeholder="+1 650-555-1234"
-            placeholderTextColor={'#8D8D8D'}
-            onFocus={() => changeFocus(true)}
-            onBlur={() => changeFocus(false)}
-            />
+              <PhoneInput
+                ref={ref => {
+                  this.phone = ref;
+                }}
+                textStyle={styles.textInput}
+                style={{width:300}}
+                value={phoneNumber}
+                onChangePhoneNumber={handleNumberChange}
+                onSelectCountry={() => setPhoneNumber(`+${this.phone.getCountryCode()}`)}
+              />
             <TouchableWithoutFeedback onPress={handleSubmit}>
               <View style={styles.button}>
                 <Text style={styles.buttonText}>Send Code</Text>
@@ -88,8 +88,8 @@ const PhoneSignIn = () => {
 const styles = StyleSheet.create({
   header: {
     flex: 1,
-    paddingTop: 50,
-    paddingBottom: 25
+    paddingTop: 40,
+    paddingBottom: 15
   },
   safeView: {
     flex: 1,
@@ -120,14 +120,15 @@ const styles = StyleSheet.create({
   textInput: {
     fontSize: 13,
     height: 36,
-    width: 262,
+    width: 220,
     borderWidth: 1,
     color: 'black',
     borderColor: '#F1F3F6',
     borderRadius: 25,
     backgroundColor: '#F1F3F6',
     paddingLeft: 20,
-    margin: 20
+    marginTop: 10,
+    marginBottom: 10
   },
   title: {
     fontSize: 18,
@@ -151,8 +152,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   graphic: {
-    height: 200,
-    width: 200
+    height: 150,
+    width: 150
   },
   graphic_hidden: {
     display: 'none'
