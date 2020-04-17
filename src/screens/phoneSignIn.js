@@ -24,8 +24,6 @@ const PhoneSignIn = () => {
 
   const {navigate} = useNavigation();
 
-  const [textFocus, changeFocus] = useState(false); 
-
   const handleNumberChange = (text) => {
     setPhoneNumber(normalizePhoneNumber(text), phoneNumber);
   };
@@ -59,7 +57,7 @@ const PhoneSignIn = () => {
             <Text style={styles.logo}>Let's</Text>
             <Text style={styles.subtitle}>Get started!</Text>
           </View>
-          <Image style ={!textFocus ? styles.graphic : styles.graphic_hidden} source={require('../images/smartphone.png')}></Image>
+          <Image style ={styles.graphic} source={require('../images/smartphone.png')}></Image>
           <View style={styles.verfificationBox}>
             <Text style={styles.title}>Verify your number</Text>
               <PhoneInput
@@ -154,9 +152,6 @@ const styles = StyleSheet.create({
   graphic: {
     height: 150,
     width: 150
-  },
-  graphic_hidden: {
-    display: 'none'
   }
 });
 
