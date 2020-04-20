@@ -14,13 +14,12 @@ import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 import auth from '@react-native-firebase/auth';
 import {useSession} from '../firebase/auth';
 
-const PhoneVerify = ({route}) => {
+const PhoneVerifyScreen = ({route}) => {
   const [confirmtionCode, setConfirmationCode] = useState('');
   const [confirm, setConfirm] = useState(null);
-  const [textFocus, changeFocus] = useState(false); 
+  const [textFocus, changeFocus] = useState(false);
 
   const session = useSession();
-
 
   const {navigate} = useNavigation();
   const phoneNumber = useNavigationParam('phoneNumber');
@@ -59,20 +58,23 @@ const PhoneVerify = ({route}) => {
             <Text style={styles.logo}>Let's</Text>
             <Text style={styles.subtitle}>Get verified!</Text>
           </View>
-          <Image style ={!textFocus ? styles.graphic : styles.graphic_hidden} source={require('../images/mailbox.png')}></Image>
+          <Image
+            style={!textFocus ? styles.graphic : styles.graphic_hidden}
+            source={require('../images/mailbox.png')}
+          />
           <View style={styles.verfificationBox}>
             <Text style={styles.title}>Verification code</Text>
             <Text>Enter the code sent to</Text>
             <Text style={{color: '#0066FF'}}>{phoneNumber}</Text>
             <TextInput
-            value={confirmtionCode}
-            onChangeText={setConfirmationCode}
-            style={styles.textInput}
-            placeholder="123456"
-            keyboardType="number-pad"
-            placeholderTextColor={'#8D8D8D'}
-            onFocus={() => changeFocus(true)}
-            onBlur={() => changeFocus(false)}
+              value={confirmtionCode}
+              onChangeText={setConfirmationCode}
+              style={styles.textInput}
+              placeholder="123456"
+              keyboardType="number-pad"
+              placeholderTextColor="#8D8D8D"
+              onFocus={() => changeFocus(true)}
+              onBlur={() => changeFocus(false)}
             />
             <TouchableWithoutFeedback onPress={() => confirmCode()}>
               <View style={styles.button}>
@@ -90,23 +92,23 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     paddingTop: 50,
-    paddingBottom: 25
+    paddingBottom: 25,
   },
   safeView: {
     flex: 1,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
   },
   logo: {
-    fontFamily : 'Trebuchet MS',
+    fontFamily: 'Trebuchet MS',
     paddingBottom: 10,
     fontSize: 58,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   subtitle: {
     fontFamily: 'AppleSDGothicNeo-Regular',
     fontSize: 18,
     textAlign: 'center',
-    color: '#8D8D8D'
+    color: '#8D8D8D',
   },
   container: {
     flex: 1,
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
   verfificationBox: {
     alignItems: 'center',
     flex: 3,
-    margin: 20
+    margin: 20,
   },
   textInput: {
     fontSize: 13,
@@ -128,13 +130,13 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: '#F1F3F6',
     paddingLeft: 20,
-    margin: 20
+    margin: 20,
   },
   title: {
     fontSize: 18,
     fontFamily: 'AppleSDGothicNeo-Regular',
     color: '#0066FF',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   button: {
     height: 53,
@@ -143,21 +145,21 @@ const styles = StyleSheet.create({
     color: 'white',
     borderRadius: 5,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
-  buttonText: { 
+  buttonText: {
     fontSize: 16,
     fontFamily: 'AppleSDGothicNeo-Regular',
     color: 'white',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   graphic: {
     height: 200,
-    width: 200
+    width: 200,
   },
   graphic_hidden: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 });
 
-export default PhoneVerify;
+export default PhoneVerifyScreen;

@@ -1,11 +1,13 @@
 import {createStackNavigator} from 'react-navigation-stack';
-import PhoneSignIn from '../screens/phoneSignIn';
-import PhoneVerify from '../screens/phoneVerify';
+import PhoneSignInScreen from '../screens/phoneSignInScreen';
+import PhoneVerifyScreen from '../screens/phoneVerifyScreen';
+import AccountCreationScreen from '../screens/accountCreationScreen';
 
 const AuthNavigation = createStackNavigator(
   {
-    Phone: PhoneSignIn,
-    Verify: PhoneVerify,
+    Phone: PhoneSignInScreen,
+    Verify: PhoneVerifyScreen,
+    Create: AccountCreationScreen,
   },
   {
     initialRouteName: 'Phone',

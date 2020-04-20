@@ -2,7 +2,7 @@ import React from 'react';
 import {SafeAreaView, Text} from 'react-native';
 import {useSession} from '../firebase/auth';
 
-const Initial = ({navigation, firebase}) => {
+const InitialScreen = ({navigation, firebase}) => {
   const session = useSession();
 
   if (session.user === null) {
@@ -18,4 +18,4 @@ const Initial = ({navigation, firebase}) => {
   );
 };
 
-export default Initial;
+export default InitialScreen;
