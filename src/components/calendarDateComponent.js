@@ -9,12 +9,19 @@ const getDayChar = (day) => {
 
 const CalendarDateComponent = ({date, isActive}) => {
   const {navigate} = useNavigation();
-  const onPress = () => {};
+
+  const onPress = () => {
+    console.log('onPress received');
+  };
 
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={
+        isActive ? [styles.container, styles.activeDate] : styles.container
+      }>
       <Text style={styles.text}>{getDayChar(date.getDay())}</Text>
-      <Text style={styles.text}>{date.getDate()}</Text>
+      <Text style={styles.textBold}>{date.getDate()}</Text>
     </TouchableOpacity>
   );
 };
@@ -22,12 +29,23 @@ const CalendarDateComponent = ({date, isActive}) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginRight: 12,
-    height: 35,
+    marginRight: 7,
+    paddingTop: 5,
+    paddingBottom: 10,
+    paddingHorizontal: 5,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+  },
+  activeDate: {
+    backgroundColor: '#8AABDD',
   },
   text: {
-    fontSize: 15,
+    fontSize: 14,
+  },
+
+  textBold: {
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });
 
