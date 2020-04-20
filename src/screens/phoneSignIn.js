@@ -7,14 +7,14 @@ import {
   View,
   Text,
   SafeAreaView,
-  Image
+  Image,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
+import PhoneInput from 'react-native-phone-input';
 import {useSession} from '../firebase/auth';
 import normalizePhoneNumber from '../functions/normalizePhoneNumber';
 import validatePhoneNumber from '../functions/validatePhoneNumber';
-import PhoneInput from 'react-native-phone-input';
 
 const PhoneSignIn = () => {
   // If null, no SMS has been sent
@@ -57,19 +57,24 @@ const PhoneSignIn = () => {
             <Text style={styles.logo}>Let's</Text>
             <Text style={styles.subtitle}>Get started!</Text>
           </View>
-          <Image style ={styles.graphic} source={require('../images/smartphone.png')}></Image>
+          <Image
+            style={styles.graphic}
+            source={require('../images/smartphone.png')}
+          />
           <View style={styles.verfificationBox}>
             <Text style={styles.title}>Verify your number</Text>
-              <PhoneInput
-                ref={ref => {
-                  this.phone = ref;
-                }}
-                textStyle={styles.textInput}
-                style={{width:300}}
-                value={phoneNumber}
-                onChangePhoneNumber={handleNumberChange}
-                onSelectCountry={() => setPhoneNumber(`+${this.phone.getCountryCode()}`)}
-              />
+            <PhoneInput
+              ref={(ref) => {
+                this.phone = ref;
+              }}
+              textStyle={styles.textInput}
+              style={{width: 300}}
+              value={phoneNumber}
+              onChangePhoneNumber={handleNumberChange}
+              onSelectCountry={() =>
+                setPhoneNumber(`+${this.phone.getCountryCode()}`)
+              }
+            />
             <TouchableWithoutFeedback onPress={handleSubmit}>
               <View style={styles.button}>
                 <Text style={styles.buttonText}>Send Code</Text>
@@ -87,23 +92,23 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     paddingTop: 40,
-    paddingBottom: 15
+    paddingBottom: 15,
   },
   safeView: {
     flex: 1,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
   },
   logo: {
-    fontFamily : 'Trebuchet MS',
+    fontFamily: 'Trebuchet MS',
     paddingBottom: 10,
     fontSize: 58,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   subtitle: {
     fontFamily: 'AppleSDGothicNeo-Regular',
     fontSize: 18,
     textAlign: 'center',
-    color: '#8D8D8D'
+    color: '#8D8D8D',
   },
   container: {
     flex: 1,
@@ -113,7 +118,7 @@ const styles = StyleSheet.create({
   verfificationBox: {
     alignItems: 'center',
     flex: 3,
-    margin: 20
+    margin: 20,
   },
   textInput: {
     fontSize: 13,
@@ -126,13 +131,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#F1F3F6',
     paddingLeft: 20,
     marginTop: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   title: {
     fontSize: 18,
     fontFamily: 'AppleSDGothicNeo-Regular',
     color: '#0066FF',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   button: {
     height: 53,
@@ -141,18 +146,18 @@ const styles = StyleSheet.create({
     color: 'white',
     borderRadius: 5,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
-  buttonText: { 
+  buttonText: {
     fontSize: 16,
     fontFamily: 'AppleSDGothicNeo-Regular',
     color: 'white',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   graphic: {
     height: 150,
-    width: 150
-  }
+    width: 150,
+  },
 });
 
 export default PhoneSignIn;

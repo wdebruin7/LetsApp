@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 12,
     flexDirection: 'column',
-    margin: 20,
+    marginTop: 20,
     flex: 1,
     width: 300,
   },
