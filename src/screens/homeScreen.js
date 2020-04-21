@@ -1,22 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet, Text, Button, View} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {FlatList} from 'react-native-gesture-handler';
+import {useNavigation} from 'react-navigation-hooks';
 import {useSession} from '../firebase/auth';
 import {useActivities} from '../firebase';
 import ActivityDayComponent from '../components/activityDayComponent';
 import CalendarHeaderComponent from '../components/calendarHeaderComponent';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = () => {
   const session = useSession();
   const activityState = useActivities();
+  const {navigate} = useNavigation();
 
   const handleSignOut = async () => {
     auth().signOut();
   };
 
   if (!session.user) {
-    navigation.navigate('Auth');
+    navigate('Auth');
   }
 
   return (

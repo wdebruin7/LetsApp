@@ -9,13 +9,17 @@ const ActivityDayScreen = () => {
   const date = useNavigationParam('date');
 
   return (
-    <SafeAreaView>
+    <SafeAreaView styles={styles.safeArea}>
       <CalendarHeaderComponent activeDate={date} />
       <DateHeaderComponent date={date} />
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
+});
 
 export default ActivityDayScreen;

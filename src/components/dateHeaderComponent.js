@@ -2,12 +2,19 @@ import React from 'react';
 import moment from 'moment';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {Icon} from 'react-native-elements';
+import {useNavigation} from 'react-navigation-hooks';
 
 const DateHeaderComponent = ({date}) => {
+  const {navigate} = useNavigation();
+
+  const onPressX = () => {
+    navigate('Home');
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{moment(date).format('dddd, MMM D')}</Text>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onPressX}>
         <Icon
           type="antdesign"
           name="close"

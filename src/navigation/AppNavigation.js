@@ -1,8 +1,8 @@
-import {createStackNavigator} from 'react-navigation-stack';
+import {createSwitchNavigator} from 'react-navigation';
 import HomeScreen from '../screens/homeScreen';
 import ActivityDayScreen from '../screens/activityDayScreen';
 
-const AppNavigation = createStackNavigator(
+const AppNavigation = createSwitchNavigator(
   {
     Home: HomeScreen,
     ActivityDay: ActivityDayScreen,
