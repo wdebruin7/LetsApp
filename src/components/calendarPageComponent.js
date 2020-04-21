@@ -55,6 +55,7 @@ const CalendarPageComponent = ({activeDate, weekStart}) => {
           <CalendarDateComponent
             date={new Date(date)}
             isActive={isActiveDate(date)}
+            key={`${date}`}
           />
         ))}
       </View>
@@ -65,26 +66,34 @@ const CalendarPageComponent = ({activeDate, weekStart}) => {
 const styles = StyleSheet.create({
   container: {
     width: Dimensions.get('window').width,
+    justifyContent: 'flex-end',
   },
   headerContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
   },
   header: {
-    paddingLeft: 19,
     fontStyle: 'normal',
     fontWeight: 'bold',
     fontSize: 22,
   },
   listContainer: {
-    height: 60,
+    height: 55,
     flexDirection: 'row',
+    paddingHorizontal: 25,
+    justifyContent: 'space-between',
   },
   list: {
     paddingHorizontal: 19,
   },
-  contentContainerStyle: {
-    alignItems: 'flex-end',
-  },
 });
 
-export default CalendarPageComponent;
+function areEqual(prevProps, nextProps) {
+  return (
+    prevProps.activeDate === nextProps.activeDate &&
+    prevProps.weekStart === nextProps.weekStart
+  );
+}
+
+export default React.memo(CalendarPageComponent, areEqual);
