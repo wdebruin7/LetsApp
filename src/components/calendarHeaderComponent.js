@@ -1,47 +1,43 @@
 import React, {useState} from 'react';
-import {Text, View, FlatList, StyleSheet} from 'react-native';
-import moment from 'moment';
-import CalendarDateComponent from './calendarDateComponent';
+import {View, FlatList, StyleSheet, Dimensions} from 'react-native';
+import CalendarPageComponent from './calendarPageComponent';
 
-const getCurrentMonthDates = () => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const date = new Date();
-  date.setHours(0, 0, 0, 0);
-  const currentMonthDates = [];
+const getWeekStarts = () => {
+  const weekStarts = [];
+  const date = new Date(new Date().setHours(0, 0, 0, 0));
 
-  while (date.getMonth() === today.getMonth()) {
-    currentMonthDates.push(new Date(date));
-    date.setDate(date.getDate() + 1);
+  while (weekStarts.length < 3) {
+    weekStarts.push(new Date(date).getTime());
+    date.setDate(date.getDate() + 7);
   }
-  return currentMonthDates;
+  return weekStarts;
 };
 
 const CalendarHeaderComponent = ({activeDate}) => {
-  const [month, setMonth] = useState(moment().format('MMMM'));
-  const [currentMonthDates, setCurrentMonthDates] = useState(
-    getCurrentMonthDates(),
-  );
+  const [weeks, setWeeks] = useState(getWeekStarts());
 
-  const isActiveDate = (date) => {
-    return activeDate && date.getTime() === activeDate.getTime();
+  const handleEnd = () => {
+    console.log('threshold reached');
+    const date = new Date(weeks[weeks.length - 1]);
+    date.setDate(date.getDate() + 7);
+    setWeeks(weeks.concat(date.getTime()));
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>{month}</Text>
-      <View style={styles.listContainer}>
-        <FlatList
-          data={currentMonthDates}
-          renderItem={({item}) => (
-            <CalendarDateComponent date={item} isActive={isActiveDate(item)} />
-          )}
-          keyExtractor={(item) => `${item.getTime()}`}
-          horizontal
-          style={styles.list}
-          contentContainerStyle={styles.contentContainerStyle}
-        />
-      </View>
+      <FlatList
+        data={weeks}
+        renderItem={({item}) => (
+          <CalendarPageComponent activeDate={activeDate} weekStart={item} />
+        )}
+        horizontal
+        snapToInterval={Dimensions.get('window').width}
+        decelerationRate="fast"
+        pagingEnabled
+        keyExtractor={(item) => item}
+        onEndReached={handleEnd}
+        onEndReachedThreshold={1}
+      />
     </View>
   );
 };
