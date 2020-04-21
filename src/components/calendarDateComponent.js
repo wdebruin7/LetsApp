@@ -11,7 +11,7 @@ const CalendarDateComponent = ({date, isActive}) => {
   const {navigate} = useNavigation();
 
   const onPress = () => {
-    console.log('onPress received');
+    navigate('ActivityDay', {date});
   };
 
   return (

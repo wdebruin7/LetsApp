@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     backgroundColor: '#D9E8FF',
-    height: 107,
+    height: 100,
     justifyContent: 'flex-end',
   },
   header: {

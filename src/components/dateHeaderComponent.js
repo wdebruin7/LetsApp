@@ -6,9 +6,15 @@ import {Icon} from 'react-native-elements';
 const DateHeaderComponent = ({date}) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{moment(date).format('dddd, MM D')}</Text>
+      <Text style={styles.text}>{moment(date).format('dddd, MMM D')}</Text>
       <TouchableOpacity>
-        <Icon type="antdesign" name="close" color="#FFFFFF" />
+        <Icon
+          type="antdesign"
+          name="close"
+          color="#FFFFFF"
+          iconStyle={styles.icon}
+          size={24}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -17,12 +23,22 @@ const DateHeaderComponent = ({date}) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignContent: 'space-between',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     backgroundColor: '#8AABDD',
+    height: 40,
+    shadowColor: 'black',
+    shadowOpacity: 0.25,
+    shadowOffset: {width: 0, height: 4},
   },
   text: {
-    backgroundColor: '#FFFFFF',
+    color: '#FFFFFF',
+    fontSize: 16,
+    paddingHorizontal: 7,
+    fontWeight: 'bold',
+  },
+  icon: {
+    paddingHorizontal: 7,
   },
 });
 
