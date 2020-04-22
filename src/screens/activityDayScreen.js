@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, SafeAreaView} from 'react-native';
+import {StyleSheet, SafeAreaView, FlatList} from 'react-native';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 import CalendarHeaderComponent from '../components/calendarHeaderComponent';
 import DateHeaderComponent from '../components/dateHeaderComponent';
@@ -11,25 +11,29 @@ const ActivityDayScreen = () => {
   const date = useNavigationParam('date');
   const activityDays = useActivities();
   const [activities, setActivites] = useState([]);
-  console.log(activities);
 
   useEffect(() => {
-    setActivites(
-      activityDays.filter((activityDay) => {
-        const c1 = new Date(date);
-        c1.setHours(0, 0, 0, 0);
-        const c2 = new Date(activityDay.date);
-        c2.setHours(0, 0, 0, 0);
-        return c1.getTime() === c2.getTime();
-      })[0],
-    );
+    const activityDay = activityDays.filter((activityDay) => {
+      const c1 = new Date(date);
+      c1.setHours(0, 0, 0, 0);
+      const c2 = new Date(activityDay.date);
+      c2.setHours(0, 0, 0, 0);
+      return c1.getTime() === c2.getTime();
+    })[0];
+
+    setActivites(activityDay ? activityDay.activities : []);
   }, [activityDays, date]);
 
   return (
     <SafeAreaView styles={styles.safeArea}>
       <CalendarHeaderComponent activeDate={date} />
       <DateHeaderComponent date={date} />
-      {activities ? <ActivityTileComponent activity={activities[0]} /> : null}
+      <FlatList
+        data={activities}
+        renderItem={({item}) => <ActivityTileComponent activity={item} />}
+        keyExtractor={(item) => item.id}
+        style={styles.list}
+      />
     </SafeAreaView>
   );
 };
