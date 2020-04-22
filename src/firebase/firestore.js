@@ -4,25 +4,15 @@ import {useSession} from './auth';
 import activityReducer from '../reducers/activityReducer';
 import {updateActivity} from '../actions/activityActions';
 
-const useActivities = (startDate, endDate) => {
+const useActivities = () => {
   const session = useSession();
   const [activityState, activityDispatch] = useReducer(activityReducer, []);
 
-  const activityInRange = (activity) => {
-    const activityTime = new Date(activity.date._seconds * 1000);
-    return (
-      (!startDate || startDate <= activityTime) &&
-      (!endDate || endDate >= activityTime)
-    );
-  };
-
   const onSnapshot = (querySnapshot) => {
     querySnapshot.forEach((documentSnapshot) => {
-      if (activityInRange(documentSnapshot.data())) {
-        activityDispatch(
-          updateActivity({...documentSnapshot.data(), id: documentSnapshot.id}),
-        );
-      }
+      activityDispatch(
+        updateActivity({...documentSnapshot.data(), id: documentSnapshot.id}),
+      );
     });
   };
 

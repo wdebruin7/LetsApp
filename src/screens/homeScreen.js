@@ -31,7 +31,7 @@ const HomeScreen = () => {
           <FlatList
             data={activityState}
             renderItem={({item}) => <ActivityDayComponent activityDay={item} />}
-            keyExtractor={(item) => item.date._seconds.toString()}
+            keyExtractor={(item) => item.date.getTime().toString()}
           />
         ) : null}
       </View>

@@ -59,15 +59,15 @@ const getDisplayDate = (date) =>
   `${getDayOfWeek(date)}, ${getMonth(date)} ${date.getDate()}`;
 
 const ActivityDayComponent = ({activityDay}) => {
-  const date = new Date(0);
-  date.setSeconds(activityDay.date._seconds);
   const [showAll, setShowAll] = useState(false);
   const activitiesHidden = !showAll && activityDay.activities > 3;
 
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.headerView}>
-        <Text style={styles.headerText}>{getDisplayDate(date)}</Text>
+        <Text style={styles.headerText}>
+          {getDisplayDate(activityDay.date)}
+        </Text>
         <TouchableOpacity>
           <Icon name="plus" type="entypo" color="#FFFFFF" />
         </TouchableOpacity>

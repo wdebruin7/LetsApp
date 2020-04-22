@@ -7,7 +7,7 @@ const getWeekStarts = () => {
   const date = new Date(new Date().setHours(0, 0, 0, 0));
 
   while (weekStarts.length < 2) {
-    weekStarts.push(new Date(date).getTime());
+    weekStarts.push(new Date(date));
     date.setDate(date.getDate() + 7);
   }
   return weekStarts;
@@ -20,7 +20,7 @@ const CalendarHeaderComponent = ({activeDate}) => {
   const handleEnd = () => {
     const date = new Date(weeks[weeks.length - 1]);
     date.setDate(date.getDate() + 7);
-    setWeeks(weeks.concat(date.getTime()));
+    setWeeks(weeks.concat(date));
   };
 
   useEffect(() => {
@@ -30,9 +30,7 @@ const CalendarHeaderComponent = ({activeDate}) => {
       const start = new Date(weekStart);
       const end = new Date(start);
       end.setDate(end.getDate() + 8);
-      const inRange =
-        start.getTime() <= activeDate.getTime() &&
-        end.getTime() >= activeDate.getTime();
+      const inRange = start <= activeDate && end >= activeDate;
 
       return inRange;
     });

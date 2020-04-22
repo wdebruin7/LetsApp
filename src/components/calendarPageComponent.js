@@ -7,7 +7,7 @@ const getDates = (weekStart) => {
   const date = new Date(weekStart);
 
   while (dates.length < 8) {
-    dates.push(new Date(date).getTime());
+    dates.push(new Date(date));
     date.setDate(date.getDate() + 1);
   }
 
