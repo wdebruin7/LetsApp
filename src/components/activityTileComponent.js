@@ -1,10 +1,12 @@
 import React from 'react';
 import {StyleSheet, View, Text, Dimensions} from 'react-native';
 
-const ActivityTileComponent = ({activity}) => {
+const ActivityTileComponent = ({activity, group}) => {
+  if (!(activity && group)) return null;
+
   return (
     <View style={styles.container}>
-      <Text>{activity.groupName}</Text>
+      <Text>Test</Text>
     </View>
   );
 };

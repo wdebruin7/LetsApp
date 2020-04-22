@@ -4,12 +4,13 @@ import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 import CalendarHeaderComponent from '../components/calendarHeaderComponent';
 import DateHeaderComponent from '../components/dateHeaderComponent';
 import ActivityTileComponent from '../components/activityTileComponent';
-import {useActivities} from '../firebase';
+import {useActivities, useGroups} from '../firebase';
 
 const ActivityDayScreen = () => {
   const {navigate} = useNavigation();
   const date = useNavigationParam('date');
   const activityDays = useActivities();
+  const groups = useGroups();
   const [activities, setActivites] = useState([]);
 
   useEffect(() => {
@@ -30,9 +31,15 @@ const ActivityDayScreen = () => {
       <DateHeaderComponent date={date} />
       <FlatList
         data={activities}
-        renderItem={({item}) => <ActivityTileComponent activity={item} />}
+        renderItem={({item}) => (
+          <ActivityTileComponent
+            activity={item}
+            group={groups[item.groupDocumentID]}
+          />
+        )}
         keyExtractor={(item) => item.id}
         style={styles.list}
+        extraData={groups}
       />
     </SafeAreaView>
   );
