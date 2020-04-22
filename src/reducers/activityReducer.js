@@ -3,6 +3,13 @@ import activityTypes from '../actions/activityTypes';
 export default function activityReducer(state, action) {
   switch (action.type) {
     case activityTypes.UPDATE: {
+      state.forEach((day) => {
+        // eslint-disable-next-line no-param-reassign
+        day.activities = day.activities.filter(
+          (elem) => elem.id !== action.payload.id,
+        );
+      });
+
       const filtered = state.filter(
         (elem) => elem.date._seconds === action.payload.date._seconds,
       );
@@ -19,7 +26,10 @@ export default function activityReducer(state, action) {
 
       return state
         .filter((elem) => {
-          return elem.date._seconds !== action.payload.date._seconds;
+          return (
+            elem.date._seconds !== action.payload.date._seconds &&
+            elem.activities.length > 0
+          );
         })
         .concat(day)
         .sort((a, b) => {

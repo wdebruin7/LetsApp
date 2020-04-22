@@ -4,15 +4,25 @@ import {useSession} from './auth';
 import activityReducer from '../reducers/activityReducer';
 import {updateActivity} from '../actions/activityActions';
 
-const useActivities = () => {
+const useActivities = (startDate, endDate) => {
   const session = useSession();
   const [activityState, activityDispatch] = useReducer(activityReducer, []);
 
+  const activityInRange = (activity) => {
+    const activityTime = new Date(activity.date._seconds * 1000);
+    return (
+      (!startDate || startDate <= activityTime) &&
+      (!endDate || endDate >= activityTime)
+    );
+  };
+
   const onSnapshot = (querySnapshot) => {
     querySnapshot.forEach((documentSnapshot) => {
-      activityDispatch(
-        updateActivity({...documentSnapshot.data(), id: documentSnapshot.id}),
-      );
+      if (activityInRange(documentSnapshot.data())) {
+        activityDispatch(
+          updateActivity({...documentSnapshot.data(), id: documentSnapshot.id}),
+        );
+      }
     });
   };
 
@@ -32,6 +42,7 @@ const useActivities = () => {
     return () => {
       snapshotListeners.forEach((unsubscriber) => unsubscriber());
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
   return activityState;

@@ -102,8 +102,12 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     flexDirection: 'column',
     marginTop: 20,
+    marginHorizontal: 10,
     flex: 1,
     width: 300,
+    shadowColor: 'black',
+    shadowOpacity: 0.25,
+    shadowOffset: {width: 3, height: 3},
   },
   headerView: {
     backgroundColor: '#8AABDD',
