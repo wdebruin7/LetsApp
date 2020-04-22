@@ -11,19 +11,25 @@ const ActivityDayScreen = () => {
   const date = useNavigationParam('date');
   const activityDays = useActivities();
   const [activities, setActivites] = useState([]);
+  console.log(activities);
 
   useEffect(() => {
-    const dateNext = new Date(date);
-    dateNext.setDate(date.getDate() + 1);
+    setActivites(
+      activityDays.filter((activityDay) => {
+        const c1 = new Date(date);
+        c1.setHours(0, 0, 0, 0);
+        const c2 = new Date(activityDay.date);
+        c2.setHours(0, 0, 0, 0);
+        return c1.getTime() === c2.getTime();
+      })[0],
+    );
   }, [activityDays, date]);
 
   return (
     <SafeAreaView styles={styles.safeArea}>
       <CalendarHeaderComponent activeDate={date} />
       <DateHeaderComponent date={date} />
-      {activityDays.length > 0 ? (
-        <ActivityTileComponent activity={activityDays[0].activities} />
-      ) : null}
+      {activities ? <ActivityTileComponent activity={activities[0]} /> : null}
     </SafeAreaView>
   );
 };

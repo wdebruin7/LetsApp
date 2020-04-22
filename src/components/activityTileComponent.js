@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet, View, Text, Dimensions} from 'react-native';
 
 const ActivityTileComponent = ({activity}) => {
-  console.log(activity);
   return (
     <View style={styles.container}>
       <Text>Test</Text>
