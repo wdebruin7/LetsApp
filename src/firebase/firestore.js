@@ -1,5 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
-import {useEffect, useReducer, useState} from 'react';
+import {useEffect, useReducer} from 'react';
 import {useSession} from './auth';
 import activityReducer from '../reducers/activityReducer';
 import {updateActivity} from '../actions/activityActions';
@@ -37,35 +37,6 @@ const useActivities = () => {
   return activityState;
 };
 
-const useGroups = () => {
-  const session = useSession();
-  const [groupState, setGroupState] = useState({});
+const getGroups = async () => {};
 
-  const onSnapshot = (querySnapshot) => {
-    querySnapshot.forEach((documentSnapshot) => {
-      const {id} = documentSnapshot;
-      // const newState = {...groupState};
-      // newState[id] = documentSnapshot.data();
-      // console.log('---');
-      // console.log(groupState);
-      // console.log(newState);
-      setGroupState((prevState) => {
-        const newState = {...prevState};
-        newState[id] = documentSnapshot.data();
-        return newState;
-      });
-    });
-  };
-
-  useEffect(() => {
-    if (!session.user) return;
-    const ref = firestore().collection('groups');
-    const unsubscribe = ref.onSnapshot(onSnapshot);
-    return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session.user]);
-
-  return groupState;
-};
-
-export {useGroups, useActivities};
+export {getGroups, useActivities};

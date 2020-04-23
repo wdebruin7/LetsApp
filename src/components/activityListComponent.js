@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {TouchableOpacity, StyleSheet, View, Text, Switch} from 'react-native';
-import {Avatar, Icon} from 'react-native-elements';
+import {Avatar} from 'react-native-elements';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 
 const getAvatars = (participants) => {
