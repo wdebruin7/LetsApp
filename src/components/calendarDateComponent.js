@@ -11,7 +11,7 @@ const CalendarDateComponent = ({date, isActive}) => {
   const {navigate} = useNavigation();
 
   const onPress = () => {
-    navigate('ActivityDay', {date});
+    console.log('onPress received');
   };
 
   return (
@@ -29,11 +29,10 @@ const CalendarDateComponent = ({date, isActive}) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginRight: 5,
-    width: 30,
+    marginRight: 7,
     paddingTop: 5,
     paddingBottom: 10,
+    paddingHorizontal: 5,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
   },
@@ -50,11 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-function areEqual(prevProps, nextProps) {
-  return (
-    prevProps.date.getTime() === nextProps.date.getTime() &&
-    prevProps.isActive === nextProps.isActive
-  );
-}
-
-export default React.memo(CalendarDateComponent, areEqual);
+export default CalendarDateComponent;
