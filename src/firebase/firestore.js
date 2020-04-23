@@ -1,4 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 import {useEffect, useReducer, useState} from 'react';
 import {useSession} from './auth';
 import activityReducer from '../reducers/activityReducer';
@@ -44,11 +45,6 @@ const useGroups = () => {
   const onSnapshot = (querySnapshot) => {
     querySnapshot.forEach((documentSnapshot) => {
       const {id} = documentSnapshot;
-      // const newState = {...groupState};
-      // newState[id] = documentSnapshot.data();
-      // console.log('---');
-      // console.log(groupState);
-      // console.log(newState);
       setGroupState((prevState) => {
         const newState = {...prevState};
         newState[id] = documentSnapshot.data();
@@ -67,5 +63,14 @@ const useGroups = () => {
 
   return groupState;
 };
+const initializeUserInDatabase = (newUserData) => {
+  const user = auth().currentUser;
+  if (!user) throw new Error('No user currently signed in');
+  const userData = {...user, ...newUserData};
+  const userDocRef = firestore().collection('users').doc(userData.uid);
+  userDocRef.set(userData);
+};
+
+const getGroups = async () => {};
 
 export {useGroups, useActivities};
