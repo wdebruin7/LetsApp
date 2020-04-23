@@ -58,7 +58,6 @@ const useGroups = () => {
     const ref = firestore().collection('groups');
     const unsubscribe = ref.onSnapshot(onSnapshot);
     return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.user]);
 
   return groupState;
@@ -80,6 +79,9 @@ const setUserIsParticipant = (activity) => {
   userRef.update({activities: includeActivity});
 };
 
-const getGroups = async () => {};
-
-export {useGroups, useActivities};
+export {
+  useGroups,
+  useActivities,
+  initializeUserInDatabase,
+  setUserIsParticipant,
+};
