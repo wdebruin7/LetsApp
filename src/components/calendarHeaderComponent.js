@@ -1,47 +1,64 @@
-import React, {useState} from 'react';
-import {Text, View, FlatList, StyleSheet} from 'react-native';
-import moment from 'moment';
-import CalendarDateComponent from './calendarDateComponent';
+import React, {useState, useEffect} from 'react';
+import {View, FlatList, StyleSheet, Dimensions} from 'react-native';
+import CalendarPageComponent from './calendarPageComponent';
 
-const getCurrentMonthDates = () => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const date = new Date();
-  date.setHours(0, 0, 0, 0);
-  const currentMonthDates = [];
+const getWeekStarts = () => {
+  const weekStarts = [];
+  const date = new Date(new Date().setHours(0, 0, 0, 0));
 
-  while (date.getMonth() === today.getMonth()) {
-    currentMonthDates.push(new Date(date));
-    date.setDate(date.getDate() + 1);
+  while (weekStarts.length < 2) {
+    weekStarts.push(new Date(date));
+    date.setDate(date.getDate() + 7);
   }
-  return currentMonthDates;
+  return weekStarts;
 };
 
 const CalendarHeaderComponent = ({activeDate}) => {
-  const [month, setMonth] = useState(moment().format('MMMM'));
-  const [currentMonthDates, setCurrentMonthDates] = useState(
-    getCurrentMonthDates(),
-  );
+  const [weeks, setWeeks] = useState(getWeekStarts());
+  const [flatListRef, setFlatListRef] = useState(undefined);
 
-  const isActiveDate = (date) => {
-    return activeDate && date.getTime() === activeDate.getTime();
+  const handleEnd = () => {
+    const date = new Date(weeks[weeks.length - 1]);
+    date.setDate(date.getDate() + 7);
+    setWeeks(weeks.concat(date));
   };
+
+  useEffect(() => {
+    if (!activeDate || !flatListRef) return;
+
+    const index = weeks.findIndex((weekStart) => {
+      const start = new Date(weekStart);
+      const end = new Date(start);
+      end.setDate(end.getDate() + 8);
+      const inRange = start <= activeDate && end >= activeDate;
+
+      return inRange;
+    });
+    if (index === -1) return;
+    flatListRef.scrollToIndex({animated: false, index});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeDate, flatListRef]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>{month}</Text>
-      <View style={styles.listContainer}>
-        <FlatList
-          data={currentMonthDates}
-          renderItem={({item}) => (
-            <CalendarDateComponent date={item} isActive={isActiveDate(item)} />
-          )}
-          keyExtractor={(item) => `${item.getTime()}`}
-          horizontal
-          style={styles.list}
-          contentContainerStyle={styles.contentContainerStyle}
-        />
-      </View>
+      <FlatList
+        data={weeks}
+        renderItem={({item}) => (
+          <CalendarPageComponent activeDate={activeDate} weekStart={item} />
+        )}
+        horizontal
+        snapToInterval={Dimensions.get('window').width}
+        decelerationRate="fast"
+        pagingEnabled
+        keyExtractor={(item) => `${item}`}
+        onEndReached={handleEnd}
+        onEndReachedThreshold={1}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.list}
+        style={styles.listView}
+        ref={setFlatListRef}
+        onScrollToIndexFailed={() => {}}
+      />
     </View>
   );
 };
@@ -50,24 +67,10 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     backgroundColor: '#D9E8FF',
-    height: 107,
+    height: 100,
     justifyContent: 'flex-end',
   },
-  header: {
-    paddingLeft: 19,
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    fontSize: 22,
-  },
-  listContainer: {
-    height: 60,
-  },
-  list: {
-    paddingHorizontal: 19,
-  },
-  contentContainerStyle: {
-    alignItems: 'flex-end',
-  },
+  listView: {},
 });
 
 export default CalendarHeaderComponent;
