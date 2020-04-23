@@ -44,11 +44,6 @@ const useGroups = () => {
   const onSnapshot = (querySnapshot) => {
     querySnapshot.forEach((documentSnapshot) => {
       const {id} = documentSnapshot;
-      // const newState = {...groupState};
-      // newState[id] = documentSnapshot.data();
-      // console.log('---');
-      // console.log(groupState);
-      // console.log(newState);
       setGroupState((prevState) => {
         const newState = {...prevState};
         newState[id] = documentSnapshot.data();
