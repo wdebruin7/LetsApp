@@ -71,6 +71,15 @@ const initializeUserInDatabase = (newUserData) => {
   userDocRef.set(userData);
 };
 
+const setUserIsParticipant = (activity) => {
+  const user = auth().currentUser;
+  if (!user) throw new Error('No user currently signed in');
+
+  const userRef = firestore().collection('users').doc(user.uid);
+  const includeActivity = firestore.FieldValue.arrayUnion(activity);
+  userRef.update({activities: includeActivity});
+};
+
 const getGroups = async () => {};
 
 export {useGroups, useActivities};
