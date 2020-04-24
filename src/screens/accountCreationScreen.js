@@ -12,7 +12,12 @@ import {useSession} from '../firebase/auth';
 
 const AccountCreationScreen = () => {
   const session = useSession();
-  const [userName, changeUserName] = useState('');
+  const [userInfo, changeUserInfo] = useState({
+    userName: '',
+  });
+  const handleSave = () => {
+    console.log(userInfo);
+  };
   return (
     <SafeAreaView style={styles.safeView}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -24,7 +29,7 @@ const AccountCreationScreen = () => {
           <TouchableWithoutFeedback>
             <View style={styles.profilePhoto}>
               <Text style={styles.profilePhotoText}>
-                {'Select a profile photo'}
+                Select a profile photo
               </Text>
             </View>
           </TouchableWithoutFeedback>
@@ -32,8 +37,8 @@ const AccountCreationScreen = () => {
             <Text style={styles.infoTitleText}>Name</Text>
             <TextInput
               style={styles.textInput}
-              value={userName}
-              onChangeText={changeUserName}
+              value={userInfo.userName}
+              onChangeText={(e) => changeUserInfo({userName: e})}
               placeholder="User Name"
             />
             <Text style={styles.infoTitleText}>Phone number</Text>
@@ -42,7 +47,7 @@ const AccountCreationScreen = () => {
               value={session.user.phoneNumber}
             />
           </View>
-          <TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={handleSave}>
             <View style={styles.button}>
               <Text style={styles.buttonText}>Save</Text>
             </View>
