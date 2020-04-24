@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {TouchableOpacity, StyleSheet, View, Text, Switch} from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
 import AntIcon from 'react-native-vector-icons/AntDesign';
@@ -9,8 +9,10 @@ const getAvatars = (participants) => {
   const avatars = [];
   participants.slice(0, 2).forEach((participant) => {
     const initials = participant.name
-      .slice(0, 1)
-      .concat(participant.name.split(' ')[1].slice(0, 1));
+      ? participant.name
+          .slice(0, 1)
+          .concat(participant.name.split(' ')[1].slice(0, 1))
+      : '?';
     const avatar = <Avatar rounded title={initials} size={25} />;
     avatars.push(avatar);
   });
@@ -19,13 +21,20 @@ const getAvatars = (participants) => {
 
 const ActivityListComponent = ({activity, isLastElement}) => {
   const avatars = getAvatars(activity.participants);
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [isParticipant, setIsParticipant] = useState(
+    activity.participants.some((elem) => elem.uid === userData.uid),
+  );
   const {userData} = useSession();
 
   const toggleSwitch = () => {
-    setIsEnabled(!isEnabled);
     toggleUserIsParticipant(userData, activity);
   };
+
+  useEffect(() => {
+    setIsParticipant(
+      activity.participants.some((elem) => elem.uid === userData.uid),
+    );
+  }, [activity, userData]);
 
   return (
     <TouchableOpacity
@@ -50,10 +59,10 @@ const ActivityListComponent = ({activity, isLastElement}) => {
         </View>
         <Switch
           trackColor={{false: '#767577', true: '#81b0ff'}}
-          thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+          thumbColor={isParticipant ? '#f5dd4b' : '#f4f3f4'}
           ios_backgroundColor="#3e3e3e"
           onValueChange={toggleSwitch}
-          value={isEnabled}
+          value={isParticipant}
           style={styles.switch}
         />
       </View>

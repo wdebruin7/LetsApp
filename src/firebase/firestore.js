@@ -88,14 +88,12 @@ const toggleUserIsParticipant = async (userData, activityData) => {
 
   const updateUserDoc = async () => {
     const userRef = firestore().collection('users').doc(user.uid);
-    // const {description, uid} = activityData;
-    // const activity = {description, uid};
-    // const update = userIsParticipant
-    //   ? firestore.FieldValue.arrayRemove([activity])
-    //   : firestore.FieldValue.arrayUnion([activity]);
+    console.log(user.uid);
+    const {description, uid} = activityData;
+    const activity = {description, uid};
     const update = userIsParticipant
-      ? firestore.FieldValue.arrayRemove('test')
-      : firestore.FieldValue.arrayUnion('test');
+      ? firestore.FieldValue.arrayRemove(activity)
+      : firestore.FieldValue.arrayUnion(activity);
     batch.update(userRef, {activities: update});
   };
 
@@ -103,27 +101,24 @@ const toggleUserIsParticipant = async (userData, activityData) => {
     const activityRef = firestore()
       .collection('activities')
       .doc(activityData.uid);
-    // const {displayName, uid} = userData.name;
-    // const participant = {name: displayName, uid};
-    // const update = userIsParticipant
-    //   ? firestore.FieldValue.arrayRemove([participant])
-    //   : firestore.FieldValue.arrayUnion([participant]);
+    console.log(activityData.uid);
+    const {displayName, uid} = userData;
+    const participant = {name: displayName, uid};
     const update = userIsParticipant
-      ? firestore.FieldValue.arrayRemove('test')
-      : firestore.FieldValue.arrayUnion('test');
+      ? firestore.FieldValue.arrayRemove(participant)
+      : firestore.FieldValue.arrayUnion(participant);
     batch.update(activityRef, {participants: update});
   };
 
   updateUserDoc();
   updateActivityDoc();
 
-  try {
-    console.log('commiting batch');
-    await batch.commit();
-  } catch (error) {
-    return {success: false, reason: error};
-  }
-  return {success: true};
+  batch.commit().then(
+    () => {},
+    (error) => {
+      console.log(error);
+    },
+  );
 };
 
 export {
