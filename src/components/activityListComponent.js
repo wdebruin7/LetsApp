@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {TouchableOpacity, StyleSheet, View, Text, Switch} from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
 import AntIcon from 'react-native-vector-icons/AntDesign';
+import {useSession} from '../firebase/auth';
+import {toggleUserIsParticipant} from '../firebase/firestore';
 
 const getAvatars = (participants) => {
   const avatars = [];
@@ -18,8 +20,12 @@ const getAvatars = (participants) => {
 const ActivityListComponent = ({activity, isLastElement}) => {
   const avatars = getAvatars(activity.participants);
   const [isEnabled, setIsEnabled] = useState(false);
+  const {userData} = useSession();
 
-  const toggleSwitch = () => setIsEnabled(!isEnabled);
+  const toggleSwitch = () => {
+    setIsEnabled(!isEnabled);
+    toggleUserIsParticipant(userData, activity);
+  };
 
   return (
     <TouchableOpacity

@@ -1,4 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 import {useEffect, useReducer, useState} from 'react';
 import {useSession} from './auth';
 import activityReducer from '../reducers/activityReducer';
@@ -44,11 +45,6 @@ const useGroups = () => {
   const onSnapshot = (querySnapshot) => {
     querySnapshot.forEach((documentSnapshot) => {
       const {id} = documentSnapshot;
-      // const newState = {...groupState};
-      // newState[id] = documentSnapshot.data();
-      // console.log('---');
-      // console.log(groupState);
-      // console.log(newState);
       setGroupState((prevState) => {
         const newState = {...prevState};
         newState[id] = documentSnapshot.data();
@@ -62,10 +58,77 @@ const useGroups = () => {
     const ref = firestore().collection('groups');
     const unsubscribe = ref.onSnapshot(onSnapshot);
     return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.user]);
 
   return groupState;
 };
 
-export {useGroups, useActivities};
+const initializeUserInDatabase = async (newUserData) => {
+  const user = auth().currentUser;
+  if (!user) throw new Error('No user currently signed in');
+  const userData = {...user, ...newUserData};
+  const userDocRef = firestore().collection('users').doc(userData.uid);
+  try {
+    userDocRef.set(userData);
+  } catch (error) {
+    return {success: false, reason: error};
+  }
+  return {success: true};
+};
+
+const toggleUserIsParticipant = async (userData, activityData) => {
+  const user = auth().currentUser;
+  if (!user) throw new Error('No user currently signed in');
+
+  const userIsParticipant = activityData.participants.some(
+    (elem) => elem.uid === userData.uid,
+  );
+
+  const batch = firestore().batch();
+
+  const updateUserDoc = async () => {
+    const userRef = firestore().collection('users').doc(user.uid);
+    // const {description, uid} = activityData;
+    // const activity = {description, uid};
+    // const update = userIsParticipant
+    //   ? firestore.FieldValue.arrayRemove([activity])
+    //   : firestore.FieldValue.arrayUnion([activity]);
+    const update = userIsParticipant
+      ? firestore.FieldValue.arrayRemove('test')
+      : firestore.FieldValue.arrayUnion('test');
+    batch.update(userRef, {activities: update});
+  };
+
+  const updateActivityDoc = () => {
+    const activityRef = firestore()
+      .collection('activities')
+      .doc(activityData.uid);
+    // const {displayName, uid} = userData.name;
+    // const participant = {name: displayName, uid};
+    // const update = userIsParticipant
+    //   ? firestore.FieldValue.arrayRemove([participant])
+    //   : firestore.FieldValue.arrayUnion([participant]);
+    const update = userIsParticipant
+      ? firestore.FieldValue.arrayRemove('test')
+      : firestore.FieldValue.arrayUnion('test');
+    batch.update(activityRef, {participants: update});
+  };
+
+  updateUserDoc();
+  updateActivityDoc();
+
+  try {
+    console.log('commiting batch');
+    await batch.commit();
+  } catch (error) {
+    return {success: false, reason: error};
+  }
+  return {success: true};
+};
+
+export {
+  useGroups,
+  useActivities,
+  initializeUserInDatabase,
+  toggleUserIsParticipant,
+};
