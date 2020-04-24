@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   verfificationBox: {
-    alignItems: 'center',
-    margin: 20,
+    alignItems: 'flex-start',
+    margin: 10,
   },
   textInput: {
     fontSize: 13,
@@ -109,6 +109,9 @@ const styles = StyleSheet.create({
   },
   infoTitleText: {
     color: '#8D8D8D',
+    fontFamily: 'AppleSDGothicNeo-Regular',
+    marginTop: 10,
+    paddingLeft: 10,
   },
   button: {
     height: 53,
