@@ -21,19 +21,23 @@ const getAvatars = (participants) => {
 
 const ActivityListComponent = ({activity, isLastElement}) => {
   const avatars = getAvatars(activity.participants);
-  const [isParticipant, setIsParticipant] = useState(
-    activity.participants.some((elem) => elem.uid === userData.uid),
-  );
   const {userData} = useSession();
+  const [isParticipant, setIsParticipant] = useState(
+    userData &&
+      activity &&
+      activity.participants.some((elem) => elem.uid === userData.uid),
+  );
 
   const toggleSwitch = () => {
     toggleUserIsParticipant(userData, activity);
   };
 
   useEffect(() => {
-    setIsParticipant(
-      activity.participants.some((elem) => elem.uid === userData.uid),
-    );
+    if (userData && activity) {
+      setIsParticipant(
+        activity.participants.some((elem) => elem.uid === userData.uid),
+      );
+    }
   }, [activity, userData]);
 
   return (

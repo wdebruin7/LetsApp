@@ -66,7 +66,7 @@ const useGroups = () => {
 const initializeUserInDatabase = async (newUserData) => {
   const user = auth().currentUser;
   if (!user) throw new Error('No user currently signed in');
-  const userData = {...user, ...newUserData};
+  const userData = {...newUserData, ...user};
   const userDocRef = firestore().collection('users').doc(userData.uid);
   try {
     userDocRef.set(userData);
