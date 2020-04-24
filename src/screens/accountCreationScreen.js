@@ -21,7 +21,7 @@ const AccountCreationScreen = () => {
   });
   const handleSave = () => {
     try {
-      console.log(userInfo);
+      initializeUserInDatabase(userInfo);
     } catch (err) {
       console.log(err);
     }
