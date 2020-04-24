@@ -3,21 +3,32 @@ import {
   SafeAreaView,
   StyleSheet,
   TouchableWithoutFeedback,
+  TouchableHighlight,
   View,
   Text,
   TextInput,
   Keyboard,
 } from 'react-native';
+import {useNavigation} from 'react-navigation-hooks';
 import {useSession} from '../firebase/auth';
+import {initializeUserInDatabase} from '../firebase/firestore';
 
 const AccountCreationScreen = () => {
   const session = useSession();
+  const {navigate} = useNavigation();
   const [userInfo, changeUserInfo] = useState({
     userName: '',
   });
   const handleSave = () => {
-    console.log(userInfo);
+    try {
+      console.log(userInfo);
+    } catch (err) {
+      console.log(err);
+    }
   };
+  if (!session.user) {
+    navigate('Auth');
+  }
   return (
     <SafeAreaView style={styles.safeView}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -44,14 +55,12 @@ const AccountCreationScreen = () => {
             <Text style={styles.infoTitleText}>Phone number</Text>
             <TextInput
               style={styles.textInput}
-              value={session.user.phoneNumber}
+              value={'session.user.phoneNumber'}
             />
           </View>
-          <TouchableWithoutFeedback onPress={handleSave}>
-            <View style={styles.button}>
-              <Text style={styles.buttonText}>Save</Text>
-            </View>
-          </TouchableWithoutFeedback>
+          <TouchableHighlight onPress={handleSave} style={styles.button}>
+            <Text style={styles.buttonText}>Save</Text>
+          </TouchableHighlight>
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>
