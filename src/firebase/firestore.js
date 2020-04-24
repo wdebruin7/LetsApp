@@ -62,21 +62,53 @@ const useGroups = () => {
 
   return groupState;
 };
-const initializeUserInDatabase = (newUserData) => {
+
+const initializeUserInDatabase = async (newUserData) => {
   const user = auth().currentUser;
   if (!user) throw new Error('No user currently signed in');
   const userData = {...user, ...newUserData};
   const userDocRef = firestore().collection('users').doc(userData.uid);
-  userDocRef.set(userData);
+  try {
+    userDocRef.set(userData);
+  } catch (error) {
+    return {success: false, reason: error};
+  }
+  return {success: true};
 };
 
-const setUserIsParticipant = (activity) => {
+const setUserIsParticipant = async (userData, activityData) => {
   const user = auth().currentUser;
   if (!user) throw new Error('No user currently signed in');
 
-  const userRef = firestore().collection('users').doc(user.uid);
-  const includeActivity = firestore.FieldValue.arrayUnion(activity);
-  userRef.update({activities: includeActivity});
+  const batch = firestore.batch();
+
+  const updateUserDoc = async () => {
+    const userRef = firestore().collection('users').doc(user.uid);
+    const {description, uid} = activityData;
+    const includeActivity = firestore.FieldValue.arrayUnion([
+      {description, uid},
+    ]);
+    batch.update(userRef, {activities: includeActivity});
+  };
+
+  const updateActivityDoc = () => {
+    const activityRef = firestore()
+      .collection('activities')
+      .doc(activityData.uid);
+    const {name, uid} = userData.name;
+    const includeUser = firestore.FieldValue.arrayUnion([{name, uid}]);
+    batch.update(activityRef, {participants: includeUser});
+  };
+
+  updateUserDoc();
+  updateActivityDoc();
+
+  try {
+    await batch.commit();
+  } catch (error) {
+    return {success: false, reason: error};
+  }
+  return {success: true};
 };
 
 export {
