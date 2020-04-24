@@ -80,19 +80,22 @@ const toggleUserIsParticipant = async (userData, activityData) => {
   const user = auth().currentUser;
   if (!user) throw new Error('No user currently signed in');
 
-  const userIsParticipant = activityData.activities.some(
+  const userIsParticipant = activityData.participants.some(
     (elem) => elem.uid === userData.uid,
   );
 
-  const batch = firestore.batch();
+  const batch = firestore().batch();
 
   const updateUserDoc = async () => {
     const userRef = firestore().collection('users').doc(user.uid);
-    const {description, uid} = activityData;
-    const activity = {description, uid};
+    // const {description, uid} = activityData;
+    // const activity = {description, uid};
+    // const update = userIsParticipant
+    //   ? firestore.FieldValue.arrayRemove([activity])
+    //   : firestore.FieldValue.arrayUnion([activity]);
     const update = userIsParticipant
-      ? firestore.FieldValue.arrayRemove([activity])
-      : firestore.FieldValue.arrayUnion([activity]);
+      ? firestore.FieldValue.arrayRemove('test')
+      : firestore.FieldValue.arrayUnion('test');
     batch.update(userRef, {activities: update});
   };
 
@@ -100,11 +103,14 @@ const toggleUserIsParticipant = async (userData, activityData) => {
     const activityRef = firestore()
       .collection('activities')
       .doc(activityData.uid);
-    const {name, uid} = userData.name;
-    const participant = {name, uid};
+    // const {displayName, uid} = userData.name;
+    // const participant = {name: displayName, uid};
+    // const update = userIsParticipant
+    //   ? firestore.FieldValue.arrayRemove([participant])
+    //   : firestore.FieldValue.arrayUnion([participant]);
     const update = userIsParticipant
-      ? firestore.FieldValue.arrayRemove([participant])
-      : firestore.FieldValue.arrayUnion([participant]);
+      ? firestore.FieldValue.arrayRemove('test')
+      : firestore.FieldValue.arrayUnion('test');
     batch.update(activityRef, {participants: update});
   };
 
@@ -112,6 +118,7 @@ const toggleUserIsParticipant = async (userData, activityData) => {
   updateActivityDoc();
 
   try {
+    console.log('commiting batch');
     await batch.commit();
   } catch (error) {
     return {success: false, reason: error};
