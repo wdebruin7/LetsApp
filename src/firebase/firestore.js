@@ -63,20 +63,22 @@ const useGroups = () => {
   return groupState;
 };
 
-const initializeUserInDatabase = async (newUserData) => {
+const initializeUserInDatabase = (newUserData) => {
   const user = auth().currentUser;
   if (!user) throw new Error('No user currently signed in');
   const userData = {...newUserData, ...user};
   const userDocRef = firestore().collection('users').doc(userData.uid);
-  try {
-    userDocRef.set(userData);
-  } catch (error) {
-    return {success: false, reason: error};
-  }
-  return {success: true};
+  userDocRef.set(userData, {merge: true}).then(
+    () => {
+      console.log('success');
+    },
+    () => {
+      console.log('failure');
+    },
+  );
 };
 
-const toggleUserIsParticipant = async (userData, activityData) => {
+const toggleUserIsParticipant = (userData, activityData) => {
   const user = auth().currentUser;
   if (!user) throw new Error('No user currently signed in');
 
@@ -86,9 +88,8 @@ const toggleUserIsParticipant = async (userData, activityData) => {
 
   const batch = firestore().batch();
 
-  const updateUserDoc = async () => {
+  const updateUserDoc = () => {
     const userRef = firestore().collection('users').doc(user.uid);
-    console.log(user.uid);
     const {description, uid} = activityData;
     const activity = {description, uid};
     const update = userIsParticipant
@@ -101,7 +102,6 @@ const toggleUserIsParticipant = async (userData, activityData) => {
     const activityRef = firestore()
       .collection('activities')
       .doc(activityData.uid);
-    console.log(activityData.uid);
     const {displayName, uid} = userData;
     const participant = {name: displayName, uid};
     const update = userIsParticipant
