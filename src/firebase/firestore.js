@@ -66,17 +66,18 @@ const useGroups = () => {
 const initializeUserInDatabase = async (newUserData) => {
   const user = auth().currentUser;
   if (!user) throw new Error('No user currently signed in');
-  const userData = {...user, ...newUserData};
+  const userData = {
+    displayName: user.displayName,
+    creationtime: user.metadata.creationTime,
+    phoneNumber: user.phoneNumber,
+    uid: user.uid,
+    ...newUserData,
+  };
   const userDocRef = firestore().collection('users').doc(userData.uid);
-  try {
-    userDocRef.set(userData);
-  } catch (error) {
-    return {success: false, reason: error};
-  }
-  return {success: true};
+  userDocRef.set(userData, {merge: true});
 };
 
-const toggleUserIsParticipant = async (userData, activityData) => {
+const toggleUserIsParticipant = (userData, activityData) => {
   const user = auth().currentUser;
   if (!user) throw new Error('No user currently signed in');
 
@@ -86,16 +87,13 @@ const toggleUserIsParticipant = async (userData, activityData) => {
 
   const batch = firestore().batch();
 
-  const updateUserDoc = async () => {
+  const updateUserDoc = () => {
     const userRef = firestore().collection('users').doc(user.uid);
-    // const {description, uid} = activityData;
-    // const activity = {description, uid};
-    // const update = userIsParticipant
-    //   ? firestore.FieldValue.arrayRemove([activity])
-    //   : firestore.FieldValue.arrayUnion([activity]);
+    const {description, uid} = activityData;
+    const activity = {description, uid};
     const update = userIsParticipant
-      ? firestore.FieldValue.arrayRemove('test')
-      : firestore.FieldValue.arrayUnion('test');
+      ? firestore.FieldValue.arrayRemove(activity)
+      : firestore.FieldValue.arrayUnion(activity);
     batch.update(userRef, {activities: update});
   };
 
@@ -103,27 +101,23 @@ const toggleUserIsParticipant = async (userData, activityData) => {
     const activityRef = firestore()
       .collection('activities')
       .doc(activityData.uid);
-    // const {displayName, uid} = userData.name;
-    // const participant = {name: displayName, uid};
-    // const update = userIsParticipant
-    //   ? firestore.FieldValue.arrayRemove([participant])
-    //   : firestore.FieldValue.arrayUnion([participant]);
+    const {displayName, uid} = userData;
+    const participant = {name: displayName, uid};
     const update = userIsParticipant
-      ? firestore.FieldValue.arrayRemove('test')
-      : firestore.FieldValue.arrayUnion('test');
+      ? firestore.FieldValue.arrayRemove(participant)
+      : firestore.FieldValue.arrayUnion(participant);
     batch.update(activityRef, {participants: update});
   };
 
   updateUserDoc();
   updateActivityDoc();
 
-  try {
-    console.log('commiting batch');
-    await batch.commit();
-  } catch (error) {
-    return {success: false, reason: error};
-  }
-  return {success: true};
+  batch.commit().then(
+    () => {},
+    (error) => {
+      console.log(error);
+    },
+  );
 };
 
 export {
