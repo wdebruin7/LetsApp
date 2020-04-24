@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,8 +8,11 @@ import {
   TextInput,
   Keyboard,
 } from 'react-native';
+import {useSession} from '../firebase/auth';
 
 const AccountCreationScreen = () => {
+  const session = useSession();
+  const [userName, changeUserName] = useState('');
   return (
     <SafeAreaView style={styles.safeView}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -20,15 +23,30 @@ const AccountCreationScreen = () => {
           </View>
           <TouchableWithoutFeedback>
             <View style={styles.profilePhoto}>
-              <Text style={styles.buttonText}>Select a profile photo</Text>
+              <Text style={styles.profilePhotoText}>
+                {'Select a profile photo'}
+              </Text>
             </View>
           </TouchableWithoutFeedback>
           <View style={styles.verfificationBox}>
-            <Text style={styles.title}>Name</Text>
-            <TextInput />
-            <Text style={styles.title}>Phone number</Text>
-            <TextInput />
+            <Text style={styles.infoTitleText}>Name</Text>
+            <TextInput
+              style={styles.textInput}
+              value={userName}
+              onChangeText={changeUserName}
+              placeholder="User Name"
+            />
+            <Text style={styles.infoTitleText}>Phone number</Text>
+            <TextInput
+              style={styles.textInput}
+              value={session.user.phoneNumber}
+            />
           </View>
+          <TouchableWithoutFeedback>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Save</Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>
@@ -37,9 +55,8 @@ const AccountCreationScreen = () => {
 
 const styles = StyleSheet.create({
   header: {
-    flex: 1,
     paddingTop: 40,
-    paddingBottom: 15,
+    paddingBottom: 20,
   },
   safeView: {
     flex: 1,
@@ -59,12 +76,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   verfificationBox: {
     alignItems: 'center',
-    flex: 3,
     margin: 20,
   },
   textInput: {
@@ -77,7 +93,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: '#F1F3F6',
     paddingLeft: 20,
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 10,
   },
   title: {
@@ -85,6 +101,9 @@ const styles = StyleSheet.create({
     fontFamily: 'AppleSDGothicNeo-Regular',
     color: '#0066FF',
     fontWeight: 'bold',
+  },
+  infoTitleText: {
+    color: '#8D8D8D',
   },
   button: {
     height: 53,
@@ -94,6 +113,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 10,
   },
   buttonText: {
     fontSize: 16,
@@ -101,9 +121,20 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
-  graphic: {
-    height: 150,
-    width: 150,
+  profilePhotoText: {
+    fontSize: 16,
+    fontFamily: 'AppleSDGothicNeo-Regular',
+    color: '#0066FF',
+    textAlign: 'center',
+    width: 90,
+  },
+  profilePhoto: {
+    height: 140,
+    width: 140,
+    backgroundColor: '#EBF0F3',
+    borderRadius: 140,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
