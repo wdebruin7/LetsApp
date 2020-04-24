@@ -21,6 +21,10 @@ const HomeScreen = () => {
     navigate('Auth');
   }
 
+  if (!session.user.displayName) {
+    navigate('Account');
+  }
+
   return (
     <SafeAreaView style={styles.safeView}>
       <CalendarHeaderComponent />

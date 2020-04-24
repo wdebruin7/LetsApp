@@ -12,12 +12,13 @@ import {
 import {useNavigation} from 'react-navigation-hooks';
 import {useSession} from '../firebase/auth';
 import {initializeUserInDatabase} from '../firebase/firestore';
+import storage from '@react-native-firebase/storage';
 
 const AccountCreationScreen = () => {
   const session = useSession();
   const {navigate} = useNavigation();
   const [userInfo, changeUserInfo] = useState({
-    userName: '',
+    displayName: '',
   });
   const handleSave = () => {
     try {
@@ -49,13 +50,13 @@ const AccountCreationScreen = () => {
             <TextInput
               style={styles.textInput}
               value={userInfo.userName}
-              onChangeText={(e) => changeUserInfo({userName: e})}
+              onChangeText={(e) => changeUserInfo({displayName: e})}
               placeholder="User Name"
             />
             <Text style={styles.infoTitleText}>Phone number</Text>
             <TextInput
               style={styles.textInput}
-              value={'session.user.phoneNumber'}
+              value={session.user.phoneNumber}
             />
           </View>
           <TouchableHighlight onPress={handleSave} style={styles.button}>
