@@ -5,12 +5,13 @@ import AccountScreen from '../screens/accountCreationScreen';
 
 const AppNavigation = createSwitchNavigator(
   {
+    Account: AccountScreen,
     Home: HomeScreen,
     Account: AccountScreen,
     ActivityDay: ActivityDayScreen,
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Account',
   },
 );
 
