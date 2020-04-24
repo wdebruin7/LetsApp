@@ -76,19 +76,24 @@ const initializeUserInDatabase = async (newUserData) => {
   return {success: true};
 };
 
-const setUserIsParticipant = async (userData, activityData) => {
+const toggleUserIsParticipant = async (userData, activityData) => {
   const user = auth().currentUser;
   if (!user) throw new Error('No user currently signed in');
+
+  const userIsParticipant = activityData.activities.some(
+    (elem) => elem.uid === userData.uid,
+  );
 
   const batch = firestore.batch();
 
   const updateUserDoc = async () => {
     const userRef = firestore().collection('users').doc(user.uid);
     const {description, uid} = activityData;
-    const includeActivity = firestore.FieldValue.arrayUnion([
-      {description, uid},
-    ]);
-    batch.update(userRef, {activities: includeActivity});
+    const activity = {description, uid};
+    const update = userIsParticipant
+      ? firestore.FieldValue.arrayRemove([activity])
+      : firestore.FieldValue.arrayUnion([activity]);
+    batch.update(userRef, {activities: update});
   };
 
   const updateActivityDoc = () => {
@@ -96,8 +101,11 @@ const setUserIsParticipant = async (userData, activityData) => {
       .collection('activities')
       .doc(activityData.uid);
     const {name, uid} = userData.name;
-    const includeUser = firestore.FieldValue.arrayUnion([{name, uid}]);
-    batch.update(activityRef, {participants: includeUser});
+    const participant = {name, uid};
+    const update = userIsParticipant
+      ? firestore.FieldValue.arrayRemove([participant])
+      : firestore.FieldValue.arrayUnion([participant]);
+    batch.update(activityRef, {participants: update});
   };
 
   updateUserDoc();
@@ -115,5 +123,5 @@ export {
   useGroups,
   useActivities,
   initializeUserInDatabase,
-  setUserIsParticipant,
+  toggleUserIsParticipant,
 };
