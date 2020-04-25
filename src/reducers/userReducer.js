@@ -1,6 +1,16 @@
+import auth from '@react-native-firebase/auth';
 import userTypes from '../actions/userTypes';
 
-export default function userReducer(state, action) {
+const initialState = () => {
+  const user = auth().currentUser;
+  return {
+    initializing: !user,
+    user,
+    userData: {},
+  };
+};
+
+const userReducer = (state, action) => {
   switch (action.type) {
     case userTypes.SET:
       return {user: action.payload, initializing: false, userData: {}};
@@ -11,4 +21,6 @@ export default function userReducer(state, action) {
     default:
       return state;
   }
-}
+};
+
+export {initialState, userReducer};
