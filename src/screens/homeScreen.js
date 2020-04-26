@@ -1,40 +1,43 @@
 import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet, Text, Button, View} from 'react-native';
-import auth from '@react-native-firebase/auth';
-import {FlatList} from 'react-native-gesture-handler';
-import {useNavigation} from 'react-navigation-hooks';
-import {useSession} from '../firebase/auth';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import {useActivities} from '../firebase';
-import ActivityDayComponent from '../components/activityDayComponent';
 import CalendarHeaderComponent from '../components/calendarHeaderComponent';
+import HomeListComponent from '../components/homeListComponent';
+import HomeActiveDayComponent from '../components/homeActiveDayComponent';
 
 const HomeScreen = () => {
-  const session = useSession();
-  const activityState = useActivities();
-  const {navigate} = useNavigation();
+  const activityDays = useActivities();
+  const [activeDate, setActiveDate] = useState(null);
 
-  const handleSignOut = async () => {
-    auth().signOut();
+  const getActivitiesForActiveDate = () => {
+    const activeActivityDays = activityDays.filter((elem) => {
+      const elemDateMidnight = new Date(elem.date);
+      elemDateMidnight.setHours(0, 0, 0, 0);
+      const activeDateMidnight = new Date(activeDate);
+      activeDateMidnight.setHours(0, 0, 0, 0);
+      return elemDateMidnight.getTime() === activeDateMidnight.getTime();
+    });
+
+    return activeActivityDays.length > 0
+      ? activeActivityDays[0].activities
+      : [];
   };
-
-  if (!session.user) {
-    navigate('Auth');
-  }
 
   return (
     <SafeAreaView style={styles.safeView}>
-      <CalendarHeaderComponent />
-      <View style={styles.container}>
-        <Text>Welcome user!</Text>
-        <Button title="sign out" onPress={handleSignOut} />
-        {activityState.length > 0 ? (
-          <FlatList
-            data={activityState}
-            renderItem={({item}) => <ActivityDayComponent activityDay={item} />}
-            keyExtractor={(item) => item.date.getTime().toString()}
-          />
-        ) : null}
-      </View>
+      <CalendarHeaderComponent
+        activeDate={activeDate}
+        setActiveDate={setActiveDate}
+      />
+      {activeDate ? (
+        <HomeActiveDayComponent
+          activities={getActivitiesForActiveDate()}
+          date={activeDate}
+          setActiveDate={setActiveDate}
+        />
+      ) : (
+        <HomeListComponent activities={activityDays} />
+      )}
     </SafeAreaView>
   );
 };

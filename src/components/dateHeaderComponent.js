@@ -2,13 +2,10 @@ import React from 'react';
 import moment from 'moment';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {Icon} from 'react-native-elements';
-import {useNavigation} from 'react-navigation-hooks';
 
-const DateHeaderComponent = ({date}) => {
-  const {navigate} = useNavigation();
-
+const DateHeaderComponent = ({date, setActiveDate}) => {
   const onPressX = () => {
-    navigate('Home');
+    setActiveDate(null);
   };
 
   return (

@@ -1,17 +1,14 @@
 import React from 'react';
 import {Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {useNavigation} from 'react-navigation-hooks';
 
 const getDayChar = (day) => {
   const dayChars = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
   return dayChars[day];
 };
 
-const CalendarDateComponent = ({date, isActive}) => {
-  const {navigate} = useNavigation();
-
+const CalendarDateComponent = ({date, isActive, setActiveDate}) => {
   const onPress = () => {
-    navigate('ActivityDay', {date});
+    setActiveDate(date);
   };
 
   return (

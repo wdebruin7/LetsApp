@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {StyleSheet, View, Text, Dimensions} from 'react-native';
 import CalendarDateComponent from './calendarDateComponent';
 
@@ -32,11 +32,10 @@ const getMonthName = (monthNum) => {
   return monthNames[monthNum];
 };
 
-const CalendarPageComponent = ({activeDate, weekStart}) => {
-  const [dates, setDates] = useState(getDates(weekStart));
-  const [weekRollsOver, setWeekRollsOver] = useState(
-    new Date(dates[0]).getMonth() !== new Date(dates[7]).getMonth(),
-  );
+const CalendarPageComponent = ({activeDate, weekStart, setActiveDate}) => {
+  const dates = getDates(weekStart);
+  const weekRollsOver =
+    new Date(dates[0]).getMonth() !== new Date(dates[7]).getMonth();
   const startMonth = getMonthName(new Date(dates[0]).getMonth());
   const endMonth = getMonthName(new Date(dates[7]).getMonth());
 
@@ -56,6 +55,7 @@ const CalendarPageComponent = ({activeDate, weekStart}) => {
             date={new Date(date)}
             isActive={isActiveDate(date)}
             key={`${date}`}
+            setActiveDate={setActiveDate}
           />
         ))}
       </View>
