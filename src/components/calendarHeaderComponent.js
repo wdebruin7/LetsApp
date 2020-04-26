@@ -13,7 +13,7 @@ const getWeekStarts = () => {
   return weekStarts;
 };
 
-const CalendarHeaderComponent = ({activeDate}) => {
+const CalendarHeaderComponent = ({activeDate, setActiveDate}) => {
   const [weeks, setWeeks] = useState(getWeekStarts());
   const [flatListRef, setFlatListRef] = useState(undefined);
 
@@ -36,15 +36,18 @@ const CalendarHeaderComponent = ({activeDate}) => {
     });
     if (index === -1) return;
     flatListRef.scrollToIndex({animated: false, index});
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeDate, flatListRef]);
+  }, [activeDate, flatListRef, weeks]);
 
   return (
     <View style={styles.container}>
       <FlatList
         data={weeks}
         renderItem={({item}) => (
-          <CalendarPageComponent activeDate={activeDate} weekStart={item} />
+          <CalendarPageComponent
+            activeDate={activeDate}
+            weekStart={item}
+            setActiveDate={setActiveDate}
+          />
         )}
         horizontal
         snapToInterval={Dimensions.get('window').width}

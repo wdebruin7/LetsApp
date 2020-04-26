@@ -4,25 +4,20 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   View,
-  Button,
   Text,
   Image,
   TextInput,
   Keyboard,
 } from 'react-native';
-import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
+import {useRoute} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
-import {useSession} from '../firebase/auth';
 
-const PhoneVerifyScreen = ({route}) => {
+const PhoneVerifyScreen = () => {
   const [confirmtionCode, setConfirmationCode] = useState('');
   const [confirm, setConfirm] = useState(null);
   const [textFocus, changeFocus] = useState(false);
-
-  const session = useSession();
-
-  const {navigate} = useNavigation();
-  const phoneNumber = useNavigationParam('phoneNumber');
+  const route = useRoute();
+  const {phoneNumber} = route.params;
 
   const getConfirm = async () => {
     try {
@@ -45,10 +40,6 @@ const PhoneVerifyScreen = ({route}) => {
       console.log(err);
     }
   };
-
-  if (session.user) {
-    navigate('App');
-  }
 
   return (
     <SafeAreaView style={styles.safeView}>
