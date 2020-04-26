@@ -1,15 +1,15 @@
-import {createSwitchNavigator} from 'react-navigation';
+import React from 'react';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/homeScreen';
-import ActivityDayScreen from '../screens/activityDayScreen';
 
-const AppNavigation = createSwitchNavigator(
-  {
-    Home: HomeScreen,
-    ActivityDay: ActivityDayScreen,
-  },
-  {
-    initialRouteName: 'Home',
-  },
-);
+const Tab = createBottomTabNavigator();
+
+const AppNavigation = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={HomeScreen} />
+    </Tab.Navigator>
+  );
+};
 
 export default AppNavigation;

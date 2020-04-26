@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {
-  TextInput,
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
@@ -9,10 +8,8 @@ import {
   SafeAreaView,
   Image,
 } from 'react-native';
-import auth from '@react-native-firebase/auth';
-import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
+import {useNavigation} from '@react-navigation/native';
 import PhoneInput from 'react-native-phone-input';
-import {useSession} from '../firebase/auth';
 import normalizePhoneNumber from '../functions/normalizePhoneNumber';
 import validatePhoneNumber from '../functions/validatePhoneNumber';
 
@@ -20,7 +17,6 @@ const PhoneSignInScreen = () => {
   // If null, no SMS has been sent
   const [phoneNumber, setPhoneNumber] = useState('+1');
   const [error, setError] = useState('');
-  const session = useSession();
 
   const {navigate} = useNavigation();
 
@@ -43,10 +39,6 @@ const PhoneSignInScreen = () => {
     } catch (err) {
       console.log(err);
     }
-  }
-
-  if (session.user) {
-    navigate('App');
   }
 
   return (
