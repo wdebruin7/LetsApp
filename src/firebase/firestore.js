@@ -59,10 +59,10 @@ const initializeUserInDatabase = async (newUserData) => {
     ...newUserData,
   };
   const userDocRef = firestore().collection('users').doc(userData.uid);
-  userDocRef.set(userData, {merge: true});
+  await userDocRef.set(userData, {merge: true});
 };
 
-const updateUserData = async (newUserData) => {
+const setUserData = async (newUserData) => {
   const user = auth().currentUser;
   if (!user) throw new Error('No user currently signed in');
   const userRef = firestore().collection('users').doc(user.uid);
@@ -132,7 +132,7 @@ export {
   getGroupListener,
   getActivityListener,
   initializeUserInDatabase,
-  updateUserData,
+  setUserData,
   toggleUserIsParticipant,
   getUserListener,
 };
