@@ -21,7 +21,7 @@ const HomeScreen = () => {
     navigate('Auth');
   }
 
-  if (!session.user.displayName) {
+  if (session.user && !session.user.displayName) {
     navigate('Account');
   }
 

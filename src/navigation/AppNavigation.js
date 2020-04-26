@@ -7,7 +7,6 @@ const AppNavigation = createSwitchNavigator(
   {
     Account: AccountScreen,
     Home: HomeScreen,
-    Account: AccountScreen,
     ActivityDay: ActivityDayScreen,
   },
   {
