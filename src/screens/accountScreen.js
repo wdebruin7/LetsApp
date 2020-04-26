@@ -10,30 +10,11 @@ import {
   Keyboard,
 } from 'react-native';
 import {useNavigation} from 'react-navigation-hooks';
+import storage from '@react-native-firebase/storage';
 import {useSession} from '../firebase/auth';
 import {initializeUserInDatabase} from '../firebase/firestore';
-import storage from '@react-native-firebase/storage';
 
-<<<<<<< HEAD:src/screens/accountCreation/accountCreation.js
 const AccountCreation = () => {
-=======
-const AccountCreationScreen = () => {
-  const session = useSession();
-  const {navigate} = useNavigation();
-  const [userInfo, setUserInfo] = useState({
-    displayName: '',
-  });
-  const handleSave = () => {
-    try {
-      initializeUserInDatabase(userInfo);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  if (!session.user) {
-    navigate('Auth');
-  }
->>>>>>> add account screen:src/screens/accountScreen.js
   return (
     <SafeAreaView style={styles.safeView}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

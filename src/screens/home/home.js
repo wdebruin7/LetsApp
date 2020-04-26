@@ -26,6 +26,10 @@ const Home = () => {
       : [];
   };
 
+  if (session.user && !session.user.displayName) {
+    navigate('Account');
+  }
+
   return (
     <SafeAreaView style={styles.safeView}>
       <AppHeader />
