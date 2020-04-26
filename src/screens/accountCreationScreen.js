@@ -56,7 +56,7 @@ const AccountCreationScreen = () => {
             <Text style={styles.infoTitleText}>Phone number</Text>
             <TextInput
               style={styles.textInput}
-              value={'session.user.phoneNumber'}
+              value={session.user && session.user.phoneNumber}
             />
           </View>
           <TouchableHighlight onPress={handleSave} style={styles.button}>
