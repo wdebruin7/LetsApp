@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, Text, FlatList, TouchableOpacity} from 'react-native';
-import {Icon, Divider} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import ActivityListComponent from './activityListComponent';
 import ShowMoreActivitiesComponent from './showMoreActivitiesComponent';
 
@@ -85,7 +85,7 @@ const ActivityDayComponent = ({activityDay}) => {
             }
           />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.uid}
       />
       {activitiesHidden ? (
         <ShowMoreActivitiesComponent

@@ -1,20 +1,26 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, Dimensions, Switch} from 'react-native';
 import {Avatar} from 'react-native-elements';
-import {useSession} from '../firebase';
+import {useSelector} from 'react-redux';
 
 const ActivityTileComponent = ({activity, group}) => {
   const [hasThumbnail, setHasThumbnail] = useState(group && group.thumbnailURL);
-  const {user, userData} = useSession();
+  const userData = useSelector((state) =>
+    state.user ? state.user.data : null,
+  );
   const [userIsParticipant, setUserIsParticipant] = useState(
-    activity.participants.some((participant) => participant.uid === user.uid),
+    activity.participants.some(
+      (participant) => participant.uid === userData.uid,
+    ),
   );
 
   useEffect(() => {
     setUserIsParticipant(
-      activity.participants.some((participant) => participant.uid === user.uid),
+      activity.participants.some(
+        (participant) => participant.uid === userData.uid,
+      ),
     );
-  }, [user, activity]);
+  }, [userData, activity]);
 
   useEffect(() => {
     setHasThumbnail(group && group.thumbnailURL);
@@ -26,7 +32,7 @@ const ActivityTileComponent = ({activity, group}) => {
 
   const getGroupMembersString = () => {
     const otherMembers = group.members.filter(
-      (member) => member.uid !== user.uid,
+      (member) => member.uid !== userData.uid,
     );
 
     switch (otherMembers.length) {
