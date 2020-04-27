@@ -2,20 +2,11 @@ import {useContext, useReducer, useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {sessionContext} from './sessionContext';
-import userReducer from '../reducers/userReducer';
+import {userReducer, initialState} from '../reducers/userReducer';
 import {setUser, updateUserData} from '../actions/userActions';
 
 const useSession = () => {
   return useContext(sessionContext);
-};
-
-const initialState = () => {
-  const user = auth().currentUser;
-  return {
-    initializing: !user,
-    user,
-    userData: null,
-  };
 };
 
 const useAuth = () => {
