@@ -5,6 +5,30 @@ import {useSession} from './auth';
 import activityReducer from '../reducers/activityReducer';
 import {updateActivity} from '../actions/activityActions';
 
+const useUser = () => {
+  const [userState, setUserState] = useState({user: null, initializing: true});
+  const {currentUser} = auth();
+
+  useEffect(() => {
+    if (!currentUser) return;
+    const unsubscriber = firestore()
+      .collection('users')
+      .doc(currentUser.uid)
+      .onSnapshot(
+        (documentSnapshot) => {
+          setUserState({user: documentSnapshot.data(), initializing: false});
+        },
+        (error) => {
+          console.log(error);
+        },
+      );
+
+    return () => unsubscriber();
+  }, [currentUser]);
+
+  return userState;
+};
+
 const useActivities = () => {
   const session = useSession();
   const [activityState, activityDispatch] = useReducer(activityReducer, []);
@@ -125,4 +149,5 @@ export {
   useActivities,
   initializeUserInDatabase,
   toggleUserIsParticipant,
+  useUser,
 };
