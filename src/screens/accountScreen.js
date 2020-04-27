@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   View,
   Text,
+  Image,
   TextInput,
   Keyboard,
 } from 'react-native';
@@ -24,17 +25,24 @@ const AccountCreation = () => {
             <Text style={styles.subtitle}>Create your acount!</Text>
           </View>
           <TouchableWithoutFeedback>
-            <View style={styles.profilePhoto}>
-              <Text style={styles.profilePhotoText}>
-                Select a profile photo
-              </Text>
-            </View>
+            {session.user && session.userData.photoURL ? (
+              <Image
+                style={styles.profilePhoto}
+                source={{uri: userInfo.profilePhoto}}
+              />
+            ) : (
+              <View style={styles.profilePhoto}>
+                <Text style={styles.profilePhotoText}>
+                  Select a profile photo
+                </Text>
+              </View>
+            )}
           </TouchableWithoutFeedback>
           <View style={styles.verfificationBox}>
             <Text style={styles.infoTitleText}>Name</Text>
             <TextInput
               style={styles.textInput}
-              value={userInfo.userName}
+              value={userInfo.displayName}
               onChangeText={(e) => setUserInfo({...userInfo, displayName: e})}
               placeholder="Display Name"
             />
@@ -141,4 +149,8 @@ const styles = StyleSheet.create({
   },
 });
 
+<<<<<<< HEAD
 export default AccountCreation;
+=======
+export default AccountScreen;
+>>>>>>> read profile photo from firebase storage
