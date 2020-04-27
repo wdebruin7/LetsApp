@@ -1,9 +1,23 @@
 import activityTypes from './activityTypes';
 
-// eslint-disable-next-line import/prefer-default-export
-export function updateActivity(activity) {
+const updateActivity = (activity) => {
   return {
     type: activityTypes.UPDATE,
     payload: activity,
   };
-}
+};
+
+const removeActivity = (activity) => {
+  return {
+    type: activityTypes.REMOVE,
+    payload: activity,
+  };
+};
+
+const clearActivities = () => {
+  return {
+    type: activityTypes.CLEAR,
+  };
+};
+
+export {updateActivity, removeActivity, clearActivities};
