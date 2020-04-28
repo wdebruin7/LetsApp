@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {useNavigation} from 'react-navigation-hooks';
 import storage from '@react-native-firebase/storage';
+import ImagePicker from 'react-native-image-picker';
 import {useSession} from '../firebase/auth';
 import {initializeUserInDatabase} from '../firebase/firestore';
 
