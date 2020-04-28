@@ -1,7 +1,12 @@
 import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
-import {CalendarHeader, HomeList, HomeActiveDay} from '../../components';
+import {
+  CalendarHeader,
+  HomeList,
+  HomeActiveDay,
+  AppHeader,
+} from '../../components';
 
 const Home = () => {
   const activityDays = useSelector((state) => state.activities || []);
@@ -23,6 +28,7 @@ const Home = () => {
 
   return (
     <SafeAreaView style={styles.safeView}>
+      <AppHeader />
       <CalendarHeader activeDate={activeDate} setActiveDate={setActiveDate} />
       {activeDate ? (
         <HomeActiveDay
