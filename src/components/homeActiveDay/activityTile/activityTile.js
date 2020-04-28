@@ -3,7 +3,7 @@ import {StyleSheet, View, Text, Dimensions, Switch} from 'react-native';
 import {Avatar} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 
-const ActivityTileComponent = ({activity, group}) => {
+const ActivityTile = ({activity, group}) => {
   const [hasThumbnail, setHasThumbnail] = useState(group && group.thumbnailURL);
   const userData = useSelector((state) =>
     state.user ? state.user.data : null,
@@ -150,4 +150,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ActivityTileComponent;
+export default ActivityTile;

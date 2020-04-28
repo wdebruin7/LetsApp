@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, Dimensions} from 'react-native';
-import CalendarDateComponent from './calendarDateComponent';
+import CalendarDate from './calendarDate';
 
 const getDates = (weekStart) => {
   const dates = [];
@@ -32,7 +32,7 @@ const getMonthName = (monthNum) => {
   return monthNames[monthNum];
 };
 
-const CalendarPageComponent = ({activeDate, weekStart, setActiveDate}) => {
+const CalendarPage = ({activeDate, weekStart, setActiveDate}) => {
   const dates = getDates(weekStart);
   const weekRollsOver =
     new Date(dates[0]).getMonth() !== new Date(dates[7]).getMonth();
@@ -51,7 +51,7 @@ const CalendarPageComponent = ({activeDate, weekStart, setActiveDate}) => {
       </View>
       <View style={styles.listContainer}>
         {dates.map((date) => (
-          <CalendarDateComponent
+          <CalendarDate
             date={new Date(date)}
             isActive={isActiveDate(date)}
             key={`${date}`}
@@ -96,4 +96,4 @@ function areEqual(prevProps, nextProps) {
   );
 }
 
-export default React.memo(CalendarPageComponent, areEqual);
+export default React.memo(CalendarPage, areEqual);

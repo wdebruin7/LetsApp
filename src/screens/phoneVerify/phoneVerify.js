@@ -12,7 +12,7 @@ import {
 import {useRoute} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 
-const PhoneVerifyScreen = () => {
+const PhoneVerify = () => {
   const [confirmtionCode, setConfirmationCode] = useState('');
   const [confirm, setConfirm] = useState(null);
   const [textFocus, changeFocus] = useState(false);
@@ -51,7 +51,7 @@ const PhoneVerifyScreen = () => {
           </View>
           <Image
             style={!textFocus ? styles.graphic : styles.graphic_hidden}
-            source={require('../images/mailbox.png')}
+            source={require('../../images/mailbox.png')}
           />
           <View style={styles.verfificationBox}>
             <Text style={styles.title}>Verification code</Text>
@@ -153,4 +153,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PhoneVerifyScreen;
+export default PhoneVerify;
