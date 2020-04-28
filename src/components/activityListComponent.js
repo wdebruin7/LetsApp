@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {TouchableOpacity, StyleSheet, View, Text, Switch} from 'react-native';
-import {Avatar, Icon} from 'react-native-elements';
+import {Avatar} from 'react-native-elements';
 import AntIcon from 'react-native-vector-icons/AntDesign';
-import {useSession} from '../firebase/auth';
+import {useSelector} from 'react-redux';
 import {toggleUserIsParticipant} from '../firebase/firestore';
 
 const getAvatars = (participants) => {
@@ -21,7 +21,9 @@ const getAvatars = (participants) => {
 
 const ActivityListComponent = ({activity, isLastElement}) => {
   const avatars = getAvatars(activity.participants);
-  const {userData} = useSession();
+  const userData = useSelector((state) =>
+    state.user ? state.user.data : null,
+  );
   const [isParticipant, setIsParticipant] = useState(
     userData &&
       activity &&
