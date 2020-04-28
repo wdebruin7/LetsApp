@@ -1,0 +1,10 @@
+const firestoreTypes = {
+  UPDATE_ACTIVITY: 'UPDATE_ACTIVITY',
+  REMOVE_ACTIVITY: 'REMOVE_ACTIVITY',
+  UPDATE_GROUP: 'UPDATE_GROUP',
+  REMOVE_GROUP: 'REMOVE_GROUP',
+  UPDATE_USER: 'UPDATE_USER',
+  CLEAR: 'CLEAR',
+};
+
+export default firestoreTypes;
