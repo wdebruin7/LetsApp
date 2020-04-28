@@ -10,9 +10,9 @@ import {
   TextInput,
   Keyboard,
 } from 'react-native';
-import {useNavigation} from 'react-navigation-hooks';
 import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-picker';
+import {useSelector} from 'react-redux';
 import {useSession} from '../firebase/auth';
 import {initializeUserInDatabase} from '../firebase/firestore';
 
@@ -26,11 +26,8 @@ const AccountCreation = () => {
             <Text style={styles.subtitle}>Create your acount!</Text>
           </View>
           <TouchableWithoutFeedback>
-            {session.user && session.userData.photoURL ? (
-              <Image
-                style={styles.profilePhoto}
-                source={{uri: userInfo.profilePhoto}}
-              />
+            {userData && userData.photoURL ? (
+              <Image style={styles.profilePhoto} source={{uri: profilePhoto}} />
             ) : (
               <View style={styles.profilePhoto}>
                 <Text style={styles.profilePhotoText}>
@@ -43,8 +40,8 @@ const AccountCreation = () => {
             <Text style={styles.infoTitleText}>Name</Text>
             <TextInput
               style={styles.textInput}
-              value={userInfo.displayName}
-              onChangeText={(e) => setUserInfo({...userInfo, displayName: e})}
+              value={displayName}
+              onChangeText={(e) => setDisplayname(e)}
               placeholder="Display Name"
             />
             <Text style={styles.infoTitleText}>Phone number</Text>
