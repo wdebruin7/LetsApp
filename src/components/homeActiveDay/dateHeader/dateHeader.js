@@ -3,7 +3,7 @@ import moment from 'moment';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {Icon} from 'react-native-elements';
 
-const DateHeaderComponent = ({date, setActiveDate}) => {
+const DateHeader = ({date, setActiveDate}) => {
   const onPressX = () => {
     setActiveDate(null);
   };
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DateHeaderComponent;
+export default DateHeader;

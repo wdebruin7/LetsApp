@@ -9,7 +9,7 @@ import {
   Keyboard,
 } from 'react-native';
 
-const AccountCreationScreen = () => {
+const AccountCreation = () => {
   return (
     <SafeAreaView style={styles.safeView}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -107,4 +107,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AccountCreationScreen;
+export default AccountCreation;

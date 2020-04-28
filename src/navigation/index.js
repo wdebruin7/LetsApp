@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 import AuthNavigation from './AuthNavigation';
 import AppNavigation from './AppNavigation';
 import {useSession} from '../firebase';
-import {InitializingScreen, AccountCreationScreen} from '../screens';
+import {Initializing, AccountCreation} from '../screens';
 
 const Stack = createStackNavigator();
 
@@ -17,14 +17,11 @@ const AppContainer = () => {
     <NavigationContainer>
       <Stack.Navigator headerMode="none">
         {session.initializing || user.initializing ? (
-          <Stack.Screen name="Initializing" component={InitializingScreen} />
+          <Stack.Screen name="Initializing" component={Initializing} />
         ) : !session.user ? (
           <Stack.Screen name="Auth" component={AuthNavigation} />
         ) : !user.data ? (
-          <Stack.Screen
-            name="AccountCreate"
-            component={AccountCreationScreen}
-          />
+          <Stack.Screen name="AccountCreate" component={AccountCreation} />
         ) : (
           <Stack.Screen name="App" component={AppNavigation} />
         )}

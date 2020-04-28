@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
-import CalendarHeaderComponent from '../components/calendarHeaderComponent';
-import HomeListComponent from '../components/homeListComponent';
-import HomeActiveDayComponent from '../components/homeActiveDayComponent';
+import {CalendarHeader, HomeList, HomeActiveDay} from '../../components';
 
-const HomeScreen = () => {
+const Home = () => {
   const activityDays = useSelector((state) => state.activities || []);
   const [activeDate, setActiveDate] = useState(null);
 
@@ -25,18 +23,15 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeView}>
-      <CalendarHeaderComponent
-        activeDate={activeDate}
-        setActiveDate={setActiveDate}
-      />
+      <CalendarHeader activeDate={activeDate} setActiveDate={setActiveDate} />
       {activeDate ? (
-        <HomeActiveDayComponent
+        <HomeActiveDay
           activities={getActivitiesForActiveDate()}
           date={activeDate}
           setActiveDate={setActiveDate}
         />
       ) : (
-        <HomeListComponent activities={activityDays} />
+        <HomeList activities={activityDays} />
       )}
     </SafeAreaView>
   );
@@ -54,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default Home;

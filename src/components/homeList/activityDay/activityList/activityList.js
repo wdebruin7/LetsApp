@@ -3,7 +3,7 @@ import {TouchableOpacity, StyleSheet, View, Text, Switch} from 'react-native';
 import {Avatar} from 'react-native-elements';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import {useSelector} from 'react-redux';
-import {toggleUserIsParticipant} from '../firebase/firestore';
+import {toggleUserIsParticipant} from '../../../../firebase';
 
 const getAvatars = (participants) => {
   const avatars = [];
@@ -19,7 +19,7 @@ const getAvatars = (participants) => {
   return avatars;
 };
 
-const ActivityListComponent = ({activity, isLastElement}) => {
+const ActivityList = ({activity, isLastElement}) => {
   const avatars = getAvatars(activity.participants);
   const userData = useSelector((state) => state.user.data);
   const [isParticipant, setIsParticipant] = useState(
@@ -107,4 +107,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ActivityListComponent;
+export default ActivityList;

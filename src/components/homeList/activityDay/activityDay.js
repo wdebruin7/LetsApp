@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, Text, FlatList, TouchableOpacity} from 'react-native';
 import {Icon} from 'react-native-elements';
-import ActivityListComponent from './activityListComponent';
-import ShowMoreActivitiesComponent from './showMoreActivitiesComponent';
+import ActivityList from './activityList';
+import ShowMoreActivities from './showMoreActivities';
 
 const getDayOfWeek = (date) => {
   const days = [
@@ -58,7 +58,7 @@ const getMonth = (date) => {
 const getDisplayDate = (date) =>
   `${getDayOfWeek(date)}, ${getMonth(date)} ${date.getDate()}`;
 
-const ActivityDayComponent = ({activityDay}) => {
+const ActivityDay = ({activityDay}) => {
   const [showAll, setShowAll] = useState(false);
   const activitiesHidden = !showAll && activityDay.activities > 3;
 
@@ -77,7 +77,7 @@ const ActivityDayComponent = ({activityDay}) => {
           showAll ? activityDay.activities : activityDay.activities.slice(0, 2)
         }
         renderItem={({item, index}) => (
-          <ActivityListComponent
+          <ActivityList
             activity={item}
             isLastElement={
               index === activityDay.activities.length - 1 ||
@@ -88,7 +88,7 @@ const ActivityDayComponent = ({activityDay}) => {
         keyExtractor={(item) => item.uid}
       />
       {activitiesHidden ? (
-        <ShowMoreActivitiesComponent
+        <ShowMoreActivities
           numAdditionalActivities={2}
           setShowAll={setShowAll}
         />
@@ -125,4 +125,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ActivityDayComponent;
+export default ActivityDay;

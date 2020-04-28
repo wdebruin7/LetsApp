@@ -10,10 +10,9 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import PhoneInput from 'react-native-phone-input';
-import normalizePhoneNumber from '../functions/normalizePhoneNumber';
-import validatePhoneNumber from '../functions/validatePhoneNumber';
+import {normalizePhoneNumber, validatePhoneNumber} from '../../utils';
 
-const PhoneSignInScreen = () => {
+const PhoneSignIn = () => {
   // If null, no SMS has been sent
   const [phoneNumber, setPhoneNumber] = useState('+1');
   const [error, setError] = useState('');
@@ -51,7 +50,7 @@ const PhoneSignInScreen = () => {
           </View>
           <Image
             style={styles.graphic}
-            source={require('../images/smartphone.png')}
+            source={require('../../images/smartphone.png')}
           />
           <View style={styles.verfificationBox}>
             <Text style={styles.title}>Verify your number</Text>
@@ -152,4 +151,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PhoneSignInScreen;
+export default PhoneSignIn;

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, FlatList, StyleSheet, Dimensions} from 'react-native';
-import CalendarPageComponent from './calendarPageComponent';
+import CalendarPage from './calendarPage/calendarPage';
 
 const getWeekStarts = () => {
   const weekStarts = [];
@@ -13,7 +13,7 @@ const getWeekStarts = () => {
   return weekStarts;
 };
 
-const CalendarHeaderComponent = ({activeDate, setActiveDate}) => {
+const CalendarHeader = ({activeDate, setActiveDate}) => {
   const [weeks, setWeeks] = useState(getWeekStarts());
   const [flatListRef, setFlatListRef] = useState(undefined);
 
@@ -43,7 +43,7 @@ const CalendarHeaderComponent = ({activeDate, setActiveDate}) => {
       <FlatList
         data={weeks}
         renderItem={({item}) => (
-          <CalendarPageComponent
+          <CalendarPage
             activeDate={activeDate}
             weekStart={item}
             setActiveDate={setActiveDate}
@@ -76,4 +76,4 @@ const styles = StyleSheet.create({
   listView: {},
 });
 
-export default CalendarHeaderComponent;
+export default CalendarHeader;

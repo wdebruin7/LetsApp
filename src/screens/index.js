@@ -1,13 +1,5 @@
-import AccountCreationScreen from './accountCreationScreen';
-import HomeScreen from './homeScreen';
-import InitializingScreen from './initializingScreen';
-import PhoneSignInScreen from './phoneSignInScreen';
-import PhoneVerifyScreen from './phoneVerifyScreen';
-
-export {
-  AccountCreationScreen,
-  HomeScreen,
-  InitializingScreen,
-  PhoneSignInScreen,
-  PhoneVerifyScreen,
-};
+export {default as AccountCreation} from './accountCreation';
+export {default as Home} from './home';
+export {default as Initializing} from './initializing';
+export {default as PhoneSignIn} from './phoneSignIn';
+export {default as PhoneVerify} from './phoneVerify';

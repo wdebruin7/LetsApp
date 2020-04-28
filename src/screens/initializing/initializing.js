@@ -1,7 +1,7 @@
 import React from 'react';
 import {SafeAreaView, View, ActivityIndicator, Text} from 'react-native';
 
-const InitializingScreen = () => {
+const Initializing = () => {
   return (
     <SafeAreaView>
       <View>
@@ -12,4 +12,4 @@ const InitializingScreen = () => {
   );
 };
 
-export default InitializingScreen;
+export default Initializing;

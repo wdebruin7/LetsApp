@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 
-const ShowMoreActivitiesComponent = ({numAdditionalActivities, setShowAll}) => {
+const ShowMoreActivities = ({numAdditionalActivities, setShowAll}) => {
   return (
     <TouchableOpacity onPress={setShowAll(true)} style={styles.touchable}>
       <Text>+ {numAdditionalActivities} more</Text>
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShowMoreActivitiesComponent;
+export default ShowMoreActivities;

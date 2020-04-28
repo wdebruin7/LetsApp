@@ -6,7 +6,7 @@ const getDayChar = (day) => {
   return dayChars[day];
 };
 
-const CalendarDateComponent = ({date, isActive, setActiveDate}) => {
+const CalendarDate = ({date, isActive, setActiveDate}) => {
   const onPress = () => {
     setActiveDate(date);
   };
@@ -54,4 +54,4 @@ function areEqual(prevProps, nextProps) {
   );
 }
 
-export default React.memo(CalendarDateComponent, areEqual);
+export default React.memo(CalendarDate, areEqual);
