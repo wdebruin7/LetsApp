@@ -13,14 +13,26 @@ const getUserListener = (user, onSnapshot) => {
 
 const getActivityListener = (userData, onSnapshot) => {
   if (!userData || !userData.groups) return () => {};
+
   const snapshotListeners = [];
   const groupIDs = userData.groups.map((x) => x.groupDocumentID);
 
   for (let i = 0; i < groupIDs.length; i += 10) {
-    const ref = firestore()
+    const groupIDSlice = groupIDs.slice(i, i + 10);
+    const unsubscriber = firestore()
       .collection('activities')
-      .where('groupDocumentID', 'in', groupIDs.slice(i, i + 10));
-    const unsubscriber = ref.onSnapshot(onSnapshot);
+      .where('groupDocumentID', 'in', groupIDSlice)
+      .onSnapshot(
+        (querySnapshot) => {
+          console.log(querySnapshot);
+        },
+        (error) => {
+          console.log(error);
+        },
+        (completion) => {
+          console.log('completion');
+        },
+      );
     snapshotListeners.push(() => unsubscriber());
   }
 

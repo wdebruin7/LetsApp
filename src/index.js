@@ -18,22 +18,24 @@ import {
   getGroupListener,
 } from './firebase/firestore';
 
+const store = createStore(firestoreReducer, initialState());
+
 const App = () => {
   const session = useAuth();
-  const store = createStore(firestoreReducer, initialState());
   const [userData, setUserData] = useState(null);
 
   const onUserSnapshot = (documentSnapshot) => {
     const data = documentSnapshot.data();
     if (data) {
+      setUserData(data);
       store.dispatch(
         updateUser({data: documentSnapshot.data(), initializing: false}),
       );
-      setUserData(data);
     }
   };
 
   const onActivitySnapshot = (querySnapshot) => {
+    console.log('here activity');
     querySnapshot.docChanges().forEach((documentChange) => {
       const data = documentChange.doc.data();
       switch (documentChange.type) {
@@ -63,21 +65,19 @@ const App = () => {
     if (!session.user) return;
     const unsubscribe = getUserListener(session.user, onUserSnapshot);
     return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.user]);
 
   useEffect(() => {
     if (!userData) return;
+    console.log('here');
     const unsubscribe = getActivityListener(userData, onActivitySnapshot);
     return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
   useEffect(() => {
     if (!userData) return;
     const unsubscribe = getGroupListener(userData, onGroupSnapshot);
     return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
   return (

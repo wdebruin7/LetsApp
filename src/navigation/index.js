@@ -12,6 +12,13 @@ const Stack = createStackNavigator();
 const AppContainer = () => {
   const session = useSession();
   const user = useSelector((state) => state.user);
+  // const activityDays = useSelector((state) => state.activities);
+  // const groups = useSelector((state) => state.groups);
+  //
+  // console.log('---');
+  // console.log(user);
+  // console.log(activityDays);
+  // console.log(groups);
 
   return (
     <NavigationContainer>

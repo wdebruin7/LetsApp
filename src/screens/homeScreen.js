@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import {useActivities} from '../firebase';
+import {useSelector} from 'react-redux';
 import CalendarHeaderComponent from '../components/calendarHeaderComponent';
 import HomeListComponent from '../components/homeListComponent';
 import HomeActiveDayComponent from '../components/homeActiveDayComponent';
 
 const HomeScreen = () => {
-  const activityDays = useActivities();
+  const activityDays = useSelector((state) => state.activities);
   const [activeDate, setActiveDate] = useState(null);
 
   const getActivitiesForActiveDate = () => {

@@ -76,7 +76,7 @@ const firestoreReducer = (state, action) => {
     case firestoreTypes.UPDATE_GROUP: {
       return {
         ...state,
-        groups: getUpdatedActivities(state.groups, action.payload),
+        groups: getUpdatedGroups(state.groups, action.payload),
       };
     }
     case firestoreTypes.REMOVE_GROUP: {
