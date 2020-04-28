@@ -63,9 +63,6 @@ const initializeUserInDatabase = async (newUserData) => {
 };
 
 const toggleUserIsParticipant = (userData, activityData) => {
-  const user = auth().currentUser;
-  if (!user) throw new Error('No user currently signed in');
-
   const userIsParticipant = activityData.participants.some(
     (elem) => elem.uid === userData.uid,
   );
@@ -73,7 +70,7 @@ const toggleUserIsParticipant = (userData, activityData) => {
   const batch = firestore().batch();
 
   const updateUserDoc = () => {
-    const userRef = firestore().collection('users').doc(user.uid);
+    const userRef = firestore().collection('users').doc(userData.uid);
     const {description, uid} = activityData;
     const activity = {description, uid};
     const update = userIsParticipant

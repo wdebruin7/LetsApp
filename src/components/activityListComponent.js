@@ -21,9 +21,7 @@ const getAvatars = (participants) => {
 
 const ActivityListComponent = ({activity, isLastElement}) => {
   const avatars = getAvatars(activity.participants);
-  const userData = useSelector((state) =>
-    state.user ? state.user.data : null,
-  );
+  const userData = useSelector((state) => state.user.data);
   const [isParticipant, setIsParticipant] = useState(
     userData &&
       activity &&
@@ -31,6 +29,7 @@ const ActivityListComponent = ({activity, isLastElement}) => {
   );
 
   const toggleSwitch = () => {
+    if (!userData) return;
     toggleUserIsParticipant(userData, activity);
   };
 

@@ -28,9 +28,7 @@ const App = () => {
     const data = documentSnapshot.data();
     if (data) {
       setUserData(data);
-      store.dispatch(
-        updateUser({data: documentSnapshot.data(), initializing: false}),
-      );
+      store.dispatch(updateUser(documentSnapshot.data()));
     }
   };
 

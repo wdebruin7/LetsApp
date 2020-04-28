@@ -18,7 +18,7 @@ const HomeActiveDayComponent = ({date, activities, setActiveDate}) => {
             group={groups[item.groupDocumentID]}
           />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.uid}
         style={styles.list}
         extraData={groups}
       />
