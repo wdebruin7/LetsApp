@@ -1,12 +1,14 @@
 import firestoreTypes from '../actions/firestoreTypes';
 
-const initialState = {
-  groups: null,
-  activities: null,
-  user: {
-    data: null,
-    initializing: true,
-  },
+const initialState = () => {
+  return {
+    groups: null,
+    activities: null,
+    user: {
+      data: null,
+      initializing: true,
+    },
+  };
 };
 
 const getUpdatedActivities = (activityDays, activity, removed) => {

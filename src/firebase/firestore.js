@@ -1,90 +1,50 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import {useEffect, useReducer, useState} from 'react';
-import {useSession} from './auth';
-import activityReducer from '../reducers/activityReducer';
-import {updateActivity} from '../actions/activityActions';
 
-const useUser = () => {
-  const [userState, setUserState] = useState({user: null, initializing: true});
-  const {currentUser} = auth();
+const getUserListener = (user, onSnapshot) => {
+  if (!user) return () => {};
+  const unsubscriber = firestore()
+    .collection('users')
+    .doc(user.uid)
+    .onSnapshot(onSnapshot);
 
-  useEffect(() => {
-    if (!currentUser) return;
-    const unsubscriber = firestore()
-      .collection('users')
-      .doc(currentUser.uid)
-      .onSnapshot(
-        (documentSnapshot) => {
-          setUserState({user: documentSnapshot.data(), initializing: false});
-        },
-        (error) => {
-          console.log(error);
-        },
-      );
-
-    return () => unsubscriber();
-  }, [currentUser]);
-
-  return userState;
+  return () => unsubscriber();
 };
 
-const useActivities = () => {
-  const session = useSession();
-  const [activityState, activityDispatch] = useReducer(activityReducer, []);
+const getActivityListener = (userData, onSnapshot) => {
+  if (!userData || !userData.groups) return () => {};
+  const snapshotListeners = [];
+  const groupIDs = userData.groups.map((x) => x.groupDocumentID);
 
-  const onSnapshot = (querySnapshot) => {
-    querySnapshot.forEach((documentSnapshot) => {
-      activityDispatch(
-        updateActivity({...documentSnapshot.data(), id: documentSnapshot.id}),
-      );
-    });
+  for (let i = 0; i < groupIDs.length; i += 10) {
+    const ref = firestore()
+      .collection('activities')
+      .where('groupDocumentID', 'in', groupIDs.slice(i, i + 10));
+    const unsubscriber = ref.onSnapshot(onSnapshot);
+    snapshotListeners.push(() => unsubscriber());
+  }
+
+  return () => {
+    snapshotListeners.forEach((unsubscriber) => unsubscriber());
   };
-
-  useEffect(() => {
-    if (!session.userData || session.userData.groups === undefined) return;
-    const snapshotListeners = [];
-    const groupIDs = session.userData.groups.map((x) => x.groupDocumentID);
-
-    for (let i = 0; i < groupIDs.length; i += 10) {
-      const ref = firestore()
-        .collection('activities')
-        .where('groupDocumentID', 'in', groupIDs.slice(i, i + 10));
-      const unsubscriber = ref.onSnapshot(onSnapshot);
-      snapshotListeners.push(() => unsubscriber());
-    }
-
-    return () => {
-      snapshotListeners.forEach((unsubscriber) => unsubscriber());
-    };
-  }, [session]);
-
-  return activityState;
 };
 
-const useGroups = () => {
-  const session = useSession();
-  const [groupState, setGroupState] = useState({});
+const getGroupListener = (userData, onSnapshot) => {
+  if (!userData || !userData.groups) return () => {};
+  const snapshotListeners = [];
+  const groupIDs = userData.groups.map((x) => x.groupDocumentID);
 
-  const onSnapshot = (querySnapshot) => {
-    querySnapshot.forEach((documentSnapshot) => {
-      const {id} = documentSnapshot;
-      setGroupState((prevState) => {
-        const newState = {...prevState};
-        newState[id] = documentSnapshot.data();
-        return newState;
-      });
-    });
+  for (let i = 0; i < groupIDs.length; i += 10) {
+    const ref = firestore()
+      .collection('groups')
+      .where('uid', 'in', groupIDs.slice(i, i + 10));
+    const unsubscriber = ref.onSnapshot(onSnapshot);
+    snapshotListeners.push(() => unsubscriber());
+  }
+
+  return () => {
+    snapshotListeners.forEach((unsubscriber) => unsubscriber());
   };
-
-  useEffect(() => {
-    if (!session.user) return;
-    const ref = firestore().collection('groups');
-    const unsubscribe = ref.onSnapshot(onSnapshot);
-    return () => unsubscribe();
-  }, [session.user]);
-
-  return groupState;
 };
 
 const initializeUserInDatabase = async (newUserData) => {
@@ -145,9 +105,9 @@ const toggleUserIsParticipant = (userData, activityData) => {
 };
 
 export {
-  useGroups,
-  useActivities,
+  getGroupListener,
+  getActivityListener,
   initializeUserInDatabase,
   toggleUserIsParticipant,
-  useUser,
+  getUserListener,
 };
