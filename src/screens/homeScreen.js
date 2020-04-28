@@ -6,7 +6,7 @@ import HomeListComponent from '../components/homeListComponent';
 import HomeActiveDayComponent from '../components/homeActiveDayComponent';
 
 const HomeScreen = () => {
-  const activityDays = useSelector((state) => state.activities);
+  const activityDays = useSelector((state) => state.activities) || [];
   const [activeDate, setActiveDate] = useState(null);
 
   const getActivitiesForActiveDate = () => {

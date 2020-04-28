@@ -35,7 +35,6 @@ const App = () => {
   };
 
   const onActivitySnapshot = (querySnapshot) => {
-    console.log('here activity');
     querySnapshot.docChanges().forEach((documentChange) => {
       const data = documentChange.doc.data();
       switch (documentChange.type) {
@@ -69,15 +68,15 @@ const App = () => {
 
   useEffect(() => {
     if (!userData) return;
-    console.log('here');
-    const unsubscribe = getActivityListener(userData, onActivitySnapshot);
-    return () => unsubscribe();
-  }, [userData]);
-
-  useEffect(() => {
-    if (!userData) return;
-    const unsubscribe = getGroupListener(userData, onGroupSnapshot);
-    return () => unsubscribe();
+    const activityUnsubscriber = getActivityListener(
+      userData,
+      onActivitySnapshot,
+    );
+    const groupUnsubscriber = getGroupListener(userData, onGroupSnapshot);
+    return () => {
+      activityUnsubscriber();
+      groupUnsubscriber();
+    };
   }, [userData]);
 
   return (

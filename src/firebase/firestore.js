@@ -17,24 +17,13 @@ const getActivityListener = (userData, onSnapshot) => {
   const snapshotListeners = [];
   const groupIDs = userData.groups.map((x) => x.groupDocumentID);
 
-  for (let i = 0; i < groupIDs.length; i += 10) {
-    const groupIDSlice = groupIDs.slice(i, i + 10);
+  groupIDs.forEach((groupDocumentID) => {
     const unsubscriber = firestore()
       .collection('activities')
-      .where('groupDocumentID', 'in', groupIDSlice)
-      .onSnapshot(
-        (querySnapshot) => {
-          console.log(querySnapshot);
-        },
-        (error) => {
-          console.log(error);
-        },
-        (completion) => {
-          console.log('completion');
-        },
-      );
+      .where('groupDocumentID', '==', groupDocumentID)
+      .onSnapshot(onSnapshot);
     snapshotListeners.push(() => unsubscriber());
-  }
+  });
 
   return () => {
     snapshotListeners.forEach((unsubscriber) => unsubscriber());
@@ -46,13 +35,13 @@ const getGroupListener = (userData, onSnapshot) => {
   const snapshotListeners = [];
   const groupIDs = userData.groups.map((x) => x.groupDocumentID);
 
-  for (let i = 0; i < groupIDs.length; i += 10) {
-    const ref = firestore()
+  groupIDs.forEach((groupDocumentID) => {
+    const unsubscriber = firestore()
       .collection('groups')
-      .where('uid', 'in', groupIDs.slice(i, i + 10));
-    const unsubscriber = ref.onSnapshot(onSnapshot);
+      .where('uid', '==', groupDocumentID)
+      .onSnapshot(onSnapshot);
     snapshotListeners.push(() => unsubscriber());
-  }
+  });
 
   return () => {
     snapshotListeners.forEach((unsubscriber) => unsubscriber());
