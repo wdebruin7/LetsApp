@@ -1,11 +1,11 @@
 import React from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
+import {useSelector} from 'react-redux';
 import ActivityTileComponent from './activityTileComponent';
-import {useGroups} from '../firebase';
 import DateHeaderComponent from './dateHeaderComponent';
 
 const HomeActiveDayComponent = ({date, activities, setActiveDate}) => {
-  const groups = useGroups();
+  const groups = useSelector((state) => state.groups || {});
 
   return (
     <View>
@@ -18,7 +18,7 @@ const HomeActiveDayComponent = ({date, activities, setActiveDate}) => {
             group={groups[item.groupDocumentID]}
           />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.uid}
         style={styles.list}
         extraData={groups}
       />
