@@ -2,6 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, Dimensions, Switch} from 'react-native';
 import {Avatar} from 'react-native-elements';
 import {useSelector} from 'react-redux';
+import {
+  getGroupMembersString,
+  getActivityParticipantsString,
+} from '../../../utils';
 
 const ActivityTile = ({activity, group}) => {
   const [hasThumbnail, setHasThumbnail] = useState(group && group.thumbnailURL);
@@ -30,60 +34,17 @@ const ActivityTile = ({activity, group}) => {
     setUserIsParticipant(!userIsParticipant);
   };
 
-  const getGroupMembersString = () => {
-    const otherMembers = group.members.filter(
-      (member) => member.uid !== userData.uid,
-    );
-
-    switch (otherMembers.length) {
-      case 0:
-        return 'You are the only member. Invite some friends!';
-      case 1:
-        return `You and ${otherMembers[0].name} are the only members.`;
-      case 2:
-        return `You, ${otherMembers[0].name}, and ${otherMembers[1].name}`;
-      default:
-        return 'You'
-          .concat(otherMembers.slice(0, 1).map((member) => `, ${member.name}`))
-          .concat(`+ ${otherMembers.length - 2} more`);
-    }
-  };
-
-  const getActivityParticipantsString = () => {
-    const participants = activity.participants
-      .filter((participant) => participant.name !== userData.displayName)
-      .map((participant) => participant.name.split(' ')[0]);
-
-    const numParticipants = participants.length;
-
-    switch (numParticipants) {
-      case 0:
-        if (userIsParticipant) return 'Nobody else is free... yet';
-        else return 'Nobody is free... yet';
-      case 1:
-        return `${participants[0]} is free`;
-      case 2:
-        return `${participants[0]} and ${participants[1]} are free`;
-      case 3:
-        return `${participants[0]}, ${participants[1]}, and ${participants[2]} are free`;
-      default:
-        return participants[0]
-          .concat(
-            participants.slice(1, 2).map((participant) => `, ${participant}`),
-          )
-          .concat(`and ${numParticipants - 3} more are free`);
-    }
-  };
-
   if (!(activity && group)) return null;
 
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
         <Text style={styles.header}>{group.name}</Text>
-        <Text style={styles.members}>{getGroupMembersString()}</Text>
+        <Text style={styles.members}>
+          {getGroupMembersString(group, userData)}
+        </Text>
         <Text style={styles.participants}>
-          {getActivityParticipantsString()}
+          {getActivityParticipantsString(activity, userData, userIsParticipant)}
         </Text>
       </View>
       <View style={styles.rightContainer}>
@@ -121,10 +82,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   textContainer: {
-    flex: 1,
+    flex: 2,
     paddingLeft: 23,
     paddingTop: 20,
-    width: '50%',
   },
   header: {
     fontWeight: 'bold',
@@ -134,14 +94,15 @@ const styles = StyleSheet.create({
     color: '#8D8D8D',
     fontSize: 13,
     paddingTop: 6,
-    height: 32,
-    width: '100%',
   },
   participants: {
+    paddingTop: 6,
     fontSize: 13,
   },
   rightContainer: {
+    flex: 1,
     justifyContent: 'space-between',
+    alignItems: 'flex-end',
   },
   switch: {
     transform: [{scaleX: 0.7}, {scaleY: 0.7}],

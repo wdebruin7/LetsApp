@@ -5,3 +5,4 @@ export {default as ActivityAdder} from './activityAdder';
 export {default as AddActivityButton} from './addActivityButton';
 export {default as Button} from './button';
 export {default as TextBox} from './textBox';
+export {default as GroupTile} from './groupTile';
