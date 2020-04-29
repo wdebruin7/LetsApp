@@ -25,7 +25,8 @@ const AccountCreation = () => {
             <Text style={styles.logo}>Let's</Text>
             <Text style={styles.subtitle}>Create your acount!</Text>
           </View>
-          <TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={hanldeImagePicker}>
             {userData && userData.photoURL ? (
               <Image style={styles.profilePhoto} source={{uri: profilePhoto}} />
             ) : (
