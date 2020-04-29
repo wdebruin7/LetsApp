@@ -59,7 +59,7 @@ const initializeUserInDatabase = async (newUserData) => {
     ...newUserData,
   };
   const userDocRef = firestore().collection('users').doc(userData.uid);
-  userDocRef.set(userData, {merge: true});
+  await userDocRef.set(userData, {merge: true});
 };
 
 const updateUserData = async (newUserData) => {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -16,7 +16,66 @@ import {useSelector} from 'react-redux';
 import {useSession} from '../firebase/auth';
 import {initializeUserInDatabase} from '../firebase/firestore';
 
-const AccountCreation = () => {
+const AccountScreen = () => {
+  const session = useSession();
+  const userData = useSelector((state) => state.user.data);
+  const [displayName, setDisplayname] = useState('');
+  const [photoURL, setPhotoURL] = useState('');
+  const [localFilepath, setLocalFilepath] = useState('');
+  const imgageSource = {uri: localFilepath || photoURL};
+  let canSave = true;
+
+  const infoDiff =
+    userData.displayName === displayName && userData.photoURL === photoURL;
+
+  useEffect(() => {
+    if (!userData) return;
+    if (userData.displayName && !displayName) {
+      setDisplayname(userData.displayName);
+    }
+    if (userData.photoURL && !photoURL) setPhotoURL(userData.photoURL);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData]);
+
+  const uploadFile = async () => {
+    const ref = storage().ref(`${userData.uid}/profileImage`);
+    await ref.putFile(localFilepath);
+    ref.getDownloadURL().then((url) => setPhotoURL(url));
+  };
+
+  const handleSave = async () => {
+    canSave = false;
+    await uploadFile();
+
+    try {
+      initializeUserInDatabase({
+        displayName,
+        photoURL,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    canSave = true;
+  };
+  const hanldeImagePicker = () => {
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        console.log('worked!');
+        setLocalFilepath(response.uri);
+      }
+    });
+  };
+  const options = {
+    title: 'Select Avatar',
+  };
   return (
     <SafeAreaView style={styles.safeView}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -25,10 +84,9 @@ const AccountCreation = () => {
             <Text style={styles.logo}>Let's</Text>
             <Text style={styles.subtitle}>Create your acount!</Text>
           </View>
-          <TouchableWithoutFeedback
-            onPress={hanldeImagePicker}>
-            {userData && userData.photoURL ? (
-              <Image style={styles.profilePhoto} source={{uri: profilePhoto}} />
+          <TouchableWithoutFeedback onPress={hanldeImagePicker}>
+            {localFilepath || photoURL ? (
+              <Image style={styles.profilePhoto} source={imgageSource} />
             ) : (
               <View style={styles.profilePhoto}>
                 <Text style={styles.profilePhotoText}>
@@ -51,7 +109,9 @@ const AccountCreation = () => {
               value={session.user && session.user.phoneNumber}
             />
           </View>
-          <TouchableHighlight onPress={handleSave} style={styles.button}>
+          <TouchableHighlight
+            onPress={handleSave}
+            style={canSave ? styles.button : styles.button_disabled}>
             <Text style={styles.buttonText}>Save</Text>
           </TouchableHighlight>
         </View>
