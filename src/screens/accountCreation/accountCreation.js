@@ -34,25 +34,24 @@ const AccountCreation = () => {
     if (userData.profileImagePath) {
       getDownloadURL(userData.profileImagePath, setPhotoURL);
     }
-
-    // console.log(getDownloadURL(userData.profileImagePath));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
   const uploadFile = async () => {
-    const ref = storage().ref(`${userData.uid}/profileImage`);
+    const ref = storage().ref(`${userData.uid}/profileImagePath`);
     await ref.putFile(localFilepath);
     ref.getDownloadURL().then((url) => setPhotoURL(url));
   };
 
   const handleSave = async () => {
     setCanSave(false);
-    await uploadFile();
-
+    if (localFilepath) {
+      await uploadFile();
+    }
     try {
       initializeUserInDatabase({
         displayName,
-        profileImagePath: `${userData.uid}/profileImage`,
+        profileImagePath: `${userData.uid}/profileImagePath`,
       });
     } catch (err) {
       console.log(err);
@@ -100,19 +99,27 @@ const AccountCreation = () => {
           <View style={styles.verfificationBox}>
             <Text style={styles.infoTitleText}>Name</Text>
             <TextInput
-              style={styles.textInput}
+              style={
+                canSave
+                  ? styles.textInput
+                  : {...styles.textInput, ...styles.notInteractive}
+              }
               value={displayName}
               onChangeText={(e) => setDisplayname(e)}
               placeholder="Display Name"
             />
             <Text style={styles.infoTitleText}>Phone number</Text>
-            <View style={styles.textInput}>
+            <View style={{...styles.textInput, ...styles.notInteractive}}>
               <Text>{session.user && session.user.phoneNumber}</Text>
             </View>
           </View>
           <TouchableHighlight
             onPress={handleSave}
-            style={canSave ? styles.button : styles.button_disabled}>
+            style={
+              canSave
+                ? styles.button
+                : {...styles.button, ...styles.notInteractive}
+            }>
             <Text style={styles.buttonText}>Save</Text>
           </TouchableHighlight>
         </View>
