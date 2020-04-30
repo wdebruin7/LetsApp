@@ -26,16 +26,13 @@ const AccountCreation = () => {
   const [canSave, setCanSave] = useState(true);
   const imgageSource = {uri: localFilepath || photoURL};
 
-  // const infoDiff =
-  //   userData.displayName === displayName && userData.photoURL === photoURL;
-
   useEffect(() => {
     if (!userData) return;
     if (userData.displayName && !displayName) {
       setDisplayname(userData.displayName);
     }
     if (userData.profileImagePath) {
-      setPhotoURL(getDownloadURL(userData.profileImagePath));
+      getDownloadURL(userData.profileImagePath, setPhotoURL);
     }
 
     // console.log(getDownloadURL(userData.profileImagePath));
