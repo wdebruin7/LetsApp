@@ -23,11 +23,11 @@ const AccountCreation = () => {
   const [displayName, setDisplayname] = useState('');
   const [photoURL, setPhotoURL] = useState('');
   const [localFilepath, setLocalFilepath] = useState('');
+  const [canSave, setCanSave] = useState(true);
   const imgageSource = {uri: localFilepath || photoURL};
-  let canSave = true;
 
-  const infoDiff =
-    userData.displayName === displayName && userData.photoURL === photoURL;
+  // const infoDiff =
+  //   userData.displayName === displayName && userData.photoURL === photoURL;
 
   useEffect(() => {
     if (!userData) return;
@@ -37,6 +37,8 @@ const AccountCreation = () => {
     if (userData.profileImagePath) {
       setPhotoURL(getDownloadURL(userData.profileImagePath));
     }
+
+    // console.log(getDownloadURL(userData.profileImagePath));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
@@ -47,18 +49,18 @@ const AccountCreation = () => {
   };
 
   const handleSave = async () => {
-    canSave = false;
+    setCanSave(false);
     await uploadFile();
 
     try {
       initializeUserInDatabase({
         displayName,
-        photoURL,
+        profileImagePath: `${userData.uid}/profileImage`,
       });
     } catch (err) {
       console.log(err);
     }
-    canSave = true;
+    setCanSave(true);
   };
   const hanldeImagePicker = () => {
     ImagePicker.showImagePicker(options, (response) => {
@@ -107,10 +109,9 @@ const AccountCreation = () => {
               placeholder="Display Name"
             />
             <Text style={styles.infoTitleText}>Phone number</Text>
-            <TextInput
-              style={styles.textInput}
-              value={session.user && session.user.phoneNumber}
-            />
+            <View style={styles.textInput}>
+              <Text>{session.user && session.user.phoneNumber}</Text>
+            </View>
           </View>
           <TouchableHighlight
             onPress={handleSave}
@@ -165,6 +166,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     marginTop: 5,
     marginBottom: 10,
+    justifyContent: 'center',
   },
   title: {
     fontSize: 18,
@@ -208,6 +210,9 @@ const styles = StyleSheet.create({
     borderRadius: 140,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  notInteractive: {
+    opacity: 0.3,
   },
 });
 
