@@ -1,8 +1,8 @@
 import storage from '@react-native-firebase/storage';
 
-const getDownloadURL = async (storageRefURL) => {
+const getDownloadURL = async (storageRefPath) => {
   try {
-    const ref = storage().refFromURL(storageRefURL);
+    const ref = storage().ref(storageRefPath);
     const url = await ref.getDownloadURL();
     return url;
   } catch (error) {

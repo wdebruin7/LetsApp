@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -6,34 +6,79 @@ import {
   TouchableHighlight,
   View,
   Text,
+  Image,
   TextInput,
   Keyboard,
 } from 'react-native';
-import {useNavigation} from 'react-navigation-hooks';
-import {useSession} from '../firebase/auth';
-import {initializeUserInDatabase} from '../firebase/firestore';
 import storage from '@react-native-firebase/storage';
+import ImagePicker from 'react-native-image-picker';
+import {useSelector} from 'react-redux';
+import {useSession} from '../../firebase/auth';
+import {initializeUserInDatabase} from '../../firebase/firestore';
+import {getDownloadURL} from '../../utils';
 
-<<<<<<< HEAD:src/screens/accountCreation/accountCreation.js
 const AccountCreation = () => {
-=======
-const AccountCreationScreen = () => {
   const session = useSession();
-  const {navigate} = useNavigation();
-  const [userInfo, setUserInfo] = useState({
-    displayName: '',
-  });
-  const handleSave = () => {
+  const userData = useSelector((state) => state.user.data);
+  const [displayName, setDisplayname] = useState('');
+  const [photoURL, setPhotoURL] = useState('');
+  const [localFilepath, setLocalFilepath] = useState('');
+  const imgageSource = {uri: localFilepath || photoURL};
+  let canSave = true;
+
+  const infoDiff =
+    userData.displayName === displayName && userData.photoURL === photoURL;
+
+  useEffect(() => {
+    if (!userData) return;
+    if (userData.displayName && !displayName) {
+      setDisplayname(userData.displayName);
+    }
+    if (userData.profileImagePath) {
+      setPhotoURL(getDownloadURL(userData.profileImagePath));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData]);
+
+  const uploadFile = async () => {
+    const ref = storage().ref(`${userData.uid}/profileImage`);
+    await ref.putFile(localFilepath);
+    ref.getDownloadURL().then((url) => setPhotoURL(url));
+  };
+
+  const handleSave = async () => {
+    canSave = false;
+    await uploadFile();
+
     try {
-      initializeUserInDatabase(userInfo);
+      initializeUserInDatabase({
+        displayName,
+        photoURL,
+      });
     } catch (err) {
       console.log(err);
     }
+    canSave = true;
   };
-  if (!session.user) {
-    navigate('Auth');
-  }
->>>>>>> add account screen:src/screens/accountScreen.js
+  const hanldeImagePicker = () => {
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        console.log('worked!');
+        setLocalFilepath(response.uri);
+      }
+    });
+  };
+  const options = {
+    title: 'Select Avatar',
+  };
   return (
     <SafeAreaView style={styles.safeView}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -42,19 +87,23 @@ const AccountCreationScreen = () => {
             <Text style={styles.logo}>Let's</Text>
             <Text style={styles.subtitle}>Create your acount!</Text>
           </View>
-          <TouchableWithoutFeedback>
-            <View style={styles.profilePhoto}>
-              <Text style={styles.profilePhotoText}>
-                Select a profile photo
-              </Text>
-            </View>
+          <TouchableWithoutFeedback onPress={hanldeImagePicker}>
+            {localFilepath || photoURL ? (
+              <Image style={styles.profilePhoto} source={imgageSource} />
+            ) : (
+              <View style={styles.profilePhoto}>
+                <Text style={styles.profilePhotoText}>
+                  Select a profile photo
+                </Text>
+              </View>
+            )}
           </TouchableWithoutFeedback>
           <View style={styles.verfificationBox}>
             <Text style={styles.infoTitleText}>Name</Text>
             <TextInput
               style={styles.textInput}
-              value={userInfo.userName}
-              onChangeText={(e) => setUserInfo({...userInfo, displayName: e})}
+              value={displayName}
+              onChangeText={(e) => setDisplayname(e)}
               placeholder="Display Name"
             />
             <Text style={styles.infoTitleText}>Phone number</Text>
@@ -63,7 +112,9 @@ const AccountCreationScreen = () => {
               value={session.user && session.user.phoneNumber}
             />
           </View>
-          <TouchableHighlight onPress={handleSave} style={styles.button}>
+          <TouchableHighlight
+            onPress={handleSave}
+            style={canSave ? styles.button : styles.button_disabled}>
             <Text style={styles.buttonText}>Save</Text>
           </TouchableHighlight>
         </View>
