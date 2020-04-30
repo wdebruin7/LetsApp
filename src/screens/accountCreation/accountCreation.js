@@ -9,6 +9,7 @@ import {
   Image,
   TextInput,
   Keyboard,
+  Alert,
 } from 'react-native';
 import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-picker';
@@ -37,6 +38,14 @@ const AccountCreation = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
+  useEffect(() => {
+    if (!displayName && !localFilepath) return;
+    if (!localFilepath && userData.displayName === displayName) {
+      setCanSave(false);
+    } else {
+      setCanSave(true);
+    }
+  }, [userData, displayName, localFilepath]);
   const uploadFile = async () => {
     const ref = storage().ref(`${userData.uid}/profileImagePath`);
     await ref.putFile(localFilepath);
@@ -45,37 +54,54 @@ const AccountCreation = () => {
 
   const handleSave = async () => {
     setCanSave(false);
-    if (localFilepath) {
+    if (
+      localFilepath &&
+      !userData.profileImagePath &&
+      userData.displayName !== displayName
+    ) {
+      try {
+        await uploadFile();
+        setLocalFilepath('');
+        await initializeUserInDatabase({
+          displayName,
+          profileImagePath: `${userData.uid}/profileImagePath`,
+        });
+        Alert.alert('Profile saved 1', "Let's get back to it!");
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    if (
+      localFilepath &&
+      userData.profileImagePath &&
+      userData.displayName !== displayName
+    ) {
       await uploadFile();
+      setLocalFilepath('');
+      Alert.alert('Profile saved 2', "Let's get back to it!");
     }
-    try {
-      initializeUserInDatabase({
-        displayName,
-        profileImagePath: `${userData.uid}/profileImagePath`,
-      });
-    } catch (err) {
-      console.log(err);
+    if (userData.profileImagePath && userData.displayName !== displayName) {
+      try {
+        await initializeUserInDatabase({
+          displayName,
+        });
+        Alert.alert('Profile saved 3', "Let's get back to it!");
+      } catch (err) {
+        console.log(err);
+      }
     }
-    setCanSave(true);
   };
   const hanldeImagePicker = () => {
+    const options = {
+      title: 'Select Profile Photo',
+    };
     ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
-
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
+      if (response.error) {
         console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
       } else {
-        console.log('worked!');
         setLocalFilepath(response.uri);
       }
     });
-  };
-  const options = {
-    title: 'Select Avatar',
   };
   return (
     <SafeAreaView style={styles.safeView}>
@@ -99,11 +125,7 @@ const AccountCreation = () => {
           <View style={styles.verfificationBox}>
             <Text style={styles.infoTitleText}>Name</Text>
             <TextInput
-              style={
-                canSave
-                  ? styles.textInput
-                  : {...styles.textInput, ...styles.notInteractive}
-              }
+              style={styles.textInput}
               value={displayName}
               onChangeText={(e) => setDisplayname(e)}
               placeholder="Display Name"
