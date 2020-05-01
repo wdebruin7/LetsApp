@@ -15,7 +15,7 @@ import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-picker';
 import {useSelector} from 'react-redux';
 import {useSession} from '../../firebase/auth';
-import {initializeUserInDatabase} from '../../firebase/firestore';
+import {setUserData} from '../../firebase/firestore';
 import {getDownloadURL} from '../../utils';
 
 const AccountCreation = () => {
@@ -64,7 +64,7 @@ const AccountCreation = () => {
       saveData.displayName = displayName;
     }
     try {
-      await initializeUserInDatabase(saveData);
+      await setUserData(saveData);
       Alert.alert('Profile saved', "Let's get back to it!");
     } catch (err) {
       console.log(err);
