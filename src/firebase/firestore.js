@@ -62,6 +62,32 @@ const initializeUserInDatabase = async (newUserData) => {
   userDocRef.set(userData, {merge: true});
 };
 
+const updateUserData = async (newUserData) => {
+  const user = auth().currentUser;
+  if (!user) throw new Error('No user currently signed in');
+  const userRef = firestore().collection('users').doc(user.uid);
+
+  try {
+    await firestore().runTransaction((transaction) => {
+      return transaction.get(userRef).then((document) => {
+        const docData = !document.exists
+          ? {
+              displayName: user.displayName,
+              creationtime: user.metadata.creationTime,
+              phoneNumber: user.phoneNumber,
+              uid: user.uid,
+            }
+          : {...document.data(), ...newUserData};
+        transaction.set(userRef, docData);
+      });
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 const toggleUserIsParticipant = (userData, activityData) => {
   const userIsParticipant = activityData.participants.some(
     (elem) => elem.uid === userData.uid,
@@ -106,6 +132,7 @@ export {
   getGroupListener,
   getActivityListener,
   initializeUserInDatabase,
+  updateUserData,
   toggleUserIsParticipant,
   getUserListener,
 };
