@@ -54,41 +54,20 @@ const AccountCreation = () => {
 
   const handleSave = async () => {
     setCanSave(false);
-    if (
-      localFilepath &&
-      !userData.profileImagePath &&
-      userData.displayName !== displayName
-    ) {
-      try {
-        await uploadFile();
-        setLocalFilepath('');
-        await initializeUserInDatabase({
-          displayName,
-          profileImagePath: `${userData.uid}/profileImagePath`,
-        });
-        Alert.alert('Profile saved 1', "Let's get back to it!");
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    if (
-      localFilepath &&
-      userData.profileImagePath &&
-      userData.displayName !== displayName
-    ) {
+    const saveData = {};
+    if (localFilepath) {
       await uploadFile();
+      saveData.profileImagePath = `${userData.uid}/profileImagePath`;
       setLocalFilepath('');
-      Alert.alert('Profile saved 2', "Let's get back to it!");
     }
-    if (userData.profileImagePath && userData.displayName !== displayName) {
-      try {
-        await initializeUserInDatabase({
-          displayName,
-        });
-        Alert.alert('Profile saved 3', "Let's get back to it!");
-      } catch (err) {
-        console.log(err);
-      }
+    if (displayName !== userData.displayName) {
+      saveData.displayName = displayName;
+    }
+    try {
+      await initializeUserInDatabase(saveData);
+      Alert.alert('Profile saved', "Let's get back to it!");
+    } catch (err) {
+      console.log(err);
     }
   };
   const hanldeImagePicker = () => {
