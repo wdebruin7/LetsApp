@@ -14,8 +14,7 @@ import {
 import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-picker';
 import {useSelector} from 'react-redux';
-import {useSession} from '../../firebase/auth';
-import {setUserData} from '../../firebase/firestore';
+import {useSession, setUserData} from '../../firebase';
 import {getDownloadURL} from '../../utils';
 
 const AccountCreation = () => {
@@ -46,6 +45,7 @@ const AccountCreation = () => {
       setCanSave(true);
     }
   }, [userData, displayName, localFilepath]);
+
   const uploadFile = async () => {
     const ref = storage().ref(`${userData.uid}/profileImagePath`);
     await ref.putFile(localFilepath);
@@ -116,6 +116,7 @@ const AccountCreation = () => {
           </View>
           <TouchableHighlight
             onPress={handleSave}
+            disabled={!canSave}
             style={
               canSave
                 ? styles.button
