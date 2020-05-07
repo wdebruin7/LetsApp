@@ -128,6 +128,8 @@ const toggleUserIsParticipant = (userData, activityData) => {
   );
 };
 
+const submitNewActivity = () => {};
+
 export {
   getGroupListener,
   getActivityListener,
@@ -135,4 +137,5 @@ export {
   setUserData,
   toggleUserIsParticipant,
   getUserListener,
+  submitNewActivity,
 };
