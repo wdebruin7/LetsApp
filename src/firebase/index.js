@@ -5,5 +5,6 @@ export {
   getUserListener,
   toggleUserIsParticipant,
   setUserData,
+  submitNewActivity,
 } from './firestore';
 export {useSession, useAuth} from './auth';
