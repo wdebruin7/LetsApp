@@ -1,44 +1,29 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
-import {
-  CalendarHeader,
-  HomeList,
-  HomeActiveDay,
-  AppHeader,
-} from '../../components';
+import {useNavigation, useRoute, useIsFocused} from '@react-navigation/native';
+import {HomeList, AppHeader} from '../../components';
 
 const Home = () => {
   const activityDays = useSelector((state) => state.activities || []);
+  const {navigate} = useNavigation();
+  const isFocused = useIsFocused();
   const [activeDate, setActiveDate] = useState(null);
 
-  const getActivitiesForActiveDate = () => {
-    const activeActivityDays = activityDays.filter((elem) => {
-      const elemDateMidnight = new Date(elem.date);
-      elemDateMidnight.setHours(0, 0, 0, 0);
-      const activeDateMidnight = new Date(activeDate);
-      activeDateMidnight.setHours(0, 0, 0, 0);
-      return elemDateMidnight.getTime() === activeDateMidnight.getTime();
-    });
+  useEffect(() => {
+    if (activeDate) {
+      navigate('HomeActiveDate', {activeDateTime: activeDate.getTime()});
+    }
+  }, [activeDate, navigate]);
 
-    return activeActivityDays.length > 0
-      ? activeActivityDays[0].activities
-      : [];
-  };
+  useEffect(() => {
+    if (isFocused) setActiveDate(null);
+  }, [isFocused]);
 
   return (
     <SafeAreaView style={styles.safeView}>
       <AppHeader />
-      <CalendarHeader activeDate={activeDate} setActiveDate={setActiveDate} />
-      {activeDate ? (
-        <HomeActiveDay
-          activities={getActivitiesForActiveDate()}
-          date={activeDate}
-          setActiveDate={setActiveDate}
-        />
-      ) : (
-        <HomeList activities={activityDays} />
-      )}
+      <HomeList activities={activityDays} setActiveDate={setActiveDate} />
     </SafeAreaView>
   );
 };

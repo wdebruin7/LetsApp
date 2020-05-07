@@ -3,7 +3,7 @@ import {View, Text, Button, FlatList, StyleSheet} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import ActivityDay from './activityDay';
 
-const HomeList = ({activities}) => {
+const HomeList = ({activities, setActiveDate}) => {
   const handleSignOut = async () => {
     auth().signOut();
   };
@@ -15,7 +15,9 @@ const HomeList = ({activities}) => {
       {activities.length > 0 ? (
         <FlatList
           data={activities}
-          renderItem={({item}) => <ActivityDay activityDay={item} />}
+          renderItem={({item}) => (
+            <ActivityDay activityDay={item} setActiveDate={setActiveDate} />
+          )}
           keyExtractor={(item) => item.date.getTime().toString()}
         />
       ) : null}
