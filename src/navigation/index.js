@@ -2,8 +2,8 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useSelector} from 'react-redux';
-import AuthNavigation from './AuthNavigation';
-import AppNavigation from './AppNavigation';
+import AuthNavigation from './authNavigation';
+import AppNavigation from './appNavigation';
 import {useSession} from '../firebase';
 import {Initializing, AccountCreation} from '../screens';
 

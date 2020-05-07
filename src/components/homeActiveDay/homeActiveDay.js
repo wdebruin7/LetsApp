@@ -15,7 +15,7 @@ const HomeActiveDay = ({date, activities, setActiveDate}) => {
         renderItem={({item}) => (
           <ActivityTile activity={item} group={groups[item.groupDocumentID]} />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.uid}
         style={styles.list}
         extraData={groups}
       />

@@ -58,13 +58,15 @@ const getMonth = (date) => {
 const getDisplayDate = (date) =>
   `${getDayOfWeek(date)}, ${getMonth(date)} ${date.getDate()}`;
 
-const ActivityDay = ({activityDay}) => {
+const ActivityDay = ({activityDay, setActiveDate}) => {
   const [showAll, setShowAll] = useState(false);
   const activitiesHidden = !showAll && activityDay.activities > 3;
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.headerView}>
+      <TouchableOpacity
+        style={styles.headerView}
+        onPress={() => setActiveDate(activityDay.date)}>
         <Text style={styles.headerText}>
           {getDisplayDate(activityDay.date)}
         </Text>
