@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {Modal, SafeAreaView, Text, Button, View, Switch} from 'react-native';
+import {SafeAreaView, Text, Button, View, Switch} from 'react-native';
 import {CalendarList} from 'react-native-calendars';
 import {useSelector} from 'react-redux';
 import {submitNewActivity} from '../../firebase';
 
-const ActivityAdder = ({visible, setVisible}) => {
+const ActivityAdder = () => {
   const [markedDates, setMarkedDates] = useState({});
   const userData = useSelector((state) => state.user.data || {});
   const [groups, setGroups] = useState(userData.groups || []);
@@ -48,30 +48,27 @@ const ActivityAdder = ({visible, setVisible}) => {
   };
 
   return (
-    <Modal animationType="slide" visible={visible}>
-      <SafeAreaView>
-        <Button title="close" onPress={() => setVisible(false)} />
-        <CalendarList
-          horizontal
-          pagingEnabled
-          minDate={new Date()}
-          onDayPress={onDayPress}
-          markedDates={markedDates}
-        />
-        <Text>{getSelectedDateStrings().length} Dates selected</Text>
-        {groups.map((group) => (
-          <View>
-            <Text>{group.name}</Text>
-            <Switch
-              value={group.selected}
-              onValueChange={() => onToggleSwitch(group)}
-            />
-          </View>
-        ))}
-        <Text>{getSelectedGroups().length} Groups Selected</Text>
-        <Button title="Submit" onPress={() => onSubmit()} />
-      </SafeAreaView>
-    </Modal>
+    <SafeAreaView>
+      <CalendarList
+        horizontal
+        pagingEnabled
+        minDate={new Date()}
+        onDayPress={onDayPress}
+        markedDates={markedDates}
+      />
+      <Text>{getSelectedDateStrings().length} Dates selected</Text>
+      {groups.map((group) => (
+        <View>
+          <Text>{group.name}</Text>
+          <Switch
+            value={group.selected}
+            onValueChange={() => onToggleSwitch(group)}
+          />
+        </View>
+      ))}
+      <Text>{getSelectedGroups().length} Groups Selected</Text>
+      <Button title="Submit" onPress={() => onSubmit()} />
+    </SafeAreaView>
   );
 };
 

@@ -2,19 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useNavigation, useIsFocused} from '@react-navigation/native';
-import {
-  HomeList,
-  AppHeader,
-  AddActivityButton,
-  ActivityAdder,
-} from '../../components';
+import {HomeList, AppHeader, AddActivityButton} from '../../components';
 
 const Home = () => {
   const activityDays = useSelector((state) => state.activities || []);
   const {navigate} = useNavigation();
   const isFocused = useIsFocused();
   const [activeDate, setActiveDate] = useState(null);
-  const [showAdder, setShowAdder] = useState(false);
 
   useEffect(() => {
     if (activeDate) {
@@ -30,11 +24,7 @@ const Home = () => {
     <SafeAreaView style={styles.safeView}>
       <AppHeader />
       <HomeList activities={activityDays} setActiveDate={setActiveDate} />
-      <AddActivityButton onPress={() => setShowAdder(true)} />
-      <ActivityAdder
-        visible={showAdder}
-        setVisible={(visible) => setShowAdder(visible)}
-      />
+      <AddActivityButton onPress={() => navigate('ActivityAdder')} />
     </SafeAreaView>
   );
 };

@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useSelector} from 'react-redux';
-import auth from '@react-native-firebase/auth';
 import AuthNavigation from './authNavigation';
 import AppNavigation from './appNavigation';
 import {useSession} from '../firebase';

@@ -7,3 +7,4 @@ export {default as HomeActiveDate} from './homeActiveDate';
 export {default as Groups} from './groups';
 export {default as GroupInfo} from './groupInfo';
 export {default as GroupCreate} from './groupCreate';
+export {default as ActivityAdder} from './activityAdder';
