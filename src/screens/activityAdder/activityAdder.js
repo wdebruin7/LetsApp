@@ -1,75 +1,99 @@
-import React, {useState} from 'react';
-import {SafeAreaView, Text, Button, View, Switch} from 'react-native';
-import {CalendarList} from 'react-native-calendars';
-import {useSelector} from 'react-redux';
-import {submitNewActivity} from '../../firebase';
+import React from 'react';
+import {
+  SafeAreaView,
+  Text,
+  View,
+  StyleSheet,
+  Button,
+  Image,
+  TouchableWithoutFeedback,
+  Switch,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const ActivityAdder = () => {
-  const [markedDates, setMarkedDates] = useState({});
-  const userData = useSelector((state) => state.user.data || {});
-  const [groups, setGroups] = useState(userData.groups || []);
-
-  const onDayPress = (day) => {
-    const toUpdate = {...markedDates};
-    const selected = toUpdate[day.dateString]
-      ? !toUpdate[day.dateString].selected
-      : true;
-    toUpdate[day.dateString] = {
-      selected,
-    };
-    setMarkedDates(toUpdate);
-  };
-
-  const onToggleSwitch = (groupToUpdate) => {
-    setGroups(
-      groups.map((group) => {
-        if (group.uid === groupToUpdate.uid) {
-          return {...group, selected: !group.selected};
-        } else return group;
-      }),
-    );
-  };
-
-  const getSelectedDateStrings = () => {
-    const dateStrings = Object.keys(markedDates);
-    return dateStrings.filter((dateString) => markedDates[dateString].selected);
-  };
-
-  const getSelectedGroups = () => {
-    return groups.filter((group) => group.selected);
-  };
-
-  const onSubmit = () => {
-    const selectedGroups = getSelectedGroups();
-    const selectedDateStrings = getSelectedDateStrings();
-    if (selectedGroups.length < 1) return;
-    if (selectedDateStrings.length < 1) return;
-    submitNewActivity(selectedGroups, selectedDateStrings, true, userData);
-  };
-
+  const {navigate} = useNavigation();
   return (
-    <SafeAreaView>
-      <CalendarList
-        horizontal
-        pagingEnabled
-        minDate={new Date()}
-        onDayPress={onDayPress}
-        markedDates={markedDates}
-      />
-      <Text>{getSelectedDateStrings().length} Dates selected</Text>
-      {groups.map((group) => (
-        <View>
-          <Text>{group.name}</Text>
-          <Switch
-            value={group.selected}
-            onValueChange={() => onToggleSwitch(group)}
-          />
+    <SafeAreaView style={styles.safeView}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableWithoutFeedback onPress={() => navigate('HomeList')}>
+            <View style={styles.backButton}>
+              <Image
+                style={styles.chevron}
+                source={require('../../images/chevron-left.png')}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+          <Text style={styles.headerText}>Let's go!</Text>
+          <Text>When are you free?</Text>
         </View>
-      ))}
-      <Text>{getSelectedGroups().length} Groups Selected</Text>
-      <Button title="Submit" onPress={() => onSubmit()} />
+        <View style={styles.activityAdder}>
+          <View style={styles.rowItem}>
+            <Text style={styles.itemHeaderText}>I'm free</Text>
+            <Switch
+              disabled={true}
+              value={true}
+              thumbColor="#FFFFFF"
+              ios_backgroundColor="#009846"
+            />
+          </View>
+        </View>
+        <Button title="save" />
+      </View>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  safeView: {
+    flex: 1,
+    backgroundColor: '#FCFEFF',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  backButton: {
+    height: 50,
+    width: 30,
+    paddingTop: 10,
+  },
+  chevron: {
+    height: 16,
+    width: 16,
+  },
+  header: {
+    height: 150,
+    width: '100%',
+    backgroundColor: '#D9E8FF',
+    justifyContent: 'center',
+    padding: 30,
+  },
+  headerText: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    fontFamily: 'AppleSDGothicNeo-Regular',
+  },
+  activityAdder: {
+    flexDirection: 'row',
+  },
+  rowItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#01D060',
+    width: '100%',
+    height: 65,
+    paddingHorizontal: 30,
+  },
+  itemHeaderText: {
+    fontSize: 18,
+    fontFamily: 'AppleSDGothicNeo-Regular',
+    fontWeight: 'bold',
+    color: 'white',
+  },
+});
 
 export default ActivityAdder;
