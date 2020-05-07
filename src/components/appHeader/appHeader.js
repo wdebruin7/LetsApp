@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,12 +8,18 @@ import {
 } from 'react-native';
 import {Icon, Avatar} from 'react-native-elements';
 import {useSelector} from 'react-redux';
+import {getDownloadURL} from '../../utils';
 
 const AppHeader = () => {
-  const {photoURL} = useSelector((state) => state.user.data || {});
+  const {profileImagePath} = useSelector((state) => state.user.data || {});
   const header = "Let's";
-  const imageSource = {uri: photoURL};
+  const [downloadURL, setDownloadURL] = useState(undefined);
+  const imageSource = {uri: downloadURL};
   const icon = {name: 'user', type: 'font-awesome', size: 24};
+
+  useEffect(() => {
+    if (profileImagePath) getDownloadURL(profileImagePath, setDownloadURL);
+  }, [profileImagePath]);
 
   return (
     <View style={styles.container}>
@@ -23,7 +29,7 @@ const AppHeader = () => {
           <Icon name="bell" type="font-awesome" size={30} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.touchable}>
-          {photoURL ? (
+          {downloadURL ? (
             <Avatar rounded source={imageSource} size={35} />
           ) : (
             <Avatar rounded icon={icon} size={35} />
