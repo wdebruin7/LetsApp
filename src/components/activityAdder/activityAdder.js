@@ -23,7 +23,7 @@ const ActivityAdder = ({visible, setVisible}) => {
   const onToggleSwitch = (groupToUpdate) => {
     setGroups(
       groups.map((group) => {
-        if (group.groupDocumentID === groupToUpdate.groupDocumentID) {
+        if (group.uid === groupToUpdate.uid) {
           return {...group, selected: !group.selected};
         } else return group;
       }),

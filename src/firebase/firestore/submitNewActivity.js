@@ -19,8 +19,7 @@ const submitNewActivity = (
       const data = {
         date,
         description,
-        groupDocumentID: group.groupDocumentID,
-        groupName: group.name,
+        group: {name: group.name, uid: group.uid},
         participants: userIsParticipant
           ? [{uid: userData.uid, name: userData.displayName}]
           : [],

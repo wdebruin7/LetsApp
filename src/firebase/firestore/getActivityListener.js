@@ -4,12 +4,14 @@ const getActivityListener = (userData, onSnapshot) => {
   if (!userData || !userData.groups) return () => {};
 
   const snapshotListeners = [];
-  const groupIDs = userData.groups.map((x) => x.groupDocumentID);
+  const groupIDs = userData.groups
+    .map((group) => group.uid)
+    .filter((uid) => uid);
 
-  groupIDs.forEach((groupDocumentID) => {
+  groupIDs.forEach((uid) => {
     const unsubscriber = firestore()
       .collection('activities')
-      .where('groupDocumentID', '==', groupDocumentID)
+      .where('group.uid', '==', uid)
       .onSnapshot(onSnapshot);
     snapshotListeners.push(() => unsubscriber());
   });

@@ -13,7 +13,7 @@ const HomeActiveDay = ({date, activities, setActiveDate}) => {
       <FlatList
         data={activities}
         renderItem={({item}) => (
-          <ActivityTile activity={item} group={groups[item.groupDocumentID]} />
+          <ActivityTile activity={item} group={groups[item.uid]} />
         )}
         keyExtractor={(item) => item.uid}
         style={styles.list}
