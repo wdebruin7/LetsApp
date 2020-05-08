@@ -17,9 +17,9 @@ const AppHeader = () => {
   const imageSource = {uri: downloadURL};
   const icon = {name: 'user', type: 'font-awesome', size: 24};
 
-  useEffect(() => {
-    if (profileImagePath) getDownloadURL(profileImagePath, setDownloadURL);
-  }, [profileImagePath]);
+  // useEffect(() => {
+  //   if (profileImagePath) getDownloadURL(profileImagePath, setDownloadURL);
+  // }, [profileImagePath]);
 
   return (
     <View style={styles.container}>
@@ -29,11 +29,11 @@ const AppHeader = () => {
           <Icon name="bell" type="font-awesome" size={30} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.touchable}>
-          {downloadURL ? (
-            <Avatar rounded source={imageSource} size={35} />
-          ) : (
-            <Avatar rounded icon={icon} size={35} />
-          )}
+          {/* {downloadURL ? ( */}
+          {/* <Avatar rounded source={imageSource} size={35} /> */}
+          {/* ) : ( */}
+          <Avatar rounded icon={icon} size={35} />
+          {/* )} */}
         </TouchableOpacity>
       </View>
     </View>
