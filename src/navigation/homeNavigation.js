@@ -4,6 +4,7 @@ import {
   Home,
   HomeActiveDate,
   ActivityDatePicker,
+  ActivityGroupPicker,
   ActivityAdder,
 } from '../screens';
 
@@ -15,6 +16,10 @@ const HomeNavigation = () => {
       <Stack.Screen name="HomeList" component={Home} />
       <Stack.Screen name="ActivityAdder" component={ActivityAdder} />
       <Stack.Screen name="ActivityDatePicker" component={ActivityDatePicker} />
+      <Stack.Screen
+        name="ActivityGroupPicker"
+        component={ActivityGroupPicker}
+      />
       <Stack.Screen name="HomeActiveDate" component={HomeActiveDate} />
     </Stack.Navigator>
   );

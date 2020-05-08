@@ -1,13 +1,24 @@
 import React, {useState} from 'react';
-import {SafeAreaView, Text, Button, View, Switch} from 'react-native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  SafeAreaView,
+  Text,
+  Button,
+  View,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Image,
+} from 'react-native';
 import {CalendarList} from 'react-native-calendars';
-import {useSelector} from 'react-redux';
-import {submitNewActivity} from '../../firebase';
 
 const ActivityDatePicker = () => {
-  const [markedDates, setMarkedDates] = useState({});
-  const userData = useSelector((state) => state.user.data || {});
-  const [groups, setGroups] = useState(userData.groups);
+  const {navigate} = useNavigation();
+  const route = useRoute();
+  let selectedDates = {};
+  if (route.params && route.params.selectedDates) {
+    selectedDates = route.params.selectedDates;
+  }
+  const [markedDates, setMarkedDates] = useState(selectedDates);
 
   const onDayPress = (day) => {
     const toUpdate = {...markedDates};
@@ -20,56 +31,71 @@ const ActivityDatePicker = () => {
     setMarkedDates(toUpdate);
   };
 
-  const onToggleSwitch = (groupToUpdate) => {
-    setGroups(
-      groups.map((group) => {
-        if (group.groupDocumentID === groupToUpdate.groupDocumentID) {
-          return {...group, selected: !group.selected};
-        } else return group;
-      }),
-    );
-  };
-
   const getSelectedDateStrings = () => {
     const dateStrings = Object.keys(markedDates);
     return dateStrings.filter((dateString) => markedDates[dateString].selected);
   };
 
-  const getSelectedGroups = () => {
-    return groups.filter((group) => group.selected);
-  };
-
-  const onSubmit = () => {
-    const selectedGroups = getSelectedGroups();
-    const selectedDateStrings = getSelectedDateStrings();
-    if (selectedGroups.length < 1) return;
-    if (selectedDateStrings.length < 1) return;
-    submitNewActivity(selectedGroups, selectedDateStrings);
-  };
-
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeView}>
+      <View style={styles.header}>
+        <TouchableWithoutFeedback
+          onPress={() => navigate('ActivityAdder', {markedDates})}>
+          <View style={styles.backButton}>
+            <Image
+              style={styles.chevron}
+              source={require('../../images/chevron-left.png')}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+        <Text style={styles.headerText}>Let's go!</Text>
+        <Text>When are you free?</Text>
+      </View>
       <CalendarList
         horizontal
         pagingEnabled
         minDate={new Date()}
         onDayPress={onDayPress}
         markedDates={markedDates}
+        pastScrollRange={0}
       />
       <Text>{getSelectedDateStrings().length} Dates selected</Text>
-      {groups.map((group) => (
-        <View>
-          <Text>{group.name}</Text>
-          <Switch
-            value={group.selected}
-            onValueChange={() => onToggleSwitch(group)}
-          />
-        </View>
-      ))}
-      <Text>{getSelectedGroups().length} Groups Selected</Text>
-      <Button title="Submit" onPress={() => onSubmit()} />
+      <Button title="Submit" onPress={() => {}} />
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  safeView: {
+    flex: 1,
+    backgroundColor: '#FCFEFF',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  backButton: {
+    height: 50,
+    width: 30,
+    paddingTop: 10,
+  },
+  chevron: {
+    height: 16,
+    width: 16,
+  },
+  header: {
+    height: 150,
+    width: '100%',
+    backgroundColor: '#D9E8FF',
+    justifyContent: 'center',
+    padding: 30,
+  },
+  headerText: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    fontFamily: 'AppleSDGothicNeo-Regular',
+  },
+});
 
 export default ActivityDatePicker;
