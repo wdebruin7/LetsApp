@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
+import Contacts from 'react-native-contacts';
+import {Platform} from 'react-native';
 import {useAuth} from './firebase/auth';
 import {SessionProvider} from './firebase/sessionContext';
 import AppContainer from './navigation';
@@ -76,6 +78,15 @@ const App = () => {
       groupUnsubscriber();
     };
   }, [userData, session]);
+
+  useEffect(() => {
+    if (Platform.OS === 'ios') {
+      Contacts.getAll((err, contacts) => {
+        if (err) throw err;
+        console.log(contacts);
+      });
+    }
+  }, []);
 
   return (
     <SessionProvider value={session}>

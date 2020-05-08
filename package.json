@@ -24,6 +24,7 @@
     "react-native": "0.62.1",
     "react-native-calendars": "^1.265.0",
     "react-native-cli": "^2.0.1",
+    "react-native-contacts": "^5.2.0",
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-image-picker": "^2.3.1",
