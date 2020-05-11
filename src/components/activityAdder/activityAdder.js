@@ -7,7 +7,7 @@ import {submitNewActivity} from '../../firebase';
 const ActivityAdder = ({visible, setVisible}) => {
   const [markedDates, setMarkedDates] = useState({});
   const userData = useSelector((state) => state.user.data || {});
-  const [groups, setGroups] = useState(userData.groups);
+  const [groups, setGroups] = useState(userData.groups || []);
 
   const onDayPress = (day) => {
     const toUpdate = {...markedDates};
