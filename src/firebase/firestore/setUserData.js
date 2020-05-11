@@ -10,14 +10,19 @@ const setUserData = async (newUserData) => {
   try {
     await firestore().runTransaction((transaction) => {
       return transaction.get(userRef).then((document) => {
-        const docData = !document.exists
-          ? {
+        const docData = document.exists
+          ? {...document.data(), ...newUserData}
+          : {
               displayName: user.displayName,
-              creationtime: user.metadata.creationTime,
               phoneNumber: user.phoneNumber,
               uid: user.uid,
-            }
-          : {...document.data(), ...newUserData};
+              activities: [],
+              groups: [],
+              email: user.email,
+              photoURL: user.photoURL,
+              userDataConfirmed: true,
+              ...newUserData,
+            };
         transaction.set(userRef, docData);
       });
     });

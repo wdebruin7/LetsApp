@@ -19,11 +19,11 @@ import {getDownloadURL} from '../../utils';
 
 const AccountCreation = () => {
   const session = useSession();
-  const userData = useSelector((state) => state.user.data);
+  const userData = useSelector((state) => state.user.data || {});
   const [displayName, setDisplayname] = useState('');
   const [photoURL, setPhotoURL] = useState('');
   const [localFilepath, setLocalFilepath] = useState('');
-  const [canSave, setCanSave] = useState(true);
+  const [canSave, setCanSave] = useState(false);
   const imgageSource = {uri: localFilepath || photoURL};
 
   useEffect(() => {
@@ -39,10 +39,10 @@ const AccountCreation = () => {
 
   useEffect(() => {
     if (!displayName && !localFilepath) return;
-    if (!localFilepath && userData.displayName === displayName) {
-      setCanSave(false);
-    } else {
+    if (localFilepath || userData.displayName !== displayName) {
       setCanSave(true);
+    } else {
+      setCanSave(false);
     }
   }, [userData, displayName, localFilepath]);
 
@@ -60,7 +60,7 @@ const AccountCreation = () => {
       saveData.profileImagePath = `${userData.uid}/profileImagePath`;
       setLocalFilepath('');
     }
-    if (displayName !== userData.displayName) {
+    if (displayName && displayName !== userData.displayName) {
       saveData.displayName = displayName;
     }
     try {

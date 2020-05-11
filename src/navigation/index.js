@@ -6,6 +6,7 @@ import AuthNavigation from './authNavigation';
 import AppNavigation from './appNavigation';
 import {useSession} from '../firebase';
 import {Initializing, AccountCreation} from '../screens';
+import onNewAuth from '../firebase/firestore/onNewAuth';
 
 const Stack = createStackNavigator();
 
