@@ -32,11 +32,19 @@ const getUpdatedActivities = (activityDays, activity, removed) => {
     ? newActivityDays
     : dayPresent
     ? newActivityDays.map((day) =>
-        day.date.getTime() === date.getTime()
+        day.date.getTime() !== date.getTime()
           ? day
-          : day.activities
-              .filter((elem) => elem.uid !== activity.uid)
-              .concat(activity),
+          : {
+              date: day.date,
+              activities: day.activities
+                .filter((elem) => elem.uid !== activity.uid)
+                .concat(activity)
+                .sort((a, b) => {
+                  if (a.group.name < b.group.name) return -1;
+                  else if (a.group.name > b.group.name) return 1;
+                  else return 0;
+                }),
+            },
       )
     : newActivityDays.concat({date, activities: [activity]}).sort((a, b) => {
         if (a.date < b.date) return -1;

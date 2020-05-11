@@ -44,7 +44,7 @@ const ActivityAdder = ({visible, setVisible}) => {
     const selectedDateStrings = getSelectedDateStrings();
     if (selectedGroups.length < 1) return;
     if (selectedDateStrings.length < 1) return;
-    submitNewActivity(selectedGroups, selectedDateStrings);
+    submitNewActivity(selectedGroups, selectedDateStrings, true, userData);
   };
 
   return (
