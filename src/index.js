@@ -65,7 +65,7 @@ const App = () => {
   }, [session.user]);
 
   useEffect(() => {
-    if (!userData) return;
+    if (!userData || !session.user) return;
     const activityUnsubscriber = getActivityListener(
       userData,
       onActivitySnapshot,
@@ -75,7 +75,7 @@ const App = () => {
       activityUnsubscriber();
       groupUnsubscriber();
     };
-  }, [userData]);
+  }, [userData, session]);
 
   return (
     <SessionProvider value={session}>

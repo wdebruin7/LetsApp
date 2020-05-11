@@ -39,7 +39,11 @@ const AccountCreation = () => {
 
   useEffect(() => {
     if (!displayName && !localFilepath) return;
-    if (localFilepath || userData.displayName !== displayName) {
+    if (
+      localFilepath ||
+      userData.displayName !== displayName ||
+      !userData.userDataConfirmed
+    ) {
       setCanSave(true);
     } else {
       setCanSave(false);
@@ -60,10 +64,14 @@ const AccountCreation = () => {
       saveData.profileImagePath = `${userData.uid}/profileImagePath`;
       setLocalFilepath('');
     }
-    if (displayName && displayName !== userData.displayName) {
+    if (
+      displayName &&
+      (displayName !== userData.displayName || !userData.userDataConfirmed)
+    ) {
       saveData.displayName = displayName;
     }
     try {
+      console.log(saveData);
       await setUserData(saveData);
       Alert.alert('Profile saved', "Let's get back to it!");
     } catch (err) {
