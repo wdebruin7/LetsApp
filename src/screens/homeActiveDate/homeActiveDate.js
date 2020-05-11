@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 import {useNavigation, useRoute, StackActions} from '@react-navigation/native';
 import {HomeActiveDay, AppHeader} from '../../components';
 
-const Home = () => {
+const HomeActiveDate = () => {
   const navigation = useNavigation();
   const activityDays = useSelector((state) => state.activities || []);
   const {activeDateTime} = useRoute().params || {};
@@ -54,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default HomeActiveDate;
