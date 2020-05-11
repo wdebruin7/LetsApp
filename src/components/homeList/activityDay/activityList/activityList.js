@@ -49,7 +49,7 @@ const ActivityList = ({activity, isLastElement}) => {
           <View style={styles.activityInfoElement}>
             <AntIcon name="staro" />
           </View>
-          <Text style={styles.activityInfoElement}>{activity.groupName}</Text>
+          <Text style={styles.activityInfoElement}>{activity.group.name}</Text>
           {avatars.length > 0 ? (
             <View style={styles.activityInfoElement}>{avatars[0]}</View>
           ) : null}

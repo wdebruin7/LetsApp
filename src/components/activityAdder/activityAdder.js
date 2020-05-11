@@ -23,7 +23,7 @@ const ActivityAdder = ({visible, setVisible}) => {
   const onToggleSwitch = (groupToUpdate) => {
     setGroups(
       groups.map((group) => {
-        if (group.groupDocumentID === groupToUpdate.groupDocumentID) {
+        if (group.uid === groupToUpdate.uid) {
           return {...group, selected: !group.selected};
         } else return group;
       }),
@@ -44,7 +44,7 @@ const ActivityAdder = ({visible, setVisible}) => {
     const selectedDateStrings = getSelectedDateStrings();
     if (selectedGroups.length < 1) return;
     if (selectedDateStrings.length < 1) return;
-    submitNewActivity(selectedGroups, selectedDateStrings);
+    submitNewActivity(selectedGroups, selectedDateStrings, true, userData);
   };
 
   return (
