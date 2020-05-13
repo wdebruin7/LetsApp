@@ -4,12 +4,12 @@ import {
   Text,
   View,
   StyleSheet,
-  Image,
   TouchableWithoutFeedback,
   Switch,
   TouchableOpacity,
 } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import {Icon} from 'react-native-elements';
 
 const ActivityAdder = () => {
   const {navigate} = useNavigation();
@@ -33,19 +33,16 @@ const ActivityAdder = () => {
         <View style={styles.header}>
           <TouchableWithoutFeedback onPress={() => navigate('HomeList')}>
             <View style={styles.backButton}>
-              <Image
-                style={styles.chevron}
-                source={require('../../images/chevron-left.png')}
-              />
+              <Icon name="chevron-left" type="entypo" />
             </View>
           </TouchableWithoutFeedback>
-          <Text style={styles.headerText}>Let's go!</Text>
+          <Text style={styles.headerText}>Let&apos;s go!</Text>
           <Text>When are you free?</Text>
         </View>
         <View>
           <View style={styles.rowItem}>
             <View style={styles.rowItemHeader}>
-              <Text style={styles.rowItemHeaderText}>I'm free</Text>
+              <Text style={styles.rowItemHeaderText}>I&apos;m free</Text>
               <Switch
                 disabled={true}
                 value={true}
@@ -64,10 +61,7 @@ const ActivityAdder = () => {
                   {getSelectedDateStrings().length} Dates selected
                 </Text>
               </View>
-              <Image
-                style={styles.chevron}
-                source={require('../../images/chevron-right.png')}
-              />
+              <Icon name="chevron-right" type="entypo" />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -80,10 +74,7 @@ const ActivityAdder = () => {
                   O groups selected
                 </Text>
               </View>
-              <Image
-                style={styles.chevron}
-                source={require('../../images/chevron-right.png')}
-              />
+              <Icon name="chevron-right" type="entypo" />
             </View>
           </TouchableOpacity>
         </View>

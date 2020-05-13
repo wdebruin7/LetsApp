@@ -7,9 +7,9 @@ import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
-  Image,
 } from 'react-native';
 import {CalendarList} from 'react-native-calendars';
+import {Icon} from 'react-native-elements';
 
 const ActivityDatePicker = () => {
   const {navigate} = useNavigation();
@@ -42,13 +42,10 @@ const ActivityDatePicker = () => {
         <TouchableWithoutFeedback
           onPress={() => navigate('ActivityAdder', {markedDates})}>
           <View style={styles.backButton}>
-            <Image
-              style={styles.chevron}
-              source={require('../../images/chevron-left.png')}
-            />
+            <Icon name="chevron-left" type="entypo" />
           </View>
         </TouchableWithoutFeedback>
-        <Text style={styles.headerText}>Let's go!</Text>
+        <Text style={styles.headerText}>Let&apos;s go!</Text>
         <Text>When are you free?</Text>
       </View>
       <CalendarList

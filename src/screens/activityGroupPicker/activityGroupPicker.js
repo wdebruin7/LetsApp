@@ -8,9 +8,9 @@ import {
   Switch,
   StyleSheet,
   TouchableWithoutFeedback,
-  Image,
 } from 'react-native';
 import {useSelector} from 'react-redux';
+import {Icon} from 'react-native-elements';
 
 const ActivityGroupPicker = () => {
   const userData = useSelector((state) => state.user.data || {});
@@ -36,13 +36,10 @@ const ActivityGroupPicker = () => {
       <View style={styles.header}>
         <TouchableWithoutFeedback onPress={() => navigate('ActivityAdder')}>
           <View style={styles.backButton}>
-            <Image
-              style={styles.chevron}
-              source={require('../../images/chevron-left.png')}
-            />
+            <Icon name="chevron-left" type="entypo" />
           </View>
         </TouchableWithoutFeedback>
-        <Text style={styles.headerText}>Let's go!</Text>
+        <Text style={styles.headerText}>Let&apos;s go!</Text>
         <Text>When are you free?</Text>
       </View>
       {groups.map((group) => (
