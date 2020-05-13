@@ -3,6 +3,7 @@ import {TouchableOpacity, StyleSheet, View, Text, Switch} from 'react-native';
 import {Avatar} from 'react-native-elements';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import {useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 import {toggleUserIsParticipant} from '../../../../firebase';
 
 const getAvatars = (participants) => {
@@ -27,6 +28,14 @@ const ActivityList = ({activity, isLastElement}) => {
       activity &&
       activity.participants.some((elem) => elem.uid === userData.uid),
   );
+  const {navigate} = useNavigation();
+
+  const onPress = () => {
+    navigate('Group', {
+      screen: 'GroupsHome',
+      params: {groupUID: activity.group.uid},
+    });
+  };
 
   const toggleSwitch = () => {
     if (!userData) return;
@@ -43,7 +52,8 @@ const ActivityList = ({activity, isLastElement}) => {
 
   return (
     <TouchableOpacity
-      style={isLastElement ? styles.touchableLastActivity : styles.touchable}>
+      style={isLastElement ? styles.touchableLastActivity : styles.touchable}
+      onPress={onPress}>
       <View style={styles.container}>
         <View style={styles.activityInfoView}>
           <View style={styles.activityInfoElement}>

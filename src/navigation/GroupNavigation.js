@@ -11,6 +11,7 @@ const GroupNavigation = () => {
         name="GroupsHome"
         component={Groups}
         options={{headerShown: false}}
+        initialParams
       />
       <Stack.Screen name="GroupInfo" component={GroupInfo} />
     </Stack.Navigator>

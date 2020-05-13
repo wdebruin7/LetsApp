@@ -1,10 +1,15 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, View, Text, FlatList} from 'react-native';
+import {SafeAreaView, StyleSheet, View, FlatList} from 'react-native';
 import {useSelector} from 'react-redux';
+import {useRoute, useNavigation} from '@react-navigation/native';
 import {GroupTile} from '../../components';
 
 const Groups = () => {
+  const {groupUID} = useRoute().params;
   const groups = useSelector((state) => state.groups || {});
+  const {navigate} = useNavigation();
+
+  if (groupUID) navigate('GroupInfo', {groupUID});
 
   return (
     <SafeAreaView style={styles.container}>

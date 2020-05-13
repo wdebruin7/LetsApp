@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, SafeAreaView, View, Text} from 'react-native';
 import {Avatar} from 'react-native-elements';
 import {useSelector} from 'react-redux';
@@ -7,18 +7,25 @@ import {FlatList} from 'react-native-gesture-handler';
 import {getGroupMembersString} from '../../utils';
 
 const GroupInfo = () => {
+  const {params} = useRoute();
   const userData = useSelector((state) => state.user.data || {});
+  const groups = useSelector((state) => state.groups || {});
   const activityDays = useSelector((state) => state.activities || []);
-  const route = useRoute();
-  const group = route.params.group || {};
 
-  const activities = activityDays
-    .map((day) =>
-      day.activities.filter(
-        (activity) => activity.groupDocumentID === group.uid,
-      ),
-    )
-    .flat();
+  const group = params.group || groups[params.groupUID] || {};
+  const [activities, setActivities] = useState([]);
+
+  useEffect(() => {
+    setActivities(
+      activityDays
+        .map((day) =>
+          day.activities.filter(
+            (activity) => activity.groupDocumentID === group.uid,
+          ),
+        )
+        .flat(),
+    );
+  }, [activityDays, group.uid]);
 
   return (
     <SafeAreaView>
