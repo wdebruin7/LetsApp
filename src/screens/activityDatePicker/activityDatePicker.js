@@ -3,7 +3,6 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   SafeAreaView,
   Text,
-  Button,
   View,
   StyleSheet,
   TouchableWithoutFeedback,
