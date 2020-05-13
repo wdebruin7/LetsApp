@@ -1,6 +1,5 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {version} from 'react';
 
 const onNewAuth = async () => {
   const user = auth().currentUser;
