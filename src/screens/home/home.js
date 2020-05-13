@@ -24,7 +24,7 @@ const Home = () => {
     <SafeAreaView style={styles.safeView}>
       <AppHeader />
       <HomeList activities={activityDays} setActiveDate={setActiveDate} />
-      <AddActivityButton onPress={() => navigate('ActivityAdder')} />
+      <AddActivityButton onPress={() => navigate('AddActivity')} />
     </SafeAreaView>
   );
 };

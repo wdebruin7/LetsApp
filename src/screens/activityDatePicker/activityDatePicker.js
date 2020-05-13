@@ -57,7 +57,6 @@ const ActivityDatePicker = () => {
         pastScrollRange={0}
       />
       <Text>{getSelectedDateStrings().length} Dates selected</Text>
-      <Button title="Submit" onPress={() => {}} />
     </SafeAreaView>
   );
 };

@@ -12,13 +12,12 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {Icon} from 'react-native-elements';
 
 const ActivityAdder = () => {
-  const {navigate} = useNavigation();
+  const navigation = useNavigation();
   const route = useRoute();
   let selectedDates = {};
   if (route.params && route.params.markedDates) {
     selectedDates = route.params.markedDates;
   }
-  console.log(selectedDates);
 
   const getSelectedDateStrings = () => {
     const dateStrings = Object.keys(selectedDates);
@@ -31,7 +30,7 @@ const ActivityAdder = () => {
     <SafeAreaView style={styles.safeView}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableWithoutFeedback onPress={() => navigate('HomeList')}>
+          <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
             <View style={styles.backButton}>
               <Icon name="chevron-left" type="entypo" />
             </View>
@@ -52,7 +51,9 @@ const ActivityAdder = () => {
             </View>
           </View>
           <TouchableOpacity
-            onPress={() => navigate('ActivityDatePicker', {selectedDates})}
+            onPress={() =>
+              navigation.navigate('ActivityDatePicker', {selectedDates})
+            }
             style={styles.rowItem}>
             <View style={styles.rowItemContent}>
               <View>
@@ -65,7 +66,7 @@ const ActivityAdder = () => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigate('ActivityGroupPicker')}
+            onPress={() => navigation.navigate('ActivityGroupPicker')}
             style={styles.rowItem}>
             <View style={styles.rowItemContent}>
               <View>
