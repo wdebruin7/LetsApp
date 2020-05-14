@@ -50,6 +50,6 @@ const getMonth = (date) => {
 };
 
 const getDisplayDate = (date) =>
-  `${getDayOfWeek(date)}, ${getMonth(date)} ${date.getDate()}`;
+  date ? `${getDayOfWeek(date)}, ${getMonth(date)} ${date.getDate()}` : '';
 
 export default getDisplayDate;
