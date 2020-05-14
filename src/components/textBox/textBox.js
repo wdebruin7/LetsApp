@@ -2,7 +2,17 @@ import React from 'react';
 import {TextInput, StyleSheet} from 'react-native';
 import Colors from '../../constants/colors';
 
-const TextBox = ({onChangeText, style, placeholder, value, notInteractive}) => {
+const TextBox = ({
+  onChangeText,
+  style,
+  placeholder,
+  value,
+  notInteractive,
+  onFocus,
+  onBlur,
+  placeholderTextColor,
+  keyboardType,
+}) => {
   return (
     <TextInput
       onChangeText={(e) => onChangeText(e)}
@@ -14,6 +24,10 @@ const TextBox = ({onChangeText, style, placeholder, value, notInteractive}) => {
       }
       placeholder={placeholder}
       value={value}
+      onFocus={onFocus}
+      onBlur={onBlur}
+      placeholderTextColor={placeholderTextColor}
+      keyboardType={keyboardType}
     />
   );
 };

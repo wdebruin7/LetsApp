@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
 import Colors from '../../constants/colors';
 
-const Button = ({onPress, buttonText, notInteractive, width}) => {
+const Button = ({onPress, buttonText, notInteractive, width, style}) => {
   return (
     <TouchableHighlight
       style={styles.container}
@@ -11,8 +11,8 @@ const Button = ({onPress, buttonText, notInteractive, width}) => {
       <View
         style={
           !notInteractive
-            ? {...styles.button, width}
-            : {...styles.button, width, ...styles.notInteractive}
+            ? {...styles.button, style}
+            : {...styles.button, ...styles.notInteractive, style}
         }>
         <Text style={styles.buttonText}>{buttonText}</Text>
       </View>
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   button: {
+    width: 150,
     height: 53,
     backgroundColor: Colors.primaryBlue,
     borderRadius: 5,
