@@ -31,7 +31,7 @@ const ActivityList = ({activity, isLastElement}) => {
   const {navigate} = useNavigation();
 
   const onPress = () => {
-    navigate('Group', {
+    navigate('Groups', {
       screen: 'GroupsHome',
       params: {groupUID: activity.group.uid},
     });

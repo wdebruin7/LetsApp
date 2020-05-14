@@ -9,7 +9,7 @@ const AppNavigation = () => {
   return (
     <Tab.Navigator initialRouteName="Home">
       <Tab.Screen name="Home" component={HomeNavigation} />
-      <Tab.Screen name="Group" component={GroupNavigation} />
+      <Tab.Screen name="Groups" component={GroupNavigation} />
     </Tab.Navigator>
   );
 };
