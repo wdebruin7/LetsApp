@@ -30,9 +30,10 @@ const ActivityDatePicker = () => {
     setMarkedDates(toUpdate);
   };
 
-  const getSelectedDateStrings = () => {
-    const dateStrings = Object.keys(markedDates);
-    return dateStrings.filter((dateString) => markedDates[dateString].selected);
+  const numSelectedDates = () => {
+    return Object.keys(markedDates).filter(
+      (dateString) => markedDates[dateString].selected,
+    ).length;
   };
 
   return (
@@ -55,7 +56,7 @@ const ActivityDatePicker = () => {
         markedDates={markedDates}
         pastScrollRange={0}
       />
-      <Text>{getSelectedDateStrings().length} Dates selected</Text>
+      <Text>{numSelectedDates()} Dates selected</Text>
     </SafeAreaView>
   );
 };

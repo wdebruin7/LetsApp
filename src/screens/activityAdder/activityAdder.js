@@ -1,28 +1,76 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   Text,
   View,
   StyleSheet,
-  TouchableWithoutFeedback,
   Switch,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Alert,
 } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {Icon} from 'react-native-elements';
+import {useSelector} from 'react-redux';
+import {submitNewActivity} from '../../firebase';
 
 const ActivityAdder = () => {
   const navigation = useNavigation();
-  const route = useRoute();
-  let selectedDates = {};
-  if (route.params && route.params.markedDates) {
-    selectedDates = route.params.markedDates;
-  }
+  const params = useRoute().params || {};
+  const userData = useSelector((state) => state.user.data || {});
+  const selectedDates = params.markedDates || {};
+  const groups = params.groups || userData.groups || [];
+  const [showError, setShowError] = useState(false);
+  const [canSave, setCanSave] = useState(false);
+  const [userIsParticipant, setUserIsParticipant] = useState(false);
 
   const getSelectedDateStrings = () => {
     const dateStrings = Object.keys(selectedDates);
     return dateStrings.filter(
       (dateString) => selectedDates[dateString].selected,
+    );
+  };
+
+  const getSelectedGroups = () => {
+    return groups.filter((group) => group.selected);
+  };
+
+  useEffect(() => {
+    setCanSave(
+      getSelectedDateStrings().length > 0 && getSelectedGroups().length > 0,
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDates, groups]);
+
+  useEffect(() => {
+    if (canSave) setShowError(false);
+  }, [canSave]);
+
+  const handleSave = () => {
+    if (!canSave) {
+      setShowError(true);
+      return;
+    }
+    setShowError(false);
+
+    // COMMENTED OUT FOR STYLE TESTING
+    // submitNewActivity(
+    //   getSelectedGroups(),
+    //   getSelectedDateStrings(),
+    //   userIsParticipant,
+    //   userData,
+    //   undefined,
+    // );
+
+    Alert.alert(
+      'save happens now :)',
+      'boobz',
+      [
+        {text: 'cancel', style: 'cancel'},
+        {text: 'default', style: 'default'},
+        {text: 'destructive', style: 'destructive'},
+      ],
+      {cancelable: false},
     );
   };
 
@@ -43,8 +91,8 @@ const ActivityAdder = () => {
             <View style={styles.rowItemHeader}>
               <Text style={styles.rowItemHeaderText}>I&apos;m free</Text>
               <Switch
-                disabled={true}
-                value={true}
+                value={userIsParticipant}
+                onValueChange={() => setUserIsParticipant(!userIsParticipant)}
                 thumbColor="#FFFFFF"
                 ios_backgroundColor="#009846"
               />
@@ -66,21 +114,33 @@ const ActivityAdder = () => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate('ActivityGroupPicker')}
+            onPress={() => navigation.navigate('ActivityGroupPicker', {groups})}
             style={styles.rowItem}>
             <View style={styles.rowItemContent}>
               <View>
                 <Text style={styles.contentTitleText}>Choose groups</Text>
                 <Text style={styles.contentSubtitleText}>
-                  O groups selected
+                  {getSelectedGroups().length} groups selected
                 </Text>
               </View>
               <Icon name="chevron-right" type="entypo" />
             </View>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => {}} style={styles.button}>
-          <Text style={styles.buttonText}>Save</Text>
+        {showError ? (
+          <Text>Select some dates and some groups to continue</Text>
+        ) : null}
+        <TouchableOpacity
+          onPress={handleSave}
+          activeOpacity={canSave ? 0.2 : 1.0}>
+          <View
+            style={
+              canSave
+                ? {...styles.button}
+                : {...styles.button, ...styles.notInteractive}
+            }>
+            <Text style={styles.buttonText}>Save</Text>
+          </View>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -172,6 +232,9 @@ const styles = StyleSheet.create({
     fontFamily: 'AppleSDGothicNeo-Regular',
     color: 'white',
     fontWeight: 'bold',
+  },
+  notInteractive: {
+    opacity: 0.2,
   },
 });
 

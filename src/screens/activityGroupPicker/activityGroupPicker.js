@@ -1,26 +1,24 @@
 import React, {useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   SafeAreaView,
   Text,
-  Button,
   View,
   Switch,
   StyleSheet,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {useSelector} from 'react-redux';
 import {Icon} from 'react-native-elements';
 
 const ActivityGroupPicker = () => {
-  const userData = useSelector((state) => state.user.data || {});
-  const [groups, setGroups] = useState(userData.groups);
+  const {params} = useRoute();
+  const [groups, setGroups] = useState(params ? params.groups || [] : []);
   const {navigate} = useNavigation();
 
   const onToggleSwitch = (groupToUpdate) => {
     setGroups(
       groups.map((group) => {
-        if (group.groupDocumentID === groupToUpdate.groupDocumentID) {
+        if (group.uid === groupToUpdate.uid) {
           return {...group, selected: !group.selected};
         } else return group;
       }),
@@ -31,10 +29,14 @@ const ActivityGroupPicker = () => {
     return groups.filter((group) => group.selected);
   };
 
+  const onGoBack = () => {
+    navigate('ActivityAdder', {groups});
+  };
+
   return (
     <SafeAreaView>
       <View style={styles.header}>
-        <TouchableWithoutFeedback onPress={() => navigate('ActivityAdder')}>
+        <TouchableWithoutFeedback onPress={() => onGoBack()}>
           <View style={styles.backButton}>
             <Icon name="chevron-left" type="entypo" />
           </View>
@@ -43,7 +45,7 @@ const ActivityGroupPicker = () => {
         <Text>When are you free?</Text>
       </View>
       {groups.map((group) => (
-        <View>
+        <View key={group.uid}>
           <Text>{group.name}</Text>
           <Switch
             value={group.selected}
@@ -52,7 +54,6 @@ const ActivityGroupPicker = () => {
         </View>
       ))}
       <Text>{getSelectedGroups().length} Groups Selected</Text>
-      <Button title="Submit" />
     </SafeAreaView>
   );
 };
