@@ -3,11 +3,9 @@ import {
   SafeAreaView,
   StyleSheet,
   TouchableWithoutFeedback,
-  TouchableHighlight,
   View,
   Text,
   Image,
-  TextInput,
   Keyboard,
   Alert,
 } from 'react-native';
@@ -16,6 +14,8 @@ import ImagePicker from 'react-native-image-picker';
 import {useSelector} from 'react-redux';
 import {useSession, setUserData} from '../../firebase';
 import {getDownloadURL} from '../../utils';
+import {Button, TextBox} from '../../components';
+import Colors from '../../constants/colors';
 
 const AccountCreation = () => {
   const session = useSession();
@@ -96,7 +96,7 @@ const AccountCreation = () => {
         <View style={styles.container}>
           <View style={styles.header}>
             <Text style={styles.logo}>Let's</Text>
-            <Text style={styles.subtitle}>Create your acount!</Text>
+            <Text style={styles.subtitle}>Create your account!</Text>
           </View>
           <TouchableWithoutFeedback onPress={hanldeImagePicker}>
             {localFilepath || photoURL ? (
@@ -111,27 +111,23 @@ const AccountCreation = () => {
           </TouchableWithoutFeedback>
           <View style={styles.verfificationBox}>
             <Text style={styles.infoTitleText}>Name</Text>
-            <TextInput
-              style={styles.textInput}
+            <TextBox
               value={displayName}
-              onChangeText={(e) => setDisplayname(e)}
+              onChangeText={setDisplayname}
               placeholder="Display Name"
             />
             <Text style={styles.infoTitleText}>Phone number</Text>
-            <View style={{...styles.textInput, ...styles.notInteractive}}>
-              <Text>{session.user && session.user.phoneNumber}</Text>
-            </View>
+            <TextBox
+              notInteractive={true}
+              value={session.user && session.user.phoneNumber}
+            />
           </View>
-          <TouchableHighlight
+          <Button
             onPress={handleSave}
-            disabled={!canSave}
-            style={
-              canSave
-                ? styles.button
-                : {...styles.button, ...styles.notInteractive}
-            }>
-            <Text style={styles.buttonText}>Save</Text>
-          </TouchableHighlight>
+            buttonText="save"
+            notInteractive={!canSave}
+            width={150}
+          />
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>
@@ -168,65 +164,26 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     margin: 10,
   },
-  textInput: {
-    fontSize: 13,
-    height: 36,
-    width: 220,
-    borderWidth: 1,
-    color: 'black',
-    borderColor: '#F1F3F6',
-    borderRadius: 25,
-    backgroundColor: '#F1F3F6',
-    paddingLeft: 20,
-    marginTop: 5,
-    marginBottom: 10,
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 18,
-    fontFamily: 'AppleSDGothicNeo-Regular',
-    color: '#0066FF',
-    fontWeight: 'bold',
-  },
   infoTitleText: {
     color: '#8D8D8D',
     fontFamily: 'AppleSDGothicNeo-Regular',
     marginTop: 10,
     paddingLeft: 10,
   },
-  button: {
-    height: 53,
-    width: 150,
-    backgroundColor: '#0066FF',
-    color: 'white',
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 10,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontFamily: 'AppleSDGothicNeo-Regular',
-    color: 'white',
-    fontWeight: 'bold',
-  },
   profilePhotoText: {
     fontSize: 16,
     fontFamily: 'AppleSDGothicNeo-Regular',
-    color: '#0066FF',
+    color: Colors.primaryBlue,
     textAlign: 'center',
     width: 90,
   },
   profilePhoto: {
     height: 140,
     width: 140,
-    backgroundColor: '#EBF0F3',
+    backgroundColor: Colors.lightGrey,
     borderRadius: 140,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  notInteractive: {
-    opacity: 0.3,
   },
 });
 
