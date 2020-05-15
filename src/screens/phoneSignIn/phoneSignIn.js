@@ -11,6 +11,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import PhoneInput from 'react-native-phone-input';
 import {normalizePhoneNumber, validatePhoneNumber} from '../../utils';
+import {Button} from '../../components';
 
 const PhoneSignIn = () => {
   // If null, no SMS has been sent
@@ -59,6 +60,7 @@ const PhoneSignIn = () => {
                 this.phone = ref;
               }}
               textStyle={styles.textInput}
+              // eslint-disable-next-line react-native/no-inline-styles
               style={{width: 300}}
               value={phoneNumber}
               onChangePhoneNumber={handleNumberChange}
@@ -66,11 +68,7 @@ const PhoneSignIn = () => {
                 setPhoneNumber(`+${this.phone.getCountryCode()}`)
               }
             />
-            <TouchableWithoutFeedback onPress={handleSubmit}>
-              <View style={styles.button}>
-                <Text style={styles.buttonText}>Send Code</Text>
-              </View>
-            </TouchableWithoutFeedback>
+            <Button onPress={handleSubmit} buttonText="Send Code" />
             {error ? <Text>{error}</Text> : null}
           </View>
         </View>
@@ -128,21 +126,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'AppleSDGothicNeo-Regular',
     color: '#0066FF',
-    fontWeight: 'bold',
-  },
-  button: {
-    height: 53,
-    width: 150,
-    backgroundColor: '#0066FF',
-    color: 'white',
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    fontSize: 16,
-    fontFamily: 'AppleSDGothicNeo-Regular',
-    color: 'white',
     fontWeight: 'bold',
   },
   graphic: {

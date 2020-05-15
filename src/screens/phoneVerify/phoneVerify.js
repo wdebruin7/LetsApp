@@ -6,11 +6,12 @@ import {
   View,
   Text,
   Image,
-  TextInput,
   Keyboard,
 } from 'react-native';
 import {useRoute} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import {Button, TextBox} from '../../components';
+import Colors from '../../constants/colors';
 
 const PhoneVerify = () => {
   const [confirmtionCode, setConfirmationCode] = useState('');
@@ -56,22 +57,17 @@ const PhoneVerify = () => {
           <View style={styles.verfificationBox}>
             <Text style={styles.title}>Verification code</Text>
             <Text>Enter the code sent to</Text>
-            <Text style={{color: '#0066FF'}}>{phoneNumber}</Text>
-            <TextInput
+            <Text style={{color: Colors.primaryBlue}}>{phoneNumber}</Text>
+            <TextBox
               value={confirmtionCode}
               onChangeText={setConfirmationCode}
-              style={styles.textInput}
               placeholder="123456"
               keyboardType="number-pad"
               placeholderTextColor="#8D8D8D"
               onFocus={() => changeFocus(true)}
               onBlur={() => changeFocus(false)}
             />
-            <TouchableWithoutFeedback onPress={() => confirmCode()}>
-              <View style={styles.button}>
-                <Text style={styles.buttonText}>Verify</Text>
-              </View>
-            </TouchableWithoutFeedback>
+            <Button onPress={() => confirmCode()} buttonText="Verify" />
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -111,37 +107,10 @@ const styles = StyleSheet.create({
     flex: 3,
     margin: 20,
   },
-  textInput: {
-    fontSize: 13,
-    height: 36,
-    width: 262,
-    borderWidth: 1,
-    color: 'black',
-    borderColor: '#F1F3F6',
-    borderRadius: 25,
-    backgroundColor: '#F1F3F6',
-    paddingLeft: 20,
-    margin: 20,
-  },
   title: {
     fontSize: 18,
     fontFamily: 'AppleSDGothicNeo-Regular',
-    color: '#0066FF',
-    fontWeight: 'bold',
-  },
-  button: {
-    height: 53,
-    width: 150,
-    backgroundColor: '#0066FF',
-    color: 'white',
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    fontSize: 16,
-    fontFamily: 'AppleSDGothicNeo-Regular',
-    color: 'white',
+    color: Colors.primaryBlue,
     fontWeight: 'bold',
   },
   graphic: {
