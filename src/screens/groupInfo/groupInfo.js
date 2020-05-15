@@ -1,10 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, SafeAreaView, View, Text} from 'react-native';
-import {Avatar} from 'react-native-elements';
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import {Avatar, Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
 import {FlatList} from 'react-native-gesture-handler';
 import {getGroupMembersString} from '../../utils';
+import {AddActivityButton} from '../../components';
 
 const GroupInfo = () => {
   const {params} = useRoute();
@@ -19,9 +26,7 @@ const GroupInfo = () => {
     setActivities(
       activityDays
         .map((day) =>
-          day.activities.filter(
-            (activity) => activity.groupDocumentID === group.uid,
-          ),
+          day.activities.filter((activity) => activity.group.uid === group.uid),
         )
         .flat(),
     );
@@ -30,10 +35,20 @@ const GroupInfo = () => {
   return (
     <SafeAreaView>
       <View>
-        {group.photoRefURL ? <Avatar /> : null}
         <View>
-          <Text>{group.name}</Text>
-          <Text>{getGroupMembersString(group, userData)}</Text>
+          {group.photoRefURL ? <Avatar /> : null}
+          <View>
+            <Text>{group.name}</Text>
+            <Text>{getGroupMembersString(group, userData)}</Text>
+          </View>
+        </View>
+        <View>
+          <TouchableOpacity>
+            <Icon name="person-add" type="material-icons" />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Icon name="link" type="material-icons" />
+          </TouchableOpacity>
         </View>
       </View>
       <FlatList
@@ -41,6 +56,7 @@ const GroupInfo = () => {
         renderItem={({item}) => <Text>{item.description}</Text>}
         keyExtractor={(item) => item.uid}
       />
+      <AddActivityButton onPress={() => {}} />
     </SafeAreaView>
   );
 };

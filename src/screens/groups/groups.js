@@ -20,6 +20,10 @@ const Groups = () => {
   const [groupSearchString, setGroupSearchString] = useState('');
   const [filteredGroups, setFilteredGroups] = useState(groups);
 
+  const onPressCreate = () => {
+    navigate('GroupCreate');
+  };
+
   if (groupUID) navigate('GroupInfo', {groupUID});
 
   useEffect(() => {
@@ -39,7 +43,7 @@ const Groups = () => {
     <SafeAreaView style={styles.container}>
       <AppHeader />
       <View style={styles.topTile}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPressCreate}>
           <Text>Create new group</Text>
         </TouchableOpacity>
         <TextInput

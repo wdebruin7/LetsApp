@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Groups, GroupInfo} from '../screens';
+import {Groups, GroupInfo, GroupCreate} from '../screens';
 
 const Stack = createStackNavigator();
 
@@ -14,6 +14,7 @@ const GroupNavigation = () => {
         initialParams
       />
       <Stack.Screen name="GroupInfo" component={GroupInfo} />
+      <Stack.Screen name="GroupCreate" component={GroupCreate} />
     </Stack.Navigator>
   );
 };

@@ -13,7 +13,7 @@ const getGroupMembersString = (group, userData) => {
     default:
       return 'You'
         .concat(otherMembers.slice(0, 1).map((member) => `, ${member.name}`))
-        .concat(`+ ${otherMembers.length - 2} more`);
+        .concat(` + ${otherMembers.length - 2} more`);
   }
 };
 
