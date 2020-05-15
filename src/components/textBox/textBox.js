@@ -7,7 +7,7 @@ const TextBox = ({
   style,
   placeholder,
   value,
-  notInteractive,
+  disabled,
   onFocus,
   onBlur,
   placeholderTextColor,
@@ -16,11 +16,11 @@ const TextBox = ({
   return (
     <TextInput
       onChangeText={(e) => onChangeText(e)}
-      editable={!notInteractive}
+      editable={!disabled}
       style={
-        !notInteractive
+        !disabled
           ? {...styles.textBox, ...style}
-          : {...styles.textBox, ...styles.notInteractive, ...style}
+          : {...styles.textBox, ...styles.disabled, ...style}
       }
       placeholder={placeholder}
       value={value}
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     justifyContent: 'center',
   },
-  notInteractive: {
+  disabled: {
     opacity: 0.3,
   },
 });

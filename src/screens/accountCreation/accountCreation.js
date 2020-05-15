@@ -118,14 +118,14 @@ const AccountCreation = () => {
             />
             <Text style={styles.infoTitleText}>Phone number</Text>
             <TextBox
-              notInteractive={true}
+              disabled={true}
               value={session.user && session.user.phoneNumber}
             />
           </View>
           <Button
             onPress={handleSave}
             buttonText="save"
-            notInteractive={!canSave}
+            disabled={!canSave}
             width={150}
           />
         </View>
