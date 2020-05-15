@@ -4,3 +4,6 @@ export {default as Initializing} from './initializing';
 export {default as PhoneSignIn} from './phoneSignIn';
 export {default as PhoneVerify} from './phoneVerify';
 export {default as HomeActiveDate} from './homeActiveDate';
+export {default as Groups} from './groups';
+export {default as GroupInfo} from './groupInfo';
+export {default as GroupCreate} from './groupCreate';

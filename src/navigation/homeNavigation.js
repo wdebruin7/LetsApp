@@ -4,7 +4,7 @@ import {Home, HomeActiveDate} from '../screens';
 
 const Stack = createStackNavigator();
 
-const HomeNavigator = () => {
+const HomeNavigation = () => {
   return (
     <Stack.Navigator headerMode="none" initialRouteName="Home">
       <Stack.Screen name="HomeList" component={Home} />
@@ -13,4 +13,4 @@ const HomeNavigator = () => {
   );
 };
 
-export default HomeNavigator;
+export default HomeNavigation;

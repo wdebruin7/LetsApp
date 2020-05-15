@@ -1,7 +1,7 @@
 import React from 'react';
-import moment from 'moment';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {Icon} from 'react-native-elements';
+import {getDisplayDate} from '../../../utils';
 
 const DateHeader = ({date, setActiveDate}) => {
   const onPressX = () => {
@@ -10,7 +10,7 @@ const DateHeader = ({date, setActiveDate}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{moment(date).format('dddd, MMM D')}</Text>
+      <Text style={styles.text}>{getDisplayDate(date)}</Text>
       <TouchableOpacity onPress={onPressX}>
         <Icon
           type="antdesign"
