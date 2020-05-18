@@ -23,18 +23,19 @@ const ActivityAdder = () => {
   const navigation = useNavigation();
   const params = useRoute().params || {};
   const userData = useSelector((state) => state.user.data || {});
+  const userGroups = useSelector((state) => state.groups || {});
 
   const {dateTime, groupUID} = params;
   const initMarkedDates = {};
   if (dateTime) {
     initMarkedDates[getDateTimeString(new Date(dateTime))] = {selected: true};
   }
-  const markedDates = params.markedDates || initMarkedDates;
-  const groups = params.groups || userData.groups || [];
-
   if (groupUID) {
-    groups[groups.findIndex((group) => group.uid === groupUID)].selected = true;
+    userGroups[groupUID].selected = true;
   }
+
+  const markedDates = params.markedDates || initMarkedDates;
+  const groups = params.groups || userGroups;
 
   const [canSave, setCanSave] = useState(false);
   const [userIsParticipant, setUserIsParticipant] = useState(false);
@@ -44,13 +45,14 @@ const ActivityAdder = () => {
     return dateStrings.filter((dateString) => markedDates[dateString].selected);
   };
 
-  const getSelectedGroups = () => {
-    return groups.filter((group) => group.selected);
+  const getSelectedGroupUIDs = () => {
+    const groupUIDs = Object.keys(groups);
+    return groupUIDs.filter((uid) => groups[uid].selected);
   };
 
   useEffect(() => {
     setCanSave(
-      getSelectedDateStrings().length > 0 && getSelectedGroups().length > 0,
+      getSelectedDateStrings().length > 0 && getSelectedGroupUIDs().length > 0,
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [markedDates, groups]);
@@ -104,7 +106,7 @@ const ActivityAdder = () => {
   };
 
   const getGroupsSubtitle = () => {
-    const numSelectedGroups = getSelectedGroups().length;
+    const numSelectedGroups = getSelectedGroupUIDs().length;
     const s = numSelectedGroups === 1 ? '' : 's';
     return `${numSelectedGroups} group${s} selected`;
   };

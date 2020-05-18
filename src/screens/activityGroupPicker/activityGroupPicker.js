@@ -4,29 +4,48 @@ import {
   SafeAreaView,
   Text,
   View,
-  Switch,
   StyleSheet,
   TouchableWithoutFeedback,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
+import {GroupSelect} from '../../components';
 
 const ActivityGroupPicker = () => {
   const {params} = useRoute();
-  const [groups, setGroups] = useState(params ? params.groups || [] : []);
+  const [groups, setGroups] = useState(params ? params.groups || {} : {});
   const {navigate} = useNavigation();
+  const [filterString, setFilterString] = useState('');
 
   const onToggleSwitch = (groupToUpdate) => {
-    setGroups(
-      groups.map((group) => {
-        if (group.uid === groupToUpdate.uid) {
-          return {...group, selected: !group.selected};
-        } else return group;
-      }),
-    );
+    const updatedGroup = groups[groupToUpdate.uid];
+    updatedGroup.selected = !updatedGroup.selected;
+
+    const updatedGroups = {...groups};
+    updatedGroups[groupToUpdate.uid] = updatedGroup;
+
+    setGroups(updatedGroups);
   };
 
-  const getSelectedGroups = () => {
-    return groups.filter((group) => group.selected);
+  const getSelectedGroupUIDs = () => {
+    const groupUIDs = Object.keys(groups);
+    return groupUIDs.filter((uid) => groups[uid].selected);
+  };
+
+  const getSortedFilteredGroupsArray = () => {
+    const sortedGroupsArray = Object.values(groups).sort((a, b) => {
+      if (a.name < b.name) return -1;
+      else if (a.name === b.name) return 0;
+      else return 1;
+    });
+
+    return filterString
+      ? sortedGroupsArray.filter((group) =>
+          group.name
+            .trim()
+            .toLowerCase()
+            .includes(filterString.trim().toLowerCase()),
+        )
+      : sortedGroupsArray;
   };
 
   const onGoBack = () => {
@@ -44,16 +63,13 @@ const ActivityGroupPicker = () => {
         <Text style={styles.headerText}>Let&apos;s go!</Text>
         <Text>When are you free?</Text>
       </View>
-      {groups.map((group) => (
-        <View key={group.uid}>
-          <Text>{group.name}</Text>
-          <Switch
-            value={group.selected}
-            onValueChange={() => onToggleSwitch(group)}
-          />
-        </View>
+      {getSortedFilteredGroupsArray().map((group) => (
+        <GroupSelect
+          onToggleGroup={() => onToggleSwitch(group)}
+          group={group}
+        />
       ))}
-      <Text>{getSelectedGroups().length} Groups Selected</Text>
+      <Text>{getSelectedGroupUIDs().length} Groups Selected</Text>
     </SafeAreaView>
   );
 };
