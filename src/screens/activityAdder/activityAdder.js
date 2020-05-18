@@ -30,6 +30,13 @@ const ActivityAdder = () => {
   const [canSave, setCanSave] = useState(false);
   const [userIsParticipant, setUserIsParticipant] = useState(false);
 
+  useEffect(() => {
+    setCanSave(
+      getSelectedDateStrings().length > 0 && getSelectedGroupUIDs().length > 0,
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [markedDates, groups]);
+
   if (groupUID) {
     groups[groupUID].selected = true;
   }
@@ -46,13 +53,6 @@ const ActivityAdder = () => {
     const groupUIDs = Object.keys(groups);
     return groupUIDs.filter((uid) => groups[uid].selected);
   };
-
-  useEffect(() => {
-    setCanSave(
-      getSelectedDateStrings().length > 0 && getSelectedGroupUIDs().length > 0,
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [markedDates, groups]);
 
   const handleSave = () => {
     if (!canSave) {
