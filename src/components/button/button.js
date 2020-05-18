@@ -11,8 +11,8 @@ const Button = ({onPress, buttonText, disabled, style}) => {
       <View
         style={
           !disabled
-            ? {...styles.button, style}
-            : {...styles.button, ...styles.disabled, style}
+            ? {...styles.button, ...style}
+            : {...styles.button, ...styles.disabled, ...style}
         }>
         <Text style={styles.buttonText}>{buttonText}</Text>
       </View>

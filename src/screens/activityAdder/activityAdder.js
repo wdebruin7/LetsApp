@@ -13,6 +13,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import {submitNewActivity} from '../../firebase';
+import {Button} from '../../components';
 
 const getDateTimeString = (date) => {
   return `${date.getYear()}-${date.getMonth()}-${date.getDate()}`;
@@ -35,7 +36,6 @@ const ActivityAdder = () => {
     groups[groups.findIndex((group) => group.uid === groupUID)].selected = true;
   }
 
-  const [showError, setShowError] = useState(false);
   const [canSave, setCanSave] = useState(false);
   const [userIsParticipant, setUserIsParticipant] = useState(false);
 
@@ -55,16 +55,10 @@ const ActivityAdder = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [markedDates, groups]);
 
-  useEffect(() => {
-    if (canSave) setShowError(false);
-  }, [canSave]);
-
   const handleSave = () => {
     if (!canSave) {
-      setShowError(true);
       return;
     }
-    setShowError(false);
 
     // COMMENTED OUT FOR STYLE TESTING
     // submitNewActivity(
@@ -127,58 +121,45 @@ const ActivityAdder = () => {
           <Text style={styles.headerText}>Let&apos;s go!</Text>
           <Text>When are you free?</Text>
         </View>
-        <View>
-          <View style={styles.rowItem}>
-            <View style={styles.rowItemHeader}>
-              <Text style={styles.rowItemHeaderText}>I&apos;m free</Text>
-              <Switch
-                value={userIsParticipant}
-                onValueChange={onChangeSwitch}
-                thumbColor="#FFFFFF"
-                ios_backgroundColor="#009846"
-              />
-            </View>
+        <View style={styles.rowItem}>
+          <View style={styles.rowItemHeader}>
+            <Text style={styles.rowItemHeaderText}>I&apos;m free</Text>
+            <Switch
+              value={userIsParticipant}
+              onValueChange={onChangeSwitch}
+              thumbColor="#FFFFFF"
+              ios_backgroundColor="#009846"
+            />
           </View>
-          <TouchableOpacity onPress={onPressChooseDates} style={styles.rowItem}>
-            <View style={styles.rowItemContent}>
-              <View>
-                <Text style={styles.contentTitleText}>Choose dates</Text>
-                <Text style={styles.contentSubtitleText}>
-                  {getDatesSubtitle()}
-                </Text>
-              </View>
-              <Icon name="chevron-right" type="entypo" />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={onPressChooseGroups}
-            style={styles.rowItem}>
-            <View style={styles.rowItemContent}>
-              <View>
-                <Text style={styles.contentTitleText}>Choose groups</Text>
-                <Text style={styles.contentSubtitleText}>
-                  {getGroupsSubtitle()}
-                </Text>
-              </View>
-              <Icon name="chevron-right" type="entypo" />
-            </View>
-          </TouchableOpacity>
         </View>
-        {showError ? (
-          <Text>Select some dates and some groups to continue</Text>
-        ) : null}
-        <TouchableOpacity
-          onPress={handleSave}
-          activeOpacity={canSave ? 0.2 : 1.0}>
-          <View
-            style={
-              canSave
-                ? {...styles.button}
-                : {...styles.button, ...styles.notInteractive}
-            }>
-            <Text style={styles.buttonText}>Save</Text>
+        <TouchableOpacity onPress={onPressChooseDates} style={styles.rowItem}>
+          <View style={styles.rowItemContent}>
+            <View>
+              <Text style={styles.contentTitleText}>Choose dates</Text>
+              <Text style={styles.contentSubtitleText}>
+                {getDatesSubtitle()}
+              </Text>
+            </View>
+            <Icon name="chevron-right" type="entypo" />
           </View>
         </TouchableOpacity>
+        <TouchableOpacity onPress={onPressChooseGroups} style={styles.rowItem}>
+          <View style={styles.rowItemContent}>
+            <View>
+              <Text style={styles.contentTitleText}>Choose groups</Text>
+              <Text style={styles.contentSubtitleText}>
+                {getGroupsSubtitle()}
+              </Text>
+            </View>
+            <Icon name="chevron-right" type="entypo" />
+          </View>
+        </TouchableOpacity>
+        <Button
+          onPress={handleSave}
+          buttonText="Save"
+          disabled={!canSave}
+          style={styles.button}
+        />
       </View>
     </SafeAreaView>
   );
@@ -255,23 +236,7 @@ const styles = StyleSheet.create({
     color: '#BCBCBC',
   },
   button: {
-    height: 53,
     width: 250,
-    backgroundColor: '#0066FF',
-    color: 'white',
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 30,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontFamily: 'AppleSDGothicNeo-Regular',
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  notInteractive: {
-    opacity: 0.2,
   },
 });
 
