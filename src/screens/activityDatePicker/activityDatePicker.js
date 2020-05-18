@@ -36,11 +36,14 @@ const ActivityDatePicker = () => {
     ).length;
   };
 
+  const onPressBack = () => {
+    navigate('ActivityAdder', {markedDates});
+  };
+
   return (
     <SafeAreaView style={styles.safeView}>
       <View style={styles.header}>
-        <TouchableWithoutFeedback
-          onPress={() => navigate('ActivityAdder', {markedDates})}>
+        <TouchableWithoutFeedback onPress={onPressBack}>
           <View style={styles.backButton}>
             <Icon name="chevron-left" type="entypo" />
           </View>

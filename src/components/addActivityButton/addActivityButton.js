@@ -1,10 +1,20 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {Icon} from 'react-native-elements';
+import {useNavigation} from '@react-navigation/native';
 
-const AddActivityButton = ({onPress}) => {
+const AddActivityButton = ({dateTime, groupUID}) => {
+  const {navigate} = useNavigation();
+
+  const onPress = () => {
+    navigate('AddActivity', {
+      screen: 'ActivityAdder',
+      params: {dateTime, groupUID},
+    });
+  };
+
   return (
-    <TouchableOpacity style={styles.addButton} onPress={() => onPress()}>
+    <TouchableOpacity style={styles.addButton} onPress={onPress}>
       <Icon
         name="plus"
         type="entypo"

@@ -14,21 +14,34 @@ import {Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import {submitNewActivity} from '../../firebase';
 
+const getDateTimeString = (date) => {
+  return `${date.getYear()}-${date.getMonth()}-${date.getDate()}`;
+};
+
 const ActivityAdder = () => {
   const navigation = useNavigation();
   const params = useRoute().params || {};
   const userData = useSelector((state) => state.user.data || {});
-  const selectedDates = params.markedDates || {};
+
+  const {dateTime, groupUID} = params;
+  const initMarkedDates = {};
+  if (dateTime) {
+    initMarkedDates[getDateTimeString(new Date(dateTime))] = {selected: true};
+  }
+  const markedDates = params.markedDates || initMarkedDates;
   const groups = params.groups || userData.groups || [];
+
+  if (groupUID) {
+    groups[groups.findIndex((group) => group.uid === groupUID)].selected = true;
+  }
+
   const [showError, setShowError] = useState(false);
   const [canSave, setCanSave] = useState(false);
   const [userIsParticipant, setUserIsParticipant] = useState(false);
 
   const getSelectedDateStrings = () => {
-    const dateStrings = Object.keys(selectedDates);
-    return dateStrings.filter(
-      (dateString) => selectedDates[dateString].selected,
-    );
+    const dateStrings = Object.keys(markedDates);
+    return dateStrings.filter((dateString) => markedDates[dateString].selected);
   };
 
   const getSelectedGroups = () => {
@@ -40,7 +53,7 @@ const ActivityAdder = () => {
       getSelectedDateStrings().length > 0 && getSelectedGroups().length > 0,
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedDates, groups]);
+  }, [markedDates, groups]);
 
   useEffect(() => {
     if (canSave) setShowError(false);
@@ -74,11 +87,39 @@ const ActivityAdder = () => {
     );
   };
 
+  const onPressBack = () => {
+    navigation.goBack();
+  };
+
+  const onChangeSwitch = () => setUserIsParticipant(!userIsParticipant);
+
+  const onPressChooseDates = () => {
+    navigation.navigate('ActivityDatePicker', {
+      selectedDates: markedDates,
+    });
+  };
+
+  const onPressChooseGroups = () => {
+    navigation.navigate('ActivityGroupPicker', {groups});
+  };
+
+  const getDatesSubtitle = () => {
+    const numSelectedDates = getSelectedDateStrings().length;
+    const s = numSelectedDates === 1 ? '' : 's';
+    return `${numSelectedDates} Date${s} selected`;
+  };
+
+  const getGroupsSubtitle = () => {
+    const numSelectedGroups = getSelectedGroups().length;
+    const s = numSelectedGroups === 1 ? '' : 's';
+    return `${numSelectedGroups} group${s} selected`;
+  };
+
   return (
     <SafeAreaView style={styles.safeView}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+          <TouchableWithoutFeedback onPress={onPressBack}>
             <View style={styles.backButton}>
               <Icon name="chevron-left" type="entypo" />
             </View>
@@ -92,35 +133,31 @@ const ActivityAdder = () => {
               <Text style={styles.rowItemHeaderText}>I&apos;m free</Text>
               <Switch
                 value={userIsParticipant}
-                onValueChange={() => setUserIsParticipant(!userIsParticipant)}
+                onValueChange={onChangeSwitch}
                 thumbColor="#FFFFFF"
                 ios_backgroundColor="#009846"
               />
             </View>
           </View>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('ActivityDatePicker', {selectedDates})
-            }
-            style={styles.rowItem}>
+          <TouchableOpacity onPress={onPressChooseDates} style={styles.rowItem}>
             <View style={styles.rowItemContent}>
               <View>
                 <Text style={styles.contentTitleText}>Choose dates</Text>
                 <Text style={styles.contentSubtitleText}>
-                  {getSelectedDateStrings().length} Dates selected
+                  {getDatesSubtitle()}
                 </Text>
               </View>
               <Icon name="chevron-right" type="entypo" />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate('ActivityGroupPicker', {groups})}
+            onPress={onPressChooseGroups}
             style={styles.rowItem}>
             <View style={styles.rowItemContent}>
               <View>
                 <Text style={styles.contentTitleText}>Choose groups</Text>
                 <Text style={styles.contentSubtitleText}>
-                  {getSelectedGroups().length} groups selected
+                  {getGroupsSubtitle()}
                 </Text>
               </View>
               <Icon name="chevron-right" type="entypo" />

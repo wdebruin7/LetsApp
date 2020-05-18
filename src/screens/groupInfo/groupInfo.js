@@ -56,7 +56,7 @@ const GroupInfo = () => {
         renderItem={({item}) => <Text>{item.description}</Text>}
         keyExtractor={(item) => item.uid}
       />
-      <AddActivityButton onPress={() => {}} />
+      <AddActivityButton groupUID={group.uid} />
     </SafeAreaView>
   );
 };
