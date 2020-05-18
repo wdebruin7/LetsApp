@@ -6,9 +6,10 @@ import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
+  FlatList,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
-import {GroupSelect} from '../../components';
+import {GroupSelect, Button} from '../../components';
 
 const ActivityGroupPicker = () => {
   const {params} = useRoute();
@@ -53,7 +54,7 @@ const ActivityGroupPicker = () => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeView}>
       <View style={styles.header}>
         <TouchableWithoutFeedback onPress={() => onGoBack()}>
           <View style={styles.backButton}>
@@ -63,13 +64,22 @@ const ActivityGroupPicker = () => {
         <Text style={styles.headerText}>Let&apos;s go!</Text>
         <Text>When are you free?</Text>
       </View>
-      {getSortedFilteredGroupsArray().map((group) => (
-        <GroupSelect
-          onToggleGroup={() => onToggleSwitch(group)}
-          group={group}
-        />
-      ))}
-      <Text>{getSelectedGroupUIDs().length} Groups Selected</Text>
+      <FlatList
+        style={styles.list}
+        data={getSortedFilteredGroupsArray()}
+        renderItem={({item}) => (
+          <GroupSelect
+            group={item}
+            onToggleGroup={() => onToggleSwitch(item)}
+          />
+        )}
+        keyExtractor={(item) => item.uid}
+      />
+      <Button
+        style={styles.button}
+        buttonText={`Select ${getSelectedGroupUIDs().length} groups`}
+        onPress={() => onGoBack()}
+      />
     </SafeAreaView>
   );
 };
@@ -77,7 +87,8 @@ const ActivityGroupPicker = () => {
 const styles = StyleSheet.create({
   safeView: {
     flex: 1,
-    backgroundColor: '#FCFEFF',
+    backgroundColor: '#FFFFFF',
+    // alignItems: 'center',
   },
   container: {
     flex: 1,
@@ -104,6 +115,12 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     fontFamily: 'AppleSDGothicNeo-Regular',
+  },
+  list: {
+    flex: 1,
+  },
+  button: {
+    alignSelf: 'center',
   },
 });
 

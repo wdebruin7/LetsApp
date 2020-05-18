@@ -12,6 +12,7 @@ import {
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
+import {cloneDeep} from 'lodash';
 import {submitNewActivity} from '../../firebase';
 import {Button} from '../../components';
 
@@ -22,23 +23,19 @@ const getDateTimeString = (date) => {
 const ActivityAdder = () => {
   const navigation = useNavigation();
   const params = useRoute().params || {};
-  const userData = useSelector((state) => state.user.data || {});
   const userGroups = useSelector((state) => state.groups || {});
-
   const {dateTime, groupUID} = params;
-  const initMarkedDates = {};
-  if (dateTime) {
-    initMarkedDates[getDateTimeString(new Date(dateTime))] = {selected: true};
-  }
-  if (groupUID) {
-    userGroups[groupUID].selected = true;
-  }
-
-  const markedDates = params.markedDates || initMarkedDates;
-  const groups = params.groups || userGroups;
-
+  const markedDates = {...params.markedDates};
+  const groups = params.groups || cloneDeep(userGroups);
   const [canSave, setCanSave] = useState(false);
   const [userIsParticipant, setUserIsParticipant] = useState(false);
+
+  if (groupUID) {
+    groups[groupUID].selected = true;
+  }
+  if (dateTime) {
+    markedDates[getDateTimeString(new Date(dateTime))] = {selected: true};
+  }
 
   const getSelectedDateStrings = () => {
     const dateStrings = Object.keys(markedDates);
@@ -108,7 +105,7 @@ const ActivityAdder = () => {
   const getGroupsSubtitle = () => {
     const numSelectedGroups = getSelectedGroupUIDs().length;
     const s = numSelectedGroups === 1 ? '' : 's';
-    return `${numSelectedGroups} group${s} selected`;
+    return `${numSelectedGroups} Group${s} selected`;
   };
 
   return (
