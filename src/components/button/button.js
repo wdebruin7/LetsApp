@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   opacityText: {
-    color: 'blue',
+    color: '#0066FF',
   },
   disabledHighlight: {
     opacity: 0.3,

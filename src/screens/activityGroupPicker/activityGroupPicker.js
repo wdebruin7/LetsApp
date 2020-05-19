@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   SafeAreaView,
@@ -9,7 +9,6 @@ import {
   FlatList,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {cloneDeep} from 'lodash';
 import {GroupSelect, Button, TextBox} from '../../components';
 
@@ -18,6 +17,13 @@ const ActivityGroupPicker = () => {
   const [groups, setGroups] = useState(params ? params.groups || {} : {});
   const {navigate} = useNavigation();
   const [filterString, setFilterString] = useState('');
+  const [canSave, setCanSave] = useState(false);
+
+  useEffect(() => {
+    const numSelectedGroups = getSelectedGroupUIDs().length;
+    setCanSave(numSelectedGroups > 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [groups]);
 
   const onToggleSwitch = (groupToUpdate) => {
     const updatedGroup = groups[groupToUpdate.uid];
@@ -62,7 +68,15 @@ const ActivityGroupPicker = () => {
   const onPressSelectAll = (selected) => {
     const newGroups = cloneDeep(groups);
     Object.keys(newGroups).forEach((uid) => {
-      newGroups[uid].selected = selected;
+      if (
+        !filterString ||
+        newGroups[uid].name
+          .trim()
+          .toLowerCase()
+          .includes(filterString.trim().toLowerCase())
+      ) {
+        newGroups[uid].selected = selected;
+      }
     });
     setGroups(newGroups);
   };
@@ -90,12 +104,8 @@ const ActivityGroupPicker = () => {
         />
       </View>
       <View style={styles.selectView}>
-        <TouchableOpacity onPress={() => onPressSelectAll(true)}>
-          <Text style={styles.selectButton}>Select all</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => onPressSelectAll(false)}>
-          <Text style={styles.selectButton}>Deselect all</Text>
-        </TouchableOpacity>
+        <Button title="Select all" onPress={() => onPressSelectAll(true)} />
+        <Button title="Deselect all" onPress={() => onPressSelectAll(false)} />
       </View>
       <FlatList
         style={styles.list}
@@ -113,6 +123,7 @@ const ActivityGroupPicker = () => {
         title={`Select ${getSelectedGroupUIDs().length} groups`}
         onPress={onPressSave}
         raised
+        disabled={!canSave}
       />
     </SafeAreaView>
   );
@@ -164,6 +175,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: 'center',
+    width: 250,
   },
   selectView: {
     flexDirection: 'row',

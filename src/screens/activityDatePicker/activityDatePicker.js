@@ -81,6 +81,7 @@ const ActivityDatePicker = () => {
         raised
         onPress={onPressSave}
         disabled={!canSave}
+        style={styles.saveButton}
       />
     </SafeAreaView>
   );
@@ -116,6 +117,10 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     fontFamily: 'AppleSDGothicNeo-Regular',
+  },
+  saveButton: {
+    alignSelf: 'center',
+    width: 250,
   },
 });
 
