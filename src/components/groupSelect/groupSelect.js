@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableWithoutFeedback, View, Text, StyleSheet} from 'react-native';
+import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import {getGroupMembersString} from '../../utils';
@@ -9,7 +9,7 @@ const GroupSelect = ({group, onToggleGroup}) => {
   const userData = useSelector((state) => state.user.data || {});
 
   return (
-    <TouchableWithoutFeedback onPress={onToggleGroup}>
+    <TouchableOpacity onPress={onToggleGroup}>
       <View style={styles.container}>
         <Avatar
           rounded
@@ -31,7 +31,7 @@ const GroupSelect = ({group, onToggleGroup}) => {
           size={30}
         />
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 };
 

@@ -9,7 +9,9 @@ import {
   FlatList,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
-import {GroupSelect, Button} from '../../components';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {cloneDeep} from 'lodash';
+import {GroupSelect, Button, TextBox} from '../../components';
 
 const ActivityGroupPicker = () => {
   const {params} = useRoute();
@@ -53,6 +55,14 @@ const ActivityGroupPicker = () => {
     navigate('ActivityAdder', {groups});
   };
 
+  const onPressSelectAll = (selected) => {
+    const newGroups = cloneDeep(groups);
+    Object.keys(newGroups).forEach((uid) => {
+      newGroups[uid].selected = selected;
+    });
+    setGroups(newGroups);
+  };
+
   return (
     <SafeAreaView style={styles.safeView}>
       <View style={styles.header}>
@@ -63,6 +73,25 @@ const ActivityGroupPicker = () => {
         </TouchableWithoutFeedback>
         <Text style={styles.headerText}>Let&apos;s go!</Text>
         <Text>When are you free?</Text>
+      </View>
+      <View style={styles.filterView}>
+        <Text style={styles.selectText}>
+          Select groups that can see you&apos;re free
+        </Text>
+        <TextBox
+          placeholder="Search"
+          value={filterString}
+          onChangeText={setFilterString}
+          style={styles.searchBox}
+        />
+      </View>
+      <View style={styles.selectView}>
+        <TouchableOpacity onPress={() => onPressSelectAll(true)}>
+          <Text style={styles.selectButton}>Select all</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => onPressSelectAll(false)}>
+          <Text style={styles.selectButton}>Deselect all</Text>
+        </TouchableOpacity>
       </View>
       <FlatList
         style={styles.list}
@@ -90,11 +119,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     // alignItems: 'center',
   },
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
   backButton: {
     height: 50,
     width: 30,
@@ -116,11 +140,34 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'AppleSDGothicNeo-Regular',
   },
+  filterView: {
+    alignItems: 'center',
+    paddingTop: 20,
+    paddingHorizontal: 20,
+  },
+  selectText: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    width: '100%',
+  },
+  searchBox: {
+    width: '100%',
+    marginTop: 15,
+  },
   list: {
     flex: 1,
   },
   button: {
     alignSelf: 'center',
+  },
+  selectView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 17,
+    marginVertical: 10,
+  },
+  selectButton: {
+    color: '#0066FF',
   },
 });
 
