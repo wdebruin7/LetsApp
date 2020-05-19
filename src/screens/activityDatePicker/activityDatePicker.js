@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   SafeAreaView,
@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {CalendarList} from 'react-native-calendars';
 import {Icon} from 'react-native-elements';
+import Button from '../../components/button/button';
 
 const ActivityDatePicker = () => {
   const {navigate} = useNavigation();
@@ -18,6 +19,12 @@ const ActivityDatePicker = () => {
     selectedDates = route.params.selectedDates;
   }
   const [markedDates, setMarkedDates] = useState(selectedDates);
+  const [canSave, setCanSave] = useState(false);
+
+  useEffect(() => {
+    setCanSave(numSelectedDates() > 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [markedDates]);
 
   const onDayPress = (day) => {
     const toUpdate = {...markedDates};
@@ -36,7 +43,17 @@ const ActivityDatePicker = () => {
     ).length;
   };
 
+  const getSaveText = () => {
+    return `Select ${numSelectedDates()} day${
+      numSelectedDates() === 1 ? '' : 's'
+    }`;
+  };
+
   const onPressBack = () => {
+    navigate('ActivityAdder', {markedDates: route.params.selectedDates});
+  };
+
+  const onPressSave = () => {
     navigate('ActivityAdder', {markedDates});
   };
 
@@ -59,7 +76,12 @@ const ActivityDatePicker = () => {
         markedDates={markedDates}
         pastScrollRange={0}
       />
-      <Text>{numSelectedDates()} Dates selected</Text>
+      <Button
+        title={getSaveText()}
+        raised
+        onPress={onPressSave}
+        disabled={!canSave}
+      />
     </SafeAreaView>
   );
 };

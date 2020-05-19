@@ -68,7 +68,7 @@ const PhoneSignIn = () => {
                 setPhoneNumber(`+${this.phone.getCountryCode()}`)
               }
             />
-            <Button onPress={handleSubmit} buttonText="Send Code" />
+            <Button onPress={handleSubmit} title="Send Code" raised />
             {error ? <Text>{error}</Text> : null}
           </View>
         </View>

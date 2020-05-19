@@ -124,9 +124,10 @@ const AccountCreation = () => {
           </View>
           <Button
             onPress={handleSave}
-            buttonText="save"
+            title="save"
             disabled={!canSave}
             width={150}
+            raised
           />
         </View>
       </TouchableWithoutFeedback>

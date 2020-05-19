@@ -52,6 +52,10 @@ const ActivityGroupPicker = () => {
   };
 
   const onGoBack = () => {
+    navigate('ActivityAdder', {groups: params.groups});
+  };
+
+  const onPressSave = () => {
     navigate('ActivityAdder', {groups});
   };
 
@@ -106,8 +110,9 @@ const ActivityGroupPicker = () => {
       />
       <Button
         style={styles.button}
-        buttonText={`Select ${getSelectedGroupUIDs().length} groups`}
-        onPress={() => onGoBack()}
+        title={`Select ${getSelectedGroupUIDs().length} groups`}
+        onPress={onPressSave}
+        raised
       />
     </SafeAreaView>
   );

@@ -155,9 +155,10 @@ const ActivityAdder = () => {
         </TouchableOpacity>
         <Button
           onPress={handleSave}
-          buttonText="Save"
+          title="Save"
           disabled={!canSave}
           style={styles.button}
+          raised
         />
       </View>
     </SafeAreaView>
