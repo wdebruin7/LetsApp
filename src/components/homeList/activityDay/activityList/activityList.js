@@ -32,8 +32,9 @@ const ActivityList = ({activity, isLastElement}) => {
 
   const onPress = () => {
     navigate('Groups', {
-      screen: 'GroupsHome',
+      screen: 'GroupInfo',
       params: {groupUID: activity.group.uid},
+      initial: false,
     });
   };
 
