@@ -67,7 +67,7 @@ const PhoneVerify = () => {
               onFocus={() => changeFocus(true)}
               onBlur={() => changeFocus(false)}
             />
-            <Button onPress={() => confirmCode()} buttonText="Verify" />
+            <Button onPress={() => confirmCode()} title="Verify" raised />
           </View>
         </View>
       </TouchableWithoutFeedback>

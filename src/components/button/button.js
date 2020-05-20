@@ -1,48 +1,85 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  TouchableHighlight,
+  TouchableOpacity,
+} from 'react-native';
 import Colors from '../../constants/colors';
 
-const Button = ({onPress, buttonText, disabled, style}) => {
-  return (
-    <TouchableHighlight
-      style={styles.container}
-      disabled={disabled}
-      onPress={() => onPress()}>
-      <View
+const Button = ({onPress, title, disabled, style, raised}) => {
+  if (raised) {
+    return (
+      <TouchableHighlight
+        disabled={disabled}
+        onPress={onPress}
         style={
-          !disabled
-            ? {...styles.button, style}
-            : {...styles.button, ...styles.disabled, style}
+          disabled
+            ? {...styles.highlightButton, ...styles.disabledHighlight, ...style}
+            : {...styles.highlightButton, ...style}
         }>
-        <Text style={styles.buttonText}>{buttonText}</Text>
-      </View>
-    </TouchableHighlight>
+        <Text style={{...styles.buttonText, ...styles.highlightText}}>
+          {title}
+        </Text>
+      </TouchableHighlight>
+    );
+  }
+
+  return (
+    <TouchableOpacity
+      style={{...styles.opacityButton, ...style}}
+      disabled={disabled}
+      onPress={onPress}>
+      <Text
+        style={
+          disabled
+            ? {
+                ...styles.buttonText,
+                ...styles.opacityText,
+                ...styles.disabledOpacity,
+              }
+            : {...styles.buttonText, ...styles.opacityText}
+        }>
+        {title}
+      </Text>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  highlightButton: {
     marginTop: 10,
     borderRadius: 5,
-  },
-  button: {
     width: 150,
     height: 53,
     backgroundColor: Colors.primaryBlue,
-    borderRadius: 5,
     color: 'white',
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
   },
+  opacityButton: {
+    marginTop: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   buttonText: {
     fontSize: 16,
     fontFamily: 'AppleSDGothicNeo-Regular',
-    color: 'white',
     fontWeight: 'bold',
   },
-  disabled: {
+  highlightText: {
+    color: 'white',
+  },
+  opacityText: {
+    color: '#0066FF',
+  },
+  disabledHighlight: {
     opacity: 0.3,
+  },
+  disabledOpacity: {
+    color: 'gray',
   },
 });
 

@@ -95,8 +95,8 @@ const AccountCreation = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.logo}>Let's</Text>
-            <Text style={styles.subtitle}>Create your account!</Text>
+            <Text style={styles.logo}>Let&apos;s</Text>
+            <Text style={styles.subtitle}>Create your acount!</Text>
           </View>
           <TouchableWithoutFeedback onPress={hanldeImagePicker}>
             {localFilepath || photoURL ? (
@@ -124,9 +124,10 @@ const AccountCreation = () => {
           </View>
           <Button
             onPress={handleSave}
-            buttonText="save"
+            title="save"
             disabled={!canSave}
             width={150}
+            raised
           />
         </View>
       </TouchableWithoutFeedback>

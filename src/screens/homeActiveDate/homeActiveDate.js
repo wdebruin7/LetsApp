@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useNavigation, useRoute, StackActions} from '@react-navigation/native';
-import {HomeActiveDay, AppHeader} from '../../components';
+import {HomeActiveDay, AppHeader, AddActivityButton} from '../../components';
 
 const HomeActiveDate = () => {
   const navigation = useNavigation();
@@ -38,6 +38,7 @@ const HomeActiveDate = () => {
         date={activeDate}
         setActiveDate={setActiveDate}
       />
+      <AddActivityButton dateTime={activeDateTime} />
     </SafeAreaView>
   );
 };

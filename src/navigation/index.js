@@ -2,12 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useSelector} from 'react-redux';
-import auth from '@react-native-firebase/auth';
 import AuthNavigation from './authNavigation';
 import AppNavigation from './appNavigation';
 import {useSession} from '../firebase';
 import {Initializing, AccountCreation} from '../screens';
 import onNewAuth from '../firebase/firestore/onNewAuth';
+import AddActivityNavigation from './addActivityNavigation';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +20,35 @@ const AppContainer = () => {
           session.user.metadata.lastSignInTime
       : false,
   );
+
+  const screen =
+    session.initializing ||
+    (session.user && user.initializing) ||
+    awaitingMigration ? (
+      <Stack.Screen
+        name="Initializing"
+        component={Initializing}
+        options={{animationEnabled: false}}
+      />
+    ) : !session.user ? (
+      <Stack.Screen
+        name="Auth"
+        component={AuthNavigation}
+        options={{animationEnabled: false}}
+      />
+    ) : !user.data || !user.data.userDataConfirmed ? (
+      <Stack.Screen
+        name="AccountCreate"
+        component={AccountCreation}
+        options={{animationEnabled: false}}
+      />
+    ) : (
+      <Stack.Screen
+        name="App"
+        component={AppNavigation}
+        options={{animationEnabled: false}}
+      />
+    );
 
   const initiateMigration = async () => {
     try {
@@ -37,18 +66,12 @@ const AppContainer = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator headerMode="none">
-        {session.initializing ||
-        (session.user && user.initializing) ||
-        awaitingMigration ? (
-          <Stack.Screen name="Initializing" component={Initializing} />
-        ) : !session.user ? (
-          <Stack.Screen name="Auth" component={AuthNavigation} />
-        ) : !user.data || !user.data.userDataConfirmed ? (
-          <Stack.Screen name="AccountCreate" component={AccountCreation} />
-        ) : (
-          <Stack.Screen name="App" component={AppNavigation} />
-        )}
+      <Stack.Navigator
+        headerMode="none"
+        mode="modal"
+        initialRouteName={screen.name}>
+        {screen}
+        <Stack.Screen name="AddActivity" component={AddActivityNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
   );
