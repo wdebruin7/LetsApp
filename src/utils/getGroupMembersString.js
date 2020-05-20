@@ -13,9 +13,9 @@ const getGroupMembersString = (group, userData) => {
     case 3:
       return `You, ${otherMembers[0].name}, ${otherMembers[1].name}, and ${otherMembers[2].name}`;
     default:
-      return 'You'
-        .concat(otherMembers.slice(0, 2).map((member) => `, ${member.name}`))
-        .concat(` + ${otherMembers.length - 3} more`);
+      return `You, ${otherMembers[0].name}, ${otherMembers[1].name} + ${
+        otherMembers.length - 3
+      } more`;
   }
 };
 
