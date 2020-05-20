@@ -10,11 +10,10 @@ import {
   Dimensions,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import {useRoute, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {GroupTile, AppHeader} from '../../components';
 
 const Groups = () => {
-  const {groupUID} = useRoute().params;
   const groups = useSelector((state) => state.groups || {});
   const {navigate} = useNavigation();
   const [groupSearchString, setGroupSearchString] = useState('');
@@ -23,8 +22,6 @@ const Groups = () => {
   const onPressCreate = () => {
     navigate('GroupCreate');
   };
-
-  if (groupUID) navigate('GroupInfo', {groupUID});
 
   useEffect(() => {
     setFilteredGroups(
