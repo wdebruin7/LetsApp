@@ -61,12 +61,19 @@ const ActivityList = ({activity, isLastElement}) => {
             <AntIcon name="staro" />
           </View>
           <Text style={styles.activityInfoElement}>{activity.group.name}</Text>
-          {avatars.length > 0 ? (
-            <View style={styles.activityInfoElement}>{avatars[0]}</View>
-          ) : null}
-          {avatars.length > 1 ? (
-            <View style={styles.activityInfoElement}>{avatars[0]}</View>
-          ) : null}
+          {activity.participants.slice(0, 2).map((participant) => {
+            return (
+              <Avatar
+                rounded
+                size={25}
+                title={participant.name
+                  .split(' ')
+                  .map((e) => e[0])
+                  .join('')}
+                containerStyle={styles.activityInfoElement}
+              />
+            );
+          })}
           {activity.participants.length > 2 ? (
             <Text style={styles.activityInfoElement}>
               +{activity.participants.length - 2}
@@ -111,7 +118,7 @@ const styles = StyleSheet.create({
     paddingLeft: 7,
   },
   activityInfoElement: {
-    paddingLeft: 7,
+    marginLeft: 7,
   },
   switch: {
     transform: [{scaleX: 0.6}, {scaleY: 0.6}],

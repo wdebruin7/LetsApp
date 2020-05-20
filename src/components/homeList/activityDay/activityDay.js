@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Text, FlatList, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import {Icon} from 'react-native-elements';
 import ActivityList from './activityList';
 import ShowMoreActivities from './showMoreActivities';
@@ -53,7 +60,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 10,
     flex: 1,
-    width: 300,
+    width: Dimensions.get('window').width - 50,
     shadowColor: 'black',
     shadowOpacity: 0.25,
     shadowOffset: {width: 3, height: 3},
