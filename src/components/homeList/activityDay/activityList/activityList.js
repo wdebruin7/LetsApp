@@ -64,7 +64,11 @@ const ActivityList = ({activity, isLastElement}) => {
             );
           })}
           {activity.participants.length > 2 ? (
-            <Text style={styles.activityInfoElement}>
+            <Text
+              style={{
+                ...styles.activityInfoElement,
+                ...styles.activityInfoElementText,
+              }}>
               +{activity.participants.length - 2}
             </Text>
           ) : null}
@@ -104,8 +108,10 @@ const styles = StyleSheet.create({
     paddingLeft: 7,
   },
   activityInfoElement: {
-    fontSize: 16,
     marginLeft: 7,
+  },
+  activityInfoElementText: {
+    fontSize: 16,
   },
   switch: {
     transform: [{scaleX: 0.7}, {scaleY: 0.7}],
