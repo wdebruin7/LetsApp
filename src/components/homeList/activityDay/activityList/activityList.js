@@ -7,7 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import {toggleUserIsParticipant} from '../../../../firebase';
 import {fonts, colors} from '../../../../constants';
 
-const ActivityList = ({activity, isLastElement}) => {
+const ActivityList = ({activity}) => {
   const userData = useSelector((state) => state.user.data);
   const [isParticipant, setIsParticipant] = useState(
     userData &&
@@ -38,13 +38,7 @@ const ActivityList = ({activity, isLastElement}) => {
   }, [activity, userData]);
 
   return (
-    <TouchableOpacity
-      style={
-        isLastElement
-          ? {...styles.touchable, ...styles.touchableLastActivity}
-          : styles.touchable
-      }
-      onPress={onPress}>
+    <TouchableOpacity style={styles.touchable} onPress={onPress}>
       <View style={styles.container}>
         <View style={styles.activityInfoView}>
           <View style={styles.activityInfoElement}>
@@ -52,14 +46,15 @@ const ActivityList = ({activity, isLastElement}) => {
           </View>
           <Text style={styles.activityInfoElement}>{activity.group.name}</Text>
           {activity.participants.slice(0, 2).map((participant) => {
+            const initials = participant.name
+              .split(' ')
+              .map((e) => e[0])
+              .join('');
             return (
               <Avatar
                 rounded
                 size={28}
-                title={participant.name
-                  .split(' ')
-                  .map((e) => e[0])
-                  .join('')}
+                title={initials}
                 containerStyle={styles.activityInfoElement}
               />
             );
@@ -88,12 +83,17 @@ const ActivityList = ({activity, isLastElement}) => {
 };
 
 const styles = StyleSheet.create({
+  touchable: {
+    flex: 1,
+    height: 39,
+  },
   container: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+<<<<<<< HEAD
   touchable: {
     flex: 1,
     height: 45,
@@ -103,6 +103,8 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 12,
     borderBottomLeftRadius: 12,
   },
+=======
+>>>>>>> wip
   activityInfoView: {
     flexDirection: 'row',
     alignItems: 'center',

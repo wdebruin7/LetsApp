@@ -4,14 +4,13 @@ import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 const ShowMoreActivities = ({numAdditionalActivities, setShowAll}) => {
   return (
     <TouchableOpacity onPress={setShowAll(true)} style={styles.touchable}>
-      <Text>+ {numAdditionalActivities} more</Text>
+      <Text style={styles.text}>+ {numAdditionalActivities} more</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   touchable: {
-    flex: 1,
     height: 39,
     backgroundColor: '#F5F5F5',
     flexDirection: 'row',
@@ -19,6 +18,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomLeftRadius: 12,
     borderBottomRightRadius: 12,
+  },
+  text: {
     fontSize: 16,
   },
 });

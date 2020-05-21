@@ -6,9 +6,13 @@ const getActivityParticipantsString = (
 ) => {
   if (!activity || !userData) return '';
 
-  const participants = activity.participants
-    .filter((participant) => participant.name !== userData.displayName)
-    .map((participant) => participant.name.split(' ')[0]);
+  const participants = long
+    ? activity.participants
+        .filter((participant) => participant.name !== userData.displayName)
+        .map((participant) => participant.name)
+    : activity.participants
+        .filter((participant) => participant.name !== userData.displayName)
+        .map((participant) => participant.name.split(' ')[0]);
 
   const numParticipants = participants.length;
 

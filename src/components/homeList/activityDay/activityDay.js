@@ -1,18 +1,13 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
-import {Divider} from 'react-native-elements';
+import {StyleSheet, View, FlatList, TouchableOpacity} from 'react-native';
+import {Icon, Divider} from 'react-native-elements';
+import {useNavigation} from '@react-navigation/native';
 import ActivityList from './activityList';
 import ShowMoreActivities from './showMoreActivities';
 import {getDisplayDate} from '../../../utils';
 import {fonts} from '../../../constants';
 import TileHeader from '../../tileHeader';
+import TileBody from '../../tileBody/tileBody';
 
 const ActivityDay = ({activityDay, setActiveDate}) => {
   const [showAll, setShowAll] = useState(false);
@@ -29,35 +24,30 @@ const ActivityDay = ({activityDay, setActiveDate}) => {
           </TouchableOpacity>
         }
       />
-      <FlatList
-        data={
-          showAll ? activityDay.activities : activityDay.activities.slice(0, 2)
-        }
-        renderItem={({item, index}) => (
-          <ActivityList
-            activity={item}
-            isLastElement={
-              index === activityDay.activities.length - 1 ||
-              (activitiesHidden && index === 2)
-            }
-          />
-        )}
-        keyExtractor={(item) => item.uid}
-        ItemSeparatorComponent={() => <Divider />}
-      />
-      {activitiesHidden ? (
-        <ShowMoreActivities
-          numAdditionalActivities={2}
-          setShowAll={setShowAll}
+      <TileBody>
+        <FlatList
+          data={
+            showAll
+              ? activityDay.activities
+              : activityDay.activities.slice(0, 2)
+          }
+          renderItem={({item, index}) => <ActivityList activity={item} />}
+          keyExtractor={(item) => item.uid}
+          ItemSeparatorComponent={() => <Divider />}
         />
-      ) : null}
+        {activitiesHidden ? (
+          <ShowMoreActivities
+            numAdditionalActivities={2}
+            setShowAll={setShowAll}
+          />
+        ) : null}
+      </TileBody>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 12,
     flexDirection: 'column',
     marginTop: 20,
     marginHorizontal: 10,

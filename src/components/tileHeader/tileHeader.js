@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {StyleSheet, TouchableOpacity, Text, Dimensions} from 'react-native';
 
 const TileHeader = ({
   style,
@@ -26,14 +26,18 @@ const TileHeader = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#8AABDD',
-    height: 38,
+    height: 39,
+    width: Dimensions.get('window').width - 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 12,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
+    backgroundColor: '#8AABDD',
+    shadowColor: 'black',
+    shadowOpacity: 0.25,
+    shadowOffset: {width: 3, height: 3},
   },
   title: {color: '#FFFFFF'},
 });

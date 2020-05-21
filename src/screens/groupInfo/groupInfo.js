@@ -11,8 +11,13 @@ import {useSelector} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
 import {FlatList} from 'react-native-gesture-handler';
 import Clipboard from '@react-native-community/clipboard';
-import {getGroupMembersString, buildDynamicLink} from '../../utils';
-import {AddActivityButton} from '../../components';
+import {
+  getGroupMembersString,
+  getDisplayDate,
+  getActivityParticipantsString,
+  buildDynamicLink,
+} from '../../utils';
+import {AddActivityButton, TileHeader, TileBody} from '../../components';
 
 const GroupInfo = () => {
   const {params} = useRoute();
@@ -45,7 +50,7 @@ const GroupInfo = () => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeView}>
       <View>
         <View>
           {group.photoRefURL ? <Avatar /> : null}
@@ -65,14 +70,31 @@ const GroupInfo = () => {
       </View>
       <FlatList
         data={activities}
-        renderItem={({item}) => <Text>{item.description}</Text>}
+        renderItem={({item}) => (
+          <View style={styles.tile}>
+            <TileHeader title={getDisplayDate(item.date.toDate())} />
+            <TileBody>
+              <Text>
+                {getActivityParticipantsString(item, userData, undefined, true)}
+              </Text>
+            </TileBody>
+          </View>
+        )}
         keyExtractor={(item) => item.uid}
+        style={styles.list}
       />
       <AddActivityButton groupUID={group.uid} />
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  safeView: {
+    backgroundColor: '#FCFEFF',
+    flex: 1,
+  },
+  list: {alignSelf: 'center', flex: 1, paddingHorizontal: 15},
+  tile: {marginTop: 20},
+});
 
 export default GroupInfo;

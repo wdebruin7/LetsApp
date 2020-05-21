@@ -8,3 +8,4 @@ export {default as GroupTile} from './groupTile';
 export {default as GroupActivityTile} from './groupActivityTile';
 export {default as GroupSelect} from './groupSelect';
 export {default as TileHeader} from './tileHeader';
+export {default as TileBody} from './tileBody';
