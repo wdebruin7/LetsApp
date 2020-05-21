@@ -23,6 +23,7 @@ import {
   TileBody,
   GroupInfoTile,
 } from '../../components';
+import {colors} from '../../constants';
 
 const GroupInfo = () => {
   const {params} = useRoute();
@@ -56,16 +57,25 @@ const GroupInfo = () => {
 
   return (
     <SafeAreaView style={styles.safeView}>
-      <View>
-        <View>
-          {group.photoRefURL ? <Avatar /> : null}
+      <View style={styles.header}>
+        <View style={styles.groupInfo}>
+          <View style={styles.groupPhoto}>
+            {group.photoRefURL ? (
+              <Avatar />
+            ) : (
+              <Icon name="group" type="material-icons" size={30} />
+            )}
+          </View>
           <TouchableOpacity>
             <View>
-              <Text>{group.name}</Text>
-              <Text>{getGroupMembersString(group, userData)}</Text>
+              <Text style={styles.groupName}>{group.name}</Text>
+              <Text style={styles.groupMembers}>
+                {getGroupMembersString(group, userData)}
+              </Text>
             </View>
           </TouchableOpacity>
         </View>
+<<<<<<< HEAD
         <View>
           <TouchableOpacity>
             <Icon name="person-add" type="material-icons" />
@@ -73,6 +83,19 @@ const GroupInfo = () => {
           <TouchableOpacity onPress={onPressCopy}>
             <Icon name="link" type="material-icons" />
           </TouchableOpacity>
+=======
+        <View style={styles.link}>
+          <View>
+            <TouchableOpacity>
+              <Icon
+                name="link"
+                type="material-icons"
+                color="#A6A6A6"
+                size={40}
+              />
+            </TouchableOpacity>
+          </View>
+>>>>>>> 38a7847... style groupInfo header
         </View>
       </View>
       <FlatList
@@ -97,6 +120,47 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flex: 1,
     paddingHorizontal: 15,
+  },
+  header: {
+    height: 140,
+    width: '100%',
+    backgroundColor: 'white',
+    shadowColor: 'black',
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.25,
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  groupInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20,
+    marginLeft: 20,
+  },
+  groupPhoto: {
+    height: 70,
+    width: 70,
+    borderRadius: 70,
+    backgroundColor: colors.lightGrey,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 15,
+  },
+  groupName: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  groupMembers: {
+    color: '#8D8D8D',
+    fontSize: 13,
+    paddingTop: 6,
+    width: 200,
+  },
+  link: {
+    width: '100%',
+    alignItems: 'flex-end',
+    paddingRight: 40,
+    paddingBottom: 10,
   },
 });
 
