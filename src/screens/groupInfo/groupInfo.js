@@ -5,19 +5,24 @@ import {
   View,
   Text,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
-import {FlatList} from 'react-native-gesture-handler';
 import Clipboard from '@react-native-community/clipboard';
 import {
-  getGroupMembersString,
   getDisplayDate,
   getActivityParticipantsString,
   buildDynamicLink,
+  getGroupMembersString,
 } from '../../utils';
-import {AddActivityButton, TileHeader, TileBody} from '../../components';
+import {
+  AddActivityButton,
+  TileHeader,
+  TileBody,
+  GroupInfoTile,
+} from '../../components';
 
 const GroupInfo = () => {
   const {params} = useRoute();
@@ -71,14 +76,7 @@ const GroupInfo = () => {
       <FlatList
         data={activities}
         renderItem={({item}) => (
-          <View style={styles.tile}>
-            <TileHeader title={getDisplayDate(item.date.toDate())} />
-            <TileBody>
-              <Text>
-                {getActivityParticipantsString(item, userData, undefined, true)}
-              </Text>
-            </TileBody>
-          </View>
+          <GroupInfoTile activity={item} userData={userData} />
         )}
         keyExtractor={(item) => item.uid}
         style={styles.list}
@@ -93,8 +91,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#FCFEFF',
     flex: 1,
   },
-  list: {alignSelf: 'center', flex: 1, paddingHorizontal: 15},
-  tile: {marginTop: 20},
+  list: {
+    alignSelf: 'center',
+    flex: 1,
+    paddingHorizontal: 15,
+  },
 });
 
 export default GroupInfo;
