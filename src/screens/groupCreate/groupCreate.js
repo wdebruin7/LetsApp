@@ -50,7 +50,11 @@ const GroupCreate = () => {
     const imagePath = localFilepath;
     try {
       await createGroup(groupName, imagePath).then(() => {
-        navigate('GroupInfo', {groupUID: 'CQeZykHTlbnbf4De3v4D'});
+        navigate('Groups', {
+          screen: 'GroupInfo',
+          params: {groupUID: 'CQeZykHTlbnbf4De3v4D'},
+          initial: false,
+        });
       });
     } catch (err) {
       console.log(err);
