@@ -59,10 +59,12 @@ const GroupInfo = () => {
       <View>
         <View>
           {group.photoRefURL ? <Avatar /> : null}
-          <View>
-            <Text>{group.name}</Text>
-            <Text>{getGroupMembersString(group, userData)}</Text>
-          </View>
+          <TouchableOpacity>
+            <View>
+              <Text>{group.name}</Text>
+              <Text>{getGroupMembersString(group, userData)}</Text>
+            </View>
+          </TouchableOpacity>
         </View>
         <View>
           <TouchableOpacity>
