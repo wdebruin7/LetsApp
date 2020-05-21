@@ -1,7 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, Dimensions, Switch} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Dimensions,
+  Switch,
+  TouchableOpacity,
+} from 'react-native';
 import {Avatar} from 'react-native-elements';
 import {useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 import {
   getGroupMembersString,
   getActivityParticipantsString,
@@ -18,6 +26,7 @@ const ActivityTile = ({activity, group}) => {
       (participant) => participant.uid === userData.uid,
     ),
   );
+  const {navigate} = useNavigation();
 
   useEffect(() => {
     setUserIsParticipant(
@@ -35,10 +44,18 @@ const ActivityTile = ({activity, group}) => {
     setUserIsParticipant(!userIsParticipant);
   };
 
+  const onTilePress = () => {
+    navigate('Groups', {
+      screen: 'GroupInfo',
+      params: {groupUID: activity.group.uid},
+      initial: false,
+    });
+  };
+
   if (!(activity && group)) return null;
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onTilePress}>
       <View style={styles.textContainer}>
         <Text style={styles.header}>{group.name}</Text>
         <Text style={styles.members}>
@@ -63,7 +80,7 @@ const ActivityTile = ({activity, group}) => {
           style={styles.switch}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
