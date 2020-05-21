@@ -1,6 +1,14 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Text, FlatList, TouchableOpacity} from 'react-native';
-import {Icon} from 'react-native-elements';
+import {
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
+import {Icon, Divider} from 'react-native-elements';
+import {useNavigation} from '@react-navigation/native';
 import ActivityList from './activityList';
 import ShowMoreActivities from './showMoreActivities';
 import {getDisplayDate} from '../../../utils';
@@ -8,6 +16,14 @@ import {getDisplayDate} from '../../../utils';
 const ActivityDay = ({activityDay, setActiveDate}) => {
   const [showAll, setShowAll] = useState(false);
   const activitiesHidden = !showAll && activityDay.activities > 3;
+  const {navigate} = useNavigation();
+
+  const onPressAdd = () => {
+    navigate('AddActivity', {
+      screen: 'ActivityAdder',
+      params: activityDay.date.getTime(),
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -17,8 +33,8 @@ const ActivityDay = ({activityDay, setActiveDate}) => {
         <Text style={styles.headerText}>
           {getDisplayDate(activityDay.date)}
         </Text>
-        <TouchableOpacity>
-          <Icon name="plus" type="entypo" color="#FFFFFF" />
+        <TouchableOpacity onPress={onPressAdd}>
+          <Icon name="plus" type="entypo" color="#FFFFFF" size={30} />
         </TouchableOpacity>
       </TouchableOpacity>
       <FlatList
@@ -35,6 +51,7 @@ const ActivityDay = ({activityDay, setActiveDate}) => {
           />
         )}
         keyExtractor={(item) => item.uid}
+        ItemSeparatorComponent={() => <Divider />}
       />
       {activitiesHidden ? (
         <ShowMoreActivities
@@ -53,7 +70,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 10,
     flex: 1,
-    width: 300,
+    width: Dimensions.get('window').width - 50,
     shadowColor: 'black',
     shadowOpacity: 0.25,
     shadowOffset: {width: 3, height: 3},
@@ -61,7 +78,7 @@ const styles = StyleSheet.create({
   headerView: {
     backgroundColor: '#8AABDD',
     flex: 1,
-    height: 38,
+    height: 43,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -71,6 +88,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: '#FFFFFF',
+    fontSize: 16,
   },
 });
 

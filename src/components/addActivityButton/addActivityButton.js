@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableHighlight} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 
@@ -14,7 +14,7 @@ const AddActivityButton = ({dateTime, groupUID}) => {
   };
 
   return (
-    <TouchableOpacity style={styles.addButton} onPress={onPress}>
+    <TouchableHighlight style={styles.addButton} onPress={onPress}>
       <Icon
         name="plus"
         type="entypo"
@@ -22,7 +22,7 @@ const AddActivityButton = ({dateTime, groupUID}) => {
         size={45}
         iconStyle={styles.icon}
       />
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 };
 

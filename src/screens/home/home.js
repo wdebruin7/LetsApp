@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet, StatusBar} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useNavigation, useIsFocused} from '@react-navigation/native';
 import {HomeList, AppHeader, AddActivityButton} from '../../components';
@@ -22,6 +22,7 @@ const Home = () => {
 
   return (
     <SafeAreaView style={styles.safeView}>
+      <StatusBar barStyle="dark-content" />
       <AppHeader />
       <HomeList activities={activityDays} setActiveDate={setActiveDate} />
       <AddActivityButton />

@@ -6,22 +6,7 @@ import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {toggleUserIsParticipant} from '../../../../firebase';
 
-const getAvatars = (participants) => {
-  const avatars = [];
-  participants.slice(0, 2).forEach((participant) => {
-    const initials = participant.name
-      ? participant.name
-          .slice(0, 1)
-          .concat(participant.name.split(' ')[1].slice(0, 1))
-      : '?';
-    const avatar = <Avatar rounded title={initials} size={25} />;
-    avatars.push(avatar);
-  });
-  return avatars;
-};
-
 const ActivityList = ({activity, isLastElement}) => {
-  const avatars = getAvatars(activity.participants);
   const userData = useSelector((state) => state.user.data);
   const [isParticipant, setIsParticipant] = useState(
     userData &&
@@ -53,7 +38,11 @@ const ActivityList = ({activity, isLastElement}) => {
 
   return (
     <TouchableOpacity
-      style={isLastElement ? styles.touchableLastActivity : styles.touchable}
+      style={
+        isLastElement
+          ? {...styles.touchable, ...styles.touchableLastActivity}
+          : styles.touchable
+      }
       onPress={onPress}>
       <View style={styles.container}>
         <View style={styles.activityInfoView}>
@@ -61,14 +50,25 @@ const ActivityList = ({activity, isLastElement}) => {
             <AntIcon name="staro" />
           </View>
           <Text style={styles.activityInfoElement}>{activity.group.name}</Text>
-          {avatars.length > 0 ? (
-            <View style={styles.activityInfoElement}>{avatars[0]}</View>
-          ) : null}
-          {avatars.length > 1 ? (
-            <View style={styles.activityInfoElement}>{avatars[0]}</View>
-          ) : null}
+          {activity.participants.slice(0, 2).map((participant) => {
+            return (
+              <Avatar
+                rounded
+                size={28}
+                title={participant.name
+                  .split(' ')
+                  .map((e) => e[0])
+                  .join('')}
+                containerStyle={styles.activityInfoElement}
+              />
+            );
+          })}
           {activity.participants.length > 2 ? (
-            <Text style={styles.activityInfoElement}>
+            <Text
+              style={{
+                ...styles.activityInfoElement,
+                ...styles.activityInfoElementText,
+              }}>
               +{activity.participants.length - 2}
             </Text>
           ) : null}
@@ -87,23 +87,20 @@ const ActivityList = ({activity, isLastElement}) => {
 };
 
 const styles = StyleSheet.create({
-  touchable: {
-    flex: 1,
-    height: 34,
-    backgroundColor: '#F5F5F5',
-  },
-  touchableLastActivity: {
-    flex: 1,
-    height: 34,
-    borderBottomRightRadius: 12,
-    borderBottomLeftRadius: 12,
-    backgroundColor: '#F5F5F5',
-  },
   container: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignContent: 'center',
+    alignItems: 'center',
+  },
+  touchable: {
+    flex: 1,
+    height: 39,
+    backgroundColor: '#F5F5F5',
+  },
+  touchableLastActivity: {
+    borderBottomRightRadius: 12,
+    borderBottomLeftRadius: 12,
   },
   activityInfoView: {
     flexDirection: 'row',
@@ -111,10 +108,13 @@ const styles = StyleSheet.create({
     paddingLeft: 7,
   },
   activityInfoElement: {
-    paddingLeft: 7,
+    marginLeft: 7,
+  },
+  activityInfoElementText: {
+    fontSize: 16,
   },
   switch: {
-    transform: [{scaleX: 0.6}, {scaleY: 0.6}],
+    transform: [{scaleX: 0.7}, {scaleY: 0.7}],
   },
 });
 
