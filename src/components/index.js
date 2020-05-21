@@ -7,3 +7,4 @@ export {default as TextBox} from './textBox';
 export {default as GroupTile} from './groupTile';
 export {default as GroupActivityTile} from './groupActivityTile';
 export {default as GroupSelect} from './groupSelect';
+export {default as TileHeader} from './tileHeader';

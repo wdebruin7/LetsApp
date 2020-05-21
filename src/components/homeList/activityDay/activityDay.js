@@ -12,6 +12,7 @@ import ActivityList from './activityList';
 import ShowMoreActivities from './showMoreActivities';
 import {getDisplayDate} from '../../../utils';
 import {fonts} from '../../../constants';
+import TileHeader from '../../tileHeader';
 
 const ActivityDay = ({activityDay, setActiveDate}) => {
   const [showAll, setShowAll] = useState(false);
@@ -19,13 +20,15 @@ const ActivityDay = ({activityDay, setActiveDate}) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.headerView}
-        onPress={() => setActiveDate(activityDay.date)}>
-        <Text style={styles.headerText}>
-          {getDisplayDate(activityDay.date)}
-        </Text>
-      </TouchableOpacity>
+      <TileHeader
+        title={getDisplayDate(activityDay.date)}
+        onPress={() => setActiveDate(activityDay.date)}
+        rightComponent={
+          <TouchableOpacity onPress={onPressAdd}>
+            <Icon name="plus" type="entypo" color="#FFFFFF" />
+          </TouchableOpacity>
+        }
+      />
       <FlatList
         data={
           showAll ? activityDay.activities : activityDay.activities.slice(0, 2)
