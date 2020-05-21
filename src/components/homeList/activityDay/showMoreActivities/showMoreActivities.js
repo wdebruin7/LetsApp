@@ -12,13 +12,14 @@ const ShowMoreActivities = ({numAdditionalActivities, setShowAll}) => {
 const styles = StyleSheet.create({
   touchable: {
     flex: 1,
-    height: 34,
+    height: 39,
     backgroundColor: '#F5F5F5',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomLeftRadius: 12,
     borderBottomRightRadius: 12,
+    fontSize: 16,
   },
 });
 
