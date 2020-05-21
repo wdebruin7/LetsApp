@@ -6,12 +6,12 @@ import {
   FlatList,
   TouchableOpacity,
   Text,
-  TextInput,
   Dimensions,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import {GroupTile, AppHeader} from '../../components';
+import {GroupTile, AppHeader, TextBox} from '../../components';
+import {colors} from '../../constants';
 
 const Groups = () => {
   const groups = useSelector((state) => state.groups || {});
@@ -41,9 +41,10 @@ const Groups = () => {
       <AppHeader />
       <View style={styles.topTile}>
         <TouchableOpacity onPress={onPressCreate}>
-          <Text>Create new group</Text>
+          <Text style={styles.linkText}>Create new group</Text>
         </TouchableOpacity>
-        <TextInput
+        <TextBox
+          style={styles.searchBar}
           placeholder="Search groups"
           value={groupSearchString}
           onChangeText={setGroupSearchString}
@@ -69,11 +70,11 @@ const styles = StyleSheet.create({
   topTile: {
     width: Dimensions.get('window').width,
     alignItems: 'center',
-    height: 80,
     shadowColor: 'black',
     shadowOpacity: 0.25,
     shadowOffset: {width: 3, height: 3},
     backgroundColor: '#FFFFFF',
+    paddingTop: 20,
   },
   listContainer: {
     paddingTop: 10,
@@ -82,6 +83,14 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     backgroundColor: '#FFFFFF',
+  },
+  searchBar: {
+    width: '80%',
+  },
+  linkText: {
+    color: colors.primaryBlue,
+    marginBottom: 10,
+    fontSize: 16,
   },
 });
 
