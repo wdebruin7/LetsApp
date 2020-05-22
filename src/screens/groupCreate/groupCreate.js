@@ -7,9 +7,17 @@ import {
   View,
   Button,
 } from 'react-native';
+import {useSelector} from 'react-redux';
+import {createGroup} from '../../firebase';
 
 const GroupCreate = () => {
   const [groupName, setGroupName] = useState('');
+  const userData = useSelector((state) => state.user.data || {});
+
+  const onPressNext = async () => {
+    const rv = await createGroup(groupName, undefined, userData);
+    console.log(rv);
+  };
 
   return (
     <SafeAreaView>
@@ -25,7 +33,7 @@ const GroupCreate = () => {
           />
         </View>
       </View>
-      <Button title="Next" />
+      <Button title="Next" onPress={onPressNext} />
     </SafeAreaView>
   );
 };
