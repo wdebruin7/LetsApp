@@ -18,11 +18,6 @@ const ActivityDay = ({activityDay, setActiveDate}) => {
       <TileHeader
         title={getDisplayDate(activityDay.date)}
         onPress={() => setActiveDate(activityDay.date)}
-        rightComponent={
-          <TouchableOpacity onPress={onPressAdd}>
-            <Icon name="plus" type="entypo" color="#FFFFFF" />
-          </TouchableOpacity>
-        }
       />
       <TileBody>
         <FlatList
