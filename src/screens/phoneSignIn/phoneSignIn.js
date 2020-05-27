@@ -88,13 +88,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   logo: {
-    fontFamily: 'Trebuchet MS',
+    fontFamily: 'ShadowsIntoLightTwo-Regular',
     paddingBottom: 10,
     fontSize: 58,
     textAlign: 'center',
   },
   subtitle: {
-    fontFamily: 'AppleSDGothicNeo-Regular',
+    fontFamily: 'Inter-Regular',
     fontSize: 18,
     textAlign: 'center',
     color: '#8D8D8D',
