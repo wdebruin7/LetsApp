@@ -1,4 +1,4 @@
-const getGroupMembersString = (group, userData) => {
+const getGroupMembersString = (group, userData, long) => {
   const otherMembers = group.members.filter(
     (member) => member.uid !== userData.uid,
   );
@@ -14,7 +14,7 @@ const getGroupMembersString = (group, userData) => {
       return `You, ${otherMembers[0].name}, ${otherMembers[1].name}, and ${otherMembers[2].name}`;
     default:
       return `You, ${otherMembers[0].name}, ${otherMembers[1].name} + ${
-        otherMembers.length - 3
+        otherMembers.length - 2
       } more`;
   }
 };
