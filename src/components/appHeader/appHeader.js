@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   text: {
-    fontFamily: 'Trebuchet MS',
+    fontFamily: 'Shadows Into Light Two',
     fontSize: 30,
   },
 });
