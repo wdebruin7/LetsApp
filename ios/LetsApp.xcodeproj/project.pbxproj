@@ -19,6 +19,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* LetsAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* LetsAppTests.m */; };
 		6496AD8879AEA2457BCDEC7D /* libPods-LetsApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4255913CC33606B7CA44756 /* libPods-LetsApp-tvOSTests.a */; };
 		A6AC4C0FA7704FE055AB5756 /* libPods-LetsApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC51D2FAE23153CDA0AA0D44 /* libPods-LetsApp.a */; };
+		B50634E1247ED5BF00AE2971 /* ShadowsIntoLightTwo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B50634E0247ED5BF00AE2971 /* ShadowsIntoLightTwo-Regular.ttf */; };
 		B5E58B77243BD6070025B9AF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5E58B76243BD6070025B9AF /* GoogleService-Info.plist */; };
 		BEC2A82E8E1C038B088929C7 /* libPods-LetsApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF559592EB646B9EEB565FE /* libPods-LetsApp-tvOS.a */; };
 /* End PBXBuildFile section */
@@ -59,6 +60,7 @@
 		43C0EC898D3B3178FA13C974 /* Pods-LetsApp-LetsAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LetsApp-LetsAppTests.debug.xcconfig"; path = "Target Support Files/Pods-LetsApp-LetsAppTests/Pods-LetsApp-LetsAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		61DAD3254453F8D6A2B247B6 /* Pods-LetsApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LetsApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-LetsApp-tvOS/Pods-LetsApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		79D807C961CFD6EBF8F73211 /* libPods-LetsApp-LetsAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LetsApp-LetsAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B50634E0247ED5BF00AE2971 /* ShadowsIntoLightTwo-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ShadowsIntoLightTwo-Regular.ttf"; sourceTree = "<group>"; };
 		B5E58B75243BD5CC0025B9AF /* LetsApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LetsApp.entitlements; path = LetsApp/LetsApp.entitlements; sourceTree = "<group>"; };
 		B5E58B76243BD6070025B9AF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BAF559592EB646B9EEB565FE /* libPods-LetsApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LetsApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,6 +130,7 @@
 		13B07FAE1A68108700A75B9A /* LetsApp */ = {
 			isa = PBXGroup;
 			children = (
+				B50634E2247ED5C700AE2971 /* fonts */,
 				B5E58B75243BD5CC0025B9AF /* LetsApp.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -200,6 +203,14 @@
 				2D02E4901E0B4A5D006451C7 /* LetsApp-tvOSTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B50634E2247ED5C700AE2971 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				B50634E0247ED5BF00AE2971 /* ShadowsIntoLightTwo-Regular.ttf */,
+			);
+			path = fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,6 +360,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				B5E58B77243BD6070025B9AF /* GoogleService-Info.plist in Resources */,
+				B50634E1247ED5BF00AE2971 /* ShadowsIntoLightTwo-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
