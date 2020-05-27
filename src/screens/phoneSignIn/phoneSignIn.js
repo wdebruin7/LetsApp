@@ -89,13 +89,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   logo: {
+<<<<<<< HEAD
     fontFamily: fonts.logo,
+=======
+    fontFamily: 'ShadowsIntoLightTwo-Regular',
+>>>>>>> add Inter font
     paddingBottom: 10,
     fontSize: 58,
     textAlign: 'center',
   },
   subtitle: {
+<<<<<<< HEAD
     fontFamily: fonts.body_medium,
+=======
+    fontFamily: 'Inter-Regular',
+>>>>>>> add Inter font
     fontSize: 18,
     textAlign: 'center',
     color: colors.mediumGrey,
