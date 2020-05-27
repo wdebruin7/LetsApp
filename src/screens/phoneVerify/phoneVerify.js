@@ -12,6 +12,7 @@ import {useRoute} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import {Button, TextBox} from '../../components';
 import Colors from '../../constants/colors';
+import {fonts, colors} from '../../constants';
 
 const PhoneVerify = () => {
   const [confirmtionCode, setConfirmationCode] = useState('');
@@ -19,6 +20,7 @@ const PhoneVerify = () => {
   const [textFocus, changeFocus] = useState(false);
   const route = useRoute();
   const {phoneNumber} = route.params;
+  const lets = "Let's";
 
   const getConfirm = async () => {
     try {
@@ -47,7 +49,7 @@ const PhoneVerify = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.logo}>Let's</Text>
+            <Text style={styles.logo}>{lets}</Text>
             <Text style={styles.subtitle}>Get verified!</Text>
           </View>
           <Image
@@ -56,8 +58,8 @@ const PhoneVerify = () => {
           />
           <View style={styles.verfificationBox}>
             <Text style={styles.title}>Verification code</Text>
-            <Text>Enter the code sent to</Text>
-            <Text style={{color: Colors.primaryBlue}}>{phoneNumber}</Text>
+            <Text style={styles.bodyText}>Enter the code sent to</Text>
+            <Text style={styles.phoneNubmer}>{phoneNumber}</Text>
             <TextBox
               value={confirmtionCode}
               onChangeText={setConfirmationCode}
@@ -86,16 +88,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   logo: {
-    fontFamily: 'Trebuchet MS',
+    fontFamily: fonts.logo,
     paddingBottom: 10,
     fontSize: 58,
     textAlign: 'center',
   },
   subtitle: {
-    fontFamily: 'AppleSDGothicNeo-Regular',
+    fontFamily: fonts.body_medium,
     fontSize: 18,
     textAlign: 'center',
-    color: '#8D8D8D',
+    color: colors.darkGrey,
   },
   container: {
     flex: 1,
@@ -109,9 +111,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontFamily: 'AppleSDGothicNeo-Regular',
+    fontFamily: fonts.body_bold,
     color: Colors.primaryBlue,
-    fontWeight: 'bold',
   },
   graphic: {
     height: 200,
@@ -119,6 +120,15 @@ const styles = StyleSheet.create({
   },
   graphic_hidden: {
     display: 'none',
+  },
+  bodyText: {
+    fontFamily: fonts.body_light,
+    marginTop: 10,
+  },
+  phoneNubmer: {
+    fontFamily: fonts.body_bold,
+    color: colors.primaryBlue,
+    marginBottom: 5,
   },
 });
 

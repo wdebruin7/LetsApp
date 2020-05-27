@@ -12,13 +12,14 @@ import {useNavigation} from '@react-navigation/native';
 import PhoneInput from 'react-native-phone-input';
 import {normalizePhoneNumber, validatePhoneNumber} from '../../utils';
 import {Button} from '../../components';
+import {fonts, colors} from '../../constants';
 
 const PhoneSignIn = () => {
   // If null, no SMS has been sent
   const [phoneNumber, setPhoneNumber] = useState('+1');
   const [error, setError] = useState('');
-
   const {navigate} = useNavigation();
+  const lets = "Let's";
 
   const handleNumberChange = (text) => {
     setPhoneNumber(normalizePhoneNumber(text), phoneNumber);
@@ -46,7 +47,7 @@ const PhoneSignIn = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.logo}>Let's</Text>
+            <Text style={styles.logo}>{lets}</Text>
             <Text style={styles.subtitle}>Get started!</Text>
           </View>
           <Image
@@ -88,16 +89,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   logo: {
-    fontFamily: 'ShadowsIntoLightTwo-Regular',
+    fontFamily: fonts.logo,
     paddingBottom: 10,
     fontSize: 58,
     textAlign: 'center',
   },
   subtitle: {
-    fontFamily: 'Inter-Regular',
+    fontFamily: fonts.body_medium,
     fontSize: 18,
     textAlign: 'center',
-    color: '#8D8D8D',
+    color: colors.darkGrey,
   },
   container: {
     flex: 1,
@@ -115,18 +116,17 @@ const styles = StyleSheet.create({
     width: 220,
     borderWidth: 1,
     color: 'black',
-    borderColor: '#F1F3F6',
+    borderColor: colors.lightGrey,
     borderRadius: 25,
-    backgroundColor: '#F1F3F6',
+    backgroundColor: colors.lightGrey,
     paddingLeft: 20,
     marginTop: 10,
     marginBottom: 10,
   },
   title: {
     fontSize: 18,
-    fontFamily: 'AppleSDGothicNeo-Regular',
-    color: '#0066FF',
-    fontWeight: 'bold',
+    fontFamily: fonts.body_bold,
+    color: colors.primaryBlue,
   },
   graphic: {
     height: 150,
