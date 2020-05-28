@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.body_medium,
     fontSize: 18,
     textAlign: 'center',
-    color: colors.darkGrey,
+    color: colors.mediumGrey,
   },
   container: {
     flex: 1,

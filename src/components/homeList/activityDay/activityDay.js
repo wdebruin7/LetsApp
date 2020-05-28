@@ -7,23 +7,15 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import {Icon, Divider} from 'react-native-elements';
-import {useNavigation} from '@react-navigation/native';
+import {Divider} from 'react-native-elements';
 import ActivityList from './activityList';
 import ShowMoreActivities from './showMoreActivities';
 import {getDisplayDate} from '../../../utils';
+import {fonts} from '../../../constants';
 
 const ActivityDay = ({activityDay, setActiveDate}) => {
   const [showAll, setShowAll] = useState(false);
   const activitiesHidden = !showAll && activityDay.activities > 3;
-  const {navigate} = useNavigation();
-
-  const onPressAdd = () => {
-    navigate('AddActivity', {
-      screen: 'ActivityAdder',
-      params: activityDay.date.getTime(),
-    });
-  };
 
   return (
     <View style={styles.container}>
@@ -33,9 +25,6 @@ const ActivityDay = ({activityDay, setActiveDate}) => {
         <Text style={styles.headerText}>
           {getDisplayDate(activityDay.date)}
         </Text>
-        <TouchableOpacity onPress={onPressAdd}>
-          <Icon name="plus" type="entypo" color="#FFFFFF" size={30} />
-        </TouchableOpacity>
       </TouchableOpacity>
       <FlatList
         data={
@@ -78,7 +67,7 @@ const styles = StyleSheet.create({
   headerView: {
     backgroundColor: '#8AABDD',
     flex: 1,
-    height: 43,
+    height: 45,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -89,6 +78,7 @@ const styles = StyleSheet.create({
   headerText: {
     color: '#FFFFFF',
     fontSize: 16,
+    fontFamily: fonts.body_medium,
   },
 });
 

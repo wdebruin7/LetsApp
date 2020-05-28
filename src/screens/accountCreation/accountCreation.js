@@ -16,6 +16,7 @@ import {useSession, setUserData} from '../../firebase';
 import {getDownloadURL} from '../../utils';
 import {Button, TextBox} from '../../components';
 import Colors from '../../constants/colors';
+import {fonts} from '../../constants';
 
 const AccountCreation = () => {
   const session = useSession();
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   logo: {
-    fontFamily: 'Trebuchet MS',
+    fontFamily: fonts.logo,
     paddingBottom: 10,
     fontSize: 58,
     textAlign: 'center',

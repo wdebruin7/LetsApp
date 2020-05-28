@@ -1,5 +1,7 @@
 export default {
   primaryBlue: '#0066FF',
   lightGrey: '#F1F3F6',
-  darkGrey: '#8D8D8D',
+  mediumGrey: '#8D8D8D',
+  darkGrey: '#5F5F5F',
+  brightGreen: '#00EE6D',
 };

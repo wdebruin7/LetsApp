@@ -5,6 +5,7 @@ import AntIcon from 'react-native-vector-icons/AntDesign';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {toggleUserIsParticipant} from '../../../../firebase';
+import {fonts, colors} from '../../../../constants';
 
 const ActivityList = ({activity, isLastElement}) => {
   const userData = useSelector((state) => state.user.data);
@@ -74,9 +75,9 @@ const ActivityList = ({activity, isLastElement}) => {
           ) : null}
         </View>
         <Switch
-          trackColor={{false: '#767577', true: '#81b0ff'}}
-          thumbColor={isParticipant ? '#f5dd4b' : '#f4f3f4'}
-          ios_backgroundColor="#3e3e3e"
+          trackColor={{false: colors.mediumGrey, true: colors.brightGreen}}
+          thumbColor="white"
+          ios_backgroundColor={colors.mediumGrey}
           onValueChange={toggleSwitch}
           value={isParticipant}
           style={styles.switch}
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
   },
   touchable: {
     flex: 1,
-    height: 39,
+    height: 45,
     backgroundColor: '#F5F5F5',
   },
   touchableLastActivity: {
@@ -109,9 +110,12 @@ const styles = StyleSheet.create({
   },
   activityInfoElement: {
     marginLeft: 7,
+    fontFamily: fonts.body_regular,
+    color: colors.darkGrey,
   },
   activityInfoElementText: {
     fontSize: 16,
+    color: colors.mediumGrey,
   },
   switch: {
     transform: [{scaleX: 0.7}, {scaleY: 0.7}],

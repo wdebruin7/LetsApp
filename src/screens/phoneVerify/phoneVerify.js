@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.body_medium,
     fontSize: 18,
     textAlign: 'center',
-    color: colors.darkGrey,
+    color: colors.mediumGrey,
   },
   container: {
     flex: 1,
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontFamily: fonts.body_bold,
-    color: Colors.primaryBlue,
+    color: colors.primaryBlue,
   },
   graphic: {
     height: 200,
