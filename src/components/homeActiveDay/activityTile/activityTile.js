@@ -6,6 +6,7 @@ import {
   getGroupMembersString,
   getActivityParticipantsString,
 } from '../../../utils';
+import {colors, fonts} from '../../../constants';
 
 const ActivityTile = ({activity, group}) => {
   const [hasThumbnail, setHasThumbnail] = useState(group && group.thumbnailURL);
@@ -54,9 +55,9 @@ const ActivityTile = ({activity, group}) => {
           ) : null}
         </View>
         <Switch
-          trackColor={{false: '#767577', true: '#81b0ff'}}
-          thumbColor={userIsParticipant ? '#f5dd4b' : '#f4f3f4'}
-          ios_backgroundColor="#3e3e3e"
+          trackColor={{false: colors.darkGrey, true: colors.brightGreen}}
+          thumbColor="white"
+          ios_backgroundColor={colors.darkGrey}
           onValueChange={handleSwitchToggle}
           value={userIsParticipant}
           style={styles.switch}
@@ -87,17 +88,19 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   header: {
-    fontWeight: 'bold',
+    fontFamily: fonts.body_medium,
     fontSize: 16,
   },
   members: {
-    color: '#8D8D8D',
+    color: colors.mediumGrey,
     fontSize: 13,
     paddingTop: 6,
+    fontFamily: fonts.body_regular,
   },
   participants: {
-    paddingTop: 6,
+    paddingTop: 10,
     fontSize: 13,
+    fontFamily: fonts.body_regular,
   },
   rightContainer: {
     flex: 1,
