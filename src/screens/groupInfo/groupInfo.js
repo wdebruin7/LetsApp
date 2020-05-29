@@ -10,6 +10,7 @@ import {Avatar, Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
 import {FlatList} from 'react-native-gesture-handler';
+import Clipboard from '@react-native-community/clipboard';
 import {getGroupMembersString, buildDynamicLink} from '../../utils';
 import {AddActivityButton} from '../../components';
 
@@ -39,7 +40,7 @@ const GroupInfo = () => {
     };
 
     buildDynamicLink(searchParams, true)
-      .then() // here add logic to copy to clipboard
+      .then((link) => Clipboard.setString(link))
       .catch((error) => console.log(error));
   };
 
