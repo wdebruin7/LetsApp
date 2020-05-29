@@ -30,6 +30,16 @@
 				<string>com.googleusercontent.apps.12428685884-tvsafek1l8ukqf2731k0521ml74rvk9k</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>Bundle ID</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.DeBruinDesign.LetsApp</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
@@ -90,5 +100,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+  <key>FirebaseDynamicLinksCustomDomains</key>
+  <string>https://getlets.app/link</string>
 </dict>
 </plist>
