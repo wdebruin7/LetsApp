@@ -100,7 +100,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-  <key>FirebaseDynamicLinksCustomDomains</key>
-  <string>https://getlets.app/link</string>
+	<key>FirebaseDynamicLinksCustomDomains</key>
+	<array>
+		<string>https://getlets.app/link</string>
+	</array>
 </dict>
 </plist>
