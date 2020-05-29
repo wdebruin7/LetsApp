@@ -37,7 +37,10 @@ const GroupInfo = () => {
       type: 'group',
       id: group.uid,
     };
-    buildDynamicLink(searchParams, false).then();
+
+    buildDynamicLink(searchParams, false)
+      .then((link) => console.log(link))
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -54,7 +57,7 @@ const GroupInfo = () => {
           <TouchableOpacity>
             <Icon name="person-add" type="material-icons" />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onPressCopy}>
             <Icon name="link" type="material-icons" />
           </TouchableOpacity>
         </View>
