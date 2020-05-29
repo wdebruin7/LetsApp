@@ -10,6 +10,7 @@ import {useSelector} from 'react-redux';
 import {Avatar} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import {getGroupMembersString, getDownloadURL} from '../../utils';
+import {fonts, colors} from '../../constants';
 
 const GroupTile = ({group}) => {
   const userData = useSelector((state) => state.user.data || {});
@@ -68,11 +69,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    fontWeight: 'bold',
+    fontFamily: fonts.body_medium,
     fontSize: 16,
   },
   members: {
-    color: '#8D8D8D',
+    color: colors.mediumGrey,
+    fontFamily: fonts.body_regular,
     fontSize: 13,
     paddingTop: 6,
   },

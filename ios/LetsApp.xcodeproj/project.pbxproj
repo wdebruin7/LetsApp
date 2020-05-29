@@ -19,6 +19,15 @@
 		2DCD954D1E0B4F2C00145EB5 /* LetsAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* LetsAppTests.m */; };
 		6496AD8879AEA2457BCDEC7D /* libPods-LetsApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4255913CC33606B7CA44756 /* libPods-LetsApp-tvOSTests.a */; };
 		A6AC4C0FA7704FE055AB5756 /* libPods-LetsApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC51D2FAE23153CDA0AA0D44 /* libPods-LetsApp.a */; };
+		AA72984A247F1BD100761E03 /* Inter-Black-slnt=0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA729841247F1BBB00761E03 /* Inter-Black-slnt=0.ttf */; };
+		AA72984B247F1BD100761E03 /* Inter-Bold-slnt=0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA729843247F1BBB00761E03 /* Inter-Bold-slnt=0.ttf */; };
+		AA72984C247F1BD100761E03 /* Inter-ExtraBold-slnt=0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA729842247F1BBB00761E03 /* Inter-ExtraBold-slnt=0.ttf */; };
+		AA72984D247F1BD100761E03 /* Inter-ExtraLight-slnt=0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA729848247F1BBC00761E03 /* Inter-ExtraLight-slnt=0.ttf */; };
+		AA72984E247F1BD100761E03 /* Inter-Light-slnt=0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA729844247F1BBB00761E03 /* Inter-Light-slnt=0.ttf */; };
+		AA72984F247F1BD100761E03 /* Inter-Medium-slnt=0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA729845247F1BBB00761E03 /* Inter-Medium-slnt=0.ttf */; };
+		AA729850247F1BD100761E03 /* Inter-Regular-slnt=0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA729846247F1BBB00761E03 /* Inter-Regular-slnt=0.ttf */; };
+		AA729851247F1BD100761E03 /* Inter-SemiBold-slnt=0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA729847247F1BBC00761E03 /* Inter-SemiBold-slnt=0.ttf */; };
+		AA729852247F1BD100761E03 /* Inter-Thin-slnt=0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA729849247F1BBC00761E03 /* Inter-Thin-slnt=0.ttf */; };
 		B50634E1247ED5BF00AE2971 /* ShadowsIntoLightTwo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B50634E0247ED5BF00AE2971 /* ShadowsIntoLightTwo-Regular.ttf */; };
 		B5E58B77243BD6070025B9AF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5E58B76243BD6070025B9AF /* GoogleService-Info.plist */; };
 		BEC2A82E8E1C038B088929C7 /* libPods-LetsApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF559592EB646B9EEB565FE /* libPods-LetsApp-tvOS.a */; };
@@ -60,6 +69,15 @@
 		43C0EC898D3B3178FA13C974 /* Pods-LetsApp-LetsAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LetsApp-LetsAppTests.debug.xcconfig"; path = "Target Support Files/Pods-LetsApp-LetsAppTests/Pods-LetsApp-LetsAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		61DAD3254453F8D6A2B247B6 /* Pods-LetsApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LetsApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-LetsApp-tvOS/Pods-LetsApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		79D807C961CFD6EBF8F73211 /* libPods-LetsApp-LetsAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LetsApp-LetsAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA729841247F1BBB00761E03 /* Inter-Black-slnt=0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Black-slnt=0.ttf"; path = "../../../../Downloads/Inter/static/Inter-Black-slnt=0.ttf"; sourceTree = "<group>"; };
+		AA729842247F1BBB00761E03 /* Inter-ExtraBold-slnt=0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-ExtraBold-slnt=0.ttf"; path = "../../../../Downloads/Inter/static/Inter-ExtraBold-slnt=0.ttf"; sourceTree = "<group>"; };
+		AA729843247F1BBB00761E03 /* Inter-Bold-slnt=0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Bold-slnt=0.ttf"; path = "../../../../Downloads/Inter/static/Inter-Bold-slnt=0.ttf"; sourceTree = "<group>"; };
+		AA729844247F1BBB00761E03 /* Inter-Light-slnt=0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Light-slnt=0.ttf"; path = "../../../../Downloads/Inter/static/Inter-Light-slnt=0.ttf"; sourceTree = "<group>"; };
+		AA729845247F1BBB00761E03 /* Inter-Medium-slnt=0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Medium-slnt=0.ttf"; path = "../../../../Downloads/Inter/static/Inter-Medium-slnt=0.ttf"; sourceTree = "<group>"; };
+		AA729846247F1BBB00761E03 /* Inter-Regular-slnt=0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Regular-slnt=0.ttf"; path = "../../../../Downloads/Inter/static/Inter-Regular-slnt=0.ttf"; sourceTree = "<group>"; };
+		AA729847247F1BBC00761E03 /* Inter-SemiBold-slnt=0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-SemiBold-slnt=0.ttf"; path = "../../../../Downloads/Inter/static/Inter-SemiBold-slnt=0.ttf"; sourceTree = "<group>"; };
+		AA729848247F1BBC00761E03 /* Inter-ExtraLight-slnt=0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-ExtraLight-slnt=0.ttf"; path = "../../../../Downloads/Inter/static/Inter-ExtraLight-slnt=0.ttf"; sourceTree = "<group>"; };
+		AA729849247F1BBC00761E03 /* Inter-Thin-slnt=0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Thin-slnt=0.ttf"; path = "../../../../Downloads/Inter/static/Inter-Thin-slnt=0.ttf"; sourceTree = "<group>"; };
 		B50634E0247ED5BF00AE2971 /* ShadowsIntoLightTwo-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ShadowsIntoLightTwo-Regular.ttf"; sourceTree = "<group>"; };
 		B5E58B75243BD5CC0025B9AF /* LetsApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LetsApp.entitlements; path = LetsApp/LetsApp.entitlements; sourceTree = "<group>"; };
 		B5E58B76243BD6070025B9AF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -209,6 +227,15 @@
 			isa = PBXGroup;
 			children = (
 				B50634E0247ED5BF00AE2971 /* ShadowsIntoLightTwo-Regular.ttf */,
+				AA729841247F1BBB00761E03 /* Inter-Black-slnt=0.ttf */,
+				AA729843247F1BBB00761E03 /* Inter-Bold-slnt=0.ttf */,
+				AA729842247F1BBB00761E03 /* Inter-ExtraBold-slnt=0.ttf */,
+				AA729848247F1BBC00761E03 /* Inter-ExtraLight-slnt=0.ttf */,
+				AA729844247F1BBB00761E03 /* Inter-Light-slnt=0.ttf */,
+				AA729845247F1BBB00761E03 /* Inter-Medium-slnt=0.ttf */,
+				AA729846247F1BBB00761E03 /* Inter-Regular-slnt=0.ttf */,
+				AA729847247F1BBC00761E03 /* Inter-SemiBold-slnt=0.ttf */,
+				AA729849247F1BBC00761E03 /* Inter-Thin-slnt=0.ttf */,
 			);
 			path = fonts;
 			sourceTree = "<group>";
@@ -359,8 +386,17 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				AA729851247F1BD100761E03 /* Inter-SemiBold-slnt=0.ttf in Resources */,
+				AA72984A247F1BD100761E03 /* Inter-Black-slnt=0.ttf in Resources */,
+				AA729850247F1BD100761E03 /* Inter-Regular-slnt=0.ttf in Resources */,
 				B5E58B77243BD6070025B9AF /* GoogleService-Info.plist in Resources */,
+				AA72984B247F1BD100761E03 /* Inter-Bold-slnt=0.ttf in Resources */,
+				AA729852247F1BD100761E03 /* Inter-Thin-slnt=0.ttf in Resources */,
+				AA72984D247F1BD100761E03 /* Inter-ExtraLight-slnt=0.ttf in Resources */,
+				AA72984F247F1BD100761E03 /* Inter-Medium-slnt=0.ttf in Resources */,
 				B50634E1247ED5BF00AE2971 /* ShadowsIntoLightTwo-Regular.ttf in Resources */,
+				AA72984E247F1BD100761E03 /* Inter-Light-slnt=0.ttf in Resources */,
+				AA72984C247F1BD100761E03 /* Inter-ExtraBold-slnt=0.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

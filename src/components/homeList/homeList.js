@@ -10,7 +10,6 @@ const HomeList = ({activities, setActiveDate}) => {
 
   return (
     <View style={styles.container}>
-      <Text>Welcome user!</Text>
       <Button title="sign out" onPress={handleSignOut} />
       {activities.length > 0 ? (
         <FlatList

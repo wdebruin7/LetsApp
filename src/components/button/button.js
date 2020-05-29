@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Colors from '../../constants/colors';
+import {fonts} from '../../constants';
 
 const Button = ({onPress, title, disabled, style, raised}) => {
   if (raised) {
@@ -66,8 +67,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
-    fontFamily: 'AppleSDGothicNeo-Regular',
-    fontWeight: 'bold',
+    fontFamily: fonts.body_bold,
   },
   highlightText: {
     color: 'white',

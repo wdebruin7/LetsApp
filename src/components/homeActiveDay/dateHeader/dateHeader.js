@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {getDisplayDate} from '../../../utils';
+import {fonts} from '../../../constants';
 
 const DateHeader = ({date, setActiveDate}) => {
   const onPressX = () => {
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     paddingHorizontal: 7,
-    fontWeight: 'bold',
+    fontFamily: fonts.body_medium,
   },
   icon: {
     paddingHorizontal: 7,

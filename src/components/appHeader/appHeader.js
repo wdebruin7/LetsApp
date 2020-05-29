@@ -9,6 +9,7 @@ import {
 import {Icon, Avatar} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import {getDownloadURL} from '../../utils';
+import {colors, fonts} from '../../constants';
 
 const AppHeader = () => {
   const {profileImagePath} = useSelector((state) => state.user.data || {});
@@ -47,6 +48,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 55,
     width: Dimensions.get('window').width,
+    borderBottomColor: colors.lightGrey,
+    borderBottomWidth: 1,
   },
   rightButtons: {
     position: 'absolute',
@@ -61,7 +64,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   text: {
-    fontFamily: 'Shadows Into Light Two',
+    fontFamily: fonts.logo,
     fontSize: 30,
   },
 });
