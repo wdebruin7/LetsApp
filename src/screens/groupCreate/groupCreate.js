@@ -11,7 +11,7 @@ import {Icon} from 'react-native-elements';
 import ImagePicker from 'react-native-image-picker';
 import {useNavigation} from '@react-navigation/native';
 import {TextBox, Button} from '../../components';
-import {colors} from '../../constants';
+import {colors, fonts} from '../../constants';
 import {createGroup} from '../../firebase';
 
 const GroupCreate = () => {
@@ -109,22 +109,24 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   logo: {
-    fontFamily: 'Trebuchet MS',
+    fontFamily: fonts.logo,
     paddingBottom: 10,
     fontSize: 58,
     textAlign: 'center',
   },
   subtitle: {
-    fontFamily: 'AppleSDGothicNeo-Regular',
+    fontFamily: fonts.body_medium,
     fontSize: 18,
     textAlign: 'center',
     color: '#8D8D8D',
   },
   nameInput: {
     width: 220,
+    fontFamily: fonts.body_regular,
   },
   inputTitle: {
     paddingLeft: 15,
+    fontFamily: fonts.body_regular,
   },
   profilePhoto: {
     height: 50,

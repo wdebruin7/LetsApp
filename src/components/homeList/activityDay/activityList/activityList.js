@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
   touchable: {
     flex: 1,
     height: 39,
+    backgroundColor: '#F5F5F5',
   },
   container: {
     flex: 1,
@@ -93,18 +94,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-<<<<<<< HEAD
-  touchable: {
-    flex: 1,
-    height: 45,
-    backgroundColor: '#F5F5F5',
-  },
   touchableLastActivity: {
     borderBottomRightRadius: 12,
     borderBottomLeftRadius: 12,
   },
-=======
->>>>>>> wip
   activityInfoView: {
     flexDirection: 'row',
     alignItems: 'center',

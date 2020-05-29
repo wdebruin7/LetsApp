@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, FlatList, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import {Icon, Divider} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import ActivityList from './activityList';
