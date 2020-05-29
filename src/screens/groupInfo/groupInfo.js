@@ -38,8 +38,8 @@ const GroupInfo = () => {
       id: group.uid,
     };
 
-    buildDynamicLink(searchParams, false)
-      .then((link) => console.log(link))
+    buildDynamicLink(searchParams, true)
+      .then() // here add logic to copy to clipboard
       .catch((error) => console.log(error));
   };
 
