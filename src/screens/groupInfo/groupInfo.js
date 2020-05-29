@@ -6,8 +6,9 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
+  Image,
 } from 'react-native';
-import {Avatar, Icon} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
 import Clipboard from '@react-native-community/clipboard';
@@ -40,6 +41,7 @@ const GroupInfo = () => {
     const ref = storage().ref(`${group.uid}/thumbnail`);
     ref.getDownloadURL().then((url) => setPhotoRefURL(url));
   };
+  groupPhoto();
 
   useEffect(() => {
     setActivities(
@@ -68,13 +70,13 @@ const GroupInfo = () => {
         <View style={styles.groupInfo}>
           <View style={styles.groupPhoto}>
             {photoRefURL ? (
-              <Avatar source={photoRefURL} />
+              <Image style={styles.groupPhoto} source={{uri: photoRefURL}} />
             ) : (
               <Icon name="group" type="material-icons" size={30} />
             )}
           </View>
           <TouchableOpacity>
-            <View>
+            <View style={styles.groupDetails}>
               <Text style={styles.groupName}>{group.name}</Text>
               <Text style={styles.groupMembers}>
                 {getGroupMembersString(group, userData)}
@@ -151,7 +153,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightGrey,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 15,
   },
   groupName: {
     fontWeight: 'bold',
@@ -168,6 +169,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     paddingRight: 40,
     paddingBottom: 10,
+  },
+  groupDetails: {
+    marginLeft: 15,
   },
 });
 
