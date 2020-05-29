@@ -10,7 +10,7 @@ import {Avatar, Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
 import {FlatList} from 'react-native-gesture-handler';
-import {getGroupMembersString} from '../../utils';
+import {getGroupMembersString, buildDynamicLink} from '../../utils';
 import {AddActivityButton} from '../../components';
 
 const GroupInfo = () => {
@@ -31,6 +31,14 @@ const GroupInfo = () => {
         .flat(),
     );
   }, [activityDays, group.uid]);
+
+  const onPressCopy = async () => {
+    const searchParams = {
+      type: 'group',
+      id: group.uid,
+    };
+    buildDynamicLink(searchParams, false).then();
+  };
 
   return (
     <SafeAreaView>
