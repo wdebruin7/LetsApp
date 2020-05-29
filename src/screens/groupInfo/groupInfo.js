@@ -23,6 +23,7 @@ import {
   TileBody,
   GroupInfoTile,
 } from '../../components';
+import storage from '@react-native-firebase/storage';
 import {colors} from '../../constants';
 
 const GroupInfo = () => {
@@ -30,9 +31,15 @@ const GroupInfo = () => {
   const userData = useSelector((state) => state.user.data || {});
   const groups = useSelector((state) => state.groups || {});
   const activityDays = useSelector((state) => state.activities || []);
+  const [photoRefURL, setPhotoRefURL] = useState('');
 
   const group = params.group || groups[params.groupUID] || {};
   const [activities, setActivities] = useState([]);
+
+  const groupPhoto = async () => {
+    const ref = storage().ref(`${group.uid}/thumbnail`);
+    ref.getDownloadURL().then((url) => setPhotoRefURL(url));
+  };
 
   useEffect(() => {
     setActivities(
@@ -60,8 +67,8 @@ const GroupInfo = () => {
       <View style={styles.header}>
         <View style={styles.groupInfo}>
           <View style={styles.groupPhoto}>
-            {group.photoRefURL ? (
-              <Avatar />
+            {photoRefURL ? (
+              <Avatar source={photoRefURL} />
             ) : (
               <Icon name="group" type="material-icons" size={30} />
             )}
