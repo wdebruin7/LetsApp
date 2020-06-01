@@ -37,11 +37,12 @@ const GroupInfo = () => {
   const group = params.group || groups[params.groupUID] || {};
   const [activities, setActivities] = useState([]);
 
-  const groupPhoto = async () => {
-    const ref = storage().ref(`${group.uid}/thumbnail`);
-    ref.getDownloadURL().then((url) => setPhotoRefURL(url));
-  };
-  groupPhoto();
+  useEffect(() => {
+    if (group.thumbnailImagePath) {
+      const ref = storage().ref(`${group.uid}/thumbnail`);
+      ref.getDownloadURL().then((url) => setPhotoRefURL(url));
+    }
+  }, [group.thumbnailImagePath, group.uid]);
 
   useEffect(() => {
     setActivities(
