@@ -12,6 +12,7 @@ import {Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
 import Clipboard from '@react-native-community/clipboard';
+import storage from '@react-native-firebase/storage';
 import {
   getDisplayDate,
   getActivityParticipantsString,
@@ -24,7 +25,6 @@ import {
   TileBody,
   GroupInfoTile,
 } from '../../components';
-import storage from '@react-native-firebase/storage';
 import {colors} from '../../constants';
 
 const GroupInfo = () => {
@@ -85,18 +85,9 @@ const GroupInfo = () => {
             </View>
           </TouchableOpacity>
         </View>
-<<<<<<< HEAD
-        <View>
-          <TouchableOpacity>
-            <Icon name="person-add" type="material-icons" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={onPressCopy}>
-            <Icon name="link" type="material-icons" />
-          </TouchableOpacity>
-=======
         <View style={styles.link}>
           <View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={onPressCopy}>
               <Icon
                 name="link"
                 type="material-icons"
@@ -105,7 +96,6 @@ const GroupInfo = () => {
               />
             </TouchableOpacity>
           </View>
->>>>>>> 38a7847... style groupInfo header
         </View>
       </View>
       <FlatList
