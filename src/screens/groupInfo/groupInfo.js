@@ -10,7 +10,8 @@ import {Avatar, Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
 import {FlatList} from 'react-native-gesture-handler';
-import {getGroupMembersString} from '../../utils';
+import Clipboard from '@react-native-community/clipboard';
+import {getGroupMembersString, buildDynamicLink} from '../../utils';
 import {AddActivityButton} from '../../components';
 
 const GroupInfo = () => {
@@ -32,6 +33,17 @@ const GroupInfo = () => {
     );
   }, [activityDays, group.uid]);
 
+  const onPressCopy = async () => {
+    const searchParams = {
+      type: 'group',
+      id: group.uid,
+    };
+
+    buildDynamicLink(searchParams, true)
+      .then((link) => Clipboard.setString(link))
+      .catch((error) => console.log(error));
+  };
+
   return (
     <SafeAreaView>
       <View>
@@ -46,7 +58,7 @@ const GroupInfo = () => {
           <TouchableOpacity>
             <Icon name="person-add" type="material-icons" />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onPressCopy}>
             <Icon name="link" type="material-icons" />
           </TouchableOpacity>
         </View>

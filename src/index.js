@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, createContext} from 'react';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {useAuth} from './firebase/auth';
 import {SessionProvider} from './firebase/sessionContext';
 import AppContainer from './navigation';
@@ -17,12 +18,28 @@ import {
   getActivityListener,
   getGroupListener,
 } from './firebase/firestore';
+import {getSearchParams} from './utils';
+import {DynamicLinkProvider} from './firebase/dynamicLinkContext';
 
 const store = createStore(firestoreReducer, initialState());
 
 const App = () => {
   const session = useAuth();
   const [userData, setUserData] = useState(null);
+  const [dynamicLinkParams, setDynamicLinkParams] = useState(undefined);
+
+  const handleDynamicLink = (link) => {
+    const params = getSearchParams(link.url);
+    setDynamicLinkParams(params);
+  };
+
+  useEffect(() => {
+    dynamicLinks()
+      .getInitialLink()
+      .then((link) => handleDynamicLink(link));
+    const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
+    return () => unsubscribe();
+  }, []);
 
   const onUserSnapshot = (documentSnapshot) => {
     const data = documentSnapshot.data();
@@ -80,7 +97,9 @@ const App = () => {
   return (
     <SessionProvider value={session}>
       <Provider store={store}>
-        <AppContainer />
+        <DynamicLinkProvider value={dynamicLinkParams}>
+          <AppContainer />
+        </DynamicLinkProvider>
       </Provider>
     </SessionProvider>
   );
