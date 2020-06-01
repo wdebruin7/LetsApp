@@ -1,7 +1,7 @@
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 
 const buildDynamicLink = async (searchParams, short) => {
-  const url = `https://getlets.app/?value=${searchParams.value}&id=${searchParams.id}`;
+  const url = `https://getlets.app/?type=${searchParams.type}&id=${searchParams.id}`;
 
   const dynamicLinkParams = {
     link: url,
