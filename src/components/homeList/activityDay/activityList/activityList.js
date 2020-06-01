@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {TouchableOpacity, StyleSheet, View, Text, Switch} from 'react-native';
 import {Avatar} from 'react-native-elements';
-import AntIcon from 'react-native-vector-icons/AntDesign';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {toggleUserIsParticipant} from '../../../../firebase';
@@ -41,9 +40,6 @@ const ActivityList = ({activity}) => {
     <TouchableOpacity style={styles.touchable} onPress={onPress}>
       <View style={styles.container}>
         <View style={styles.activityInfoView}>
-          <View style={styles.activityInfoElement}>
-            <AntIcon name="staro" />
-          </View>
           <Text style={styles.activityInfoElement}>{activity.group.name}</Text>
           {activity.participants.slice(0, 2).map((participant) => {
             const initials = participant.name
@@ -53,7 +49,7 @@ const ActivityList = ({activity}) => {
             return (
               <Avatar
                 rounded
-                size={28}
+                size={25}
                 title={initials}
                 containerStyle={styles.activityInfoElement}
               />
