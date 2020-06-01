@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   Dimensions,
+  Image,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {Avatar} from 'react-native-elements';
@@ -14,15 +15,14 @@ import {fonts, colors} from '../../constants';
 
 const GroupTile = ({group}) => {
   const userData = useSelector((state) => state.user.data || {});
-  const [photoURL, setPhotoURl] = useState('');
+  const [photoRefURL, setPhotoRefURL] = useState('');
   const {navigate} = useNavigation();
-  const imageSource = {uri: photoURL};
 
   useEffect(() => {
-    if (userData.thumbnailImagePath) {
-      getDownloadURL(userData.thumbnailImagePath, setPhotoURl);
+    if (group.thumbnailImagePath) {
+      getDownloadURL(group.thumbnailImagePath, setPhotoRefURL);
     }
-  }, [userData.thumbnailImagePath]);
+  }, [group.thumbnailImagePath, group.uid]);
 
   const onPress = () => {
     navigate('GroupInfo', {group});
@@ -36,8 +36,12 @@ const GroupTile = ({group}) => {
           {getGroupMembersString(group, userData)}
         </Text>
       </View>
-      <View style={styles.imageContainer}>
-        {photoURL ? <Avatar rounded source={imageSource} size={30} /> : null}
+      <View style={styles.groupAvatar}>
+        {photoRefURL ? (
+          <Image style={styles.groupPhoto} source={{uri: photoRefURL}} />
+        ) : (
+          <Avatar rounded title={group.name[0]} size={50} />
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -63,7 +67,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 2,
     paddingLeft: 23,
-    paddingTop: 20,
+    paddingTop: 15,
   },
   imageContainer: {
     flex: 1,
@@ -77,6 +81,16 @@ const styles = StyleSheet.create({
     fontFamily: fonts.body_regular,
     fontSize: 13,
     paddingTop: 6,
+    width: 200,
+  },
+  groupAvatar: {
+    marginRight: 15,
+    marginTop: 20,
+  },
+  groupPhoto: {
+    height: 50,
+    width: 50,
+    borderRadius: 50,
   },
 });
 
