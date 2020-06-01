@@ -1,22 +1,32 @@
-import React from 'react';
-import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {TouchableOpacity, View, Text, StyleSheet, Image} from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
+import storage from '@react-native-firebase/storage';
 import {getGroupMembersString} from '../../utils';
-import {colors} from '../../constants';
+import {colors, fonts} from '../../constants';
 
 const GroupSelect = ({group, onToggleGroup}) => {
   const userData = useSelector((state) => state.user.data || {});
+  const [photoRefURL, setPhotoRefURL] = useState('');
+
+  useEffect(() => {
+    if (group.thumbnailImagePath) {
+      const ref = storage().ref(`${group.uid}/thumbnail`);
+      ref.getDownloadURL().then((url) => setPhotoRefURL(url));
+    }
+  }, [group.thumbnailImagePath, group.uid]);
 
   return (
     <TouchableOpacity onPress={onToggleGroup}>
       <View style={styles.container}>
-        <Avatar
-          rounded
-          title={group.name[0]}
-          containerStyle={styles.avatar}
-          size={60}
-        />
+        <View style={styles.groupAvatar}>
+          {photoRefURL ? (
+            <Image style={styles.groupPhoto} source={{uri: photoRefURL}} />
+          ) : (
+            <Avatar rounded title={group.name[0]} size={60} />
+          )}
+        </View>
         <View style={styles.textView}>
           <Text style={styles.titleText}>{group.name}</Text>
           <Text style={styles.subtitleText}>
@@ -42,10 +52,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: 'center',
   },
-  avatar: {
-    // paddingLeft: 20,
-    marginLeft: 15,
-  },
   textView: {
     flexDirection: 'column',
     marginLeft: 15,
@@ -54,11 +60,12 @@ const styles = StyleSheet.create({
   },
   titleText: {
     paddingTop: 4,
-    fontWeight: 'bold',
-    fontSize: 18,
+    fontFamily: fonts.body_bold,
+    fontSize: 16,
   },
   subtitleText: {
-    color: '#BCBCBC',
+    color: colors.mediumGrey,
+    fontFamily: fonts.body_regular,
     paddingTop: 3,
     fontSize: 14,
   },
@@ -67,6 +74,18 @@ const styles = StyleSheet.create({
     // position: 'absolute',
     // right: 20,
     marginLeft: 15,
+  },
+  groupAvatar: {
+    height: 60,
+    width: 60,
+    borderRadius: 60,
+    marginLeft: 15,
+  },
+  groupPhoto: {
+    height: 60,
+    width: 60,
+    borderRadius: 60,
+    backgroundColor: colors.mediumGrey,
   },
 });
 
