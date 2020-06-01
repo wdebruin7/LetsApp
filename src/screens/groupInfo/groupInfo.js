@@ -13,18 +13,8 @@ import {useSelector} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
 import Clipboard from '@react-native-community/clipboard';
 import storage from '@react-native-firebase/storage';
-import {
-  getDisplayDate,
-  getActivityParticipantsString,
-  buildDynamicLink,
-  getGroupMembersString,
-} from '../../utils';
-import {
-  AddActivityButton,
-  TileHeader,
-  TileBody,
-  GroupInfoTile,
-} from '../../components';
+import {buildDynamicLink, getGroupMembersString} from '../../utils';
+import {AddActivityButton, GroupInfoTile} from '../../components';
 import {colors} from '../../constants';
 
 const GroupInfo = () => {
