@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   titleText: {
     paddingTop: 4,
     fontFamily: fonts.body_bold,
-    fontSize: 18,
+    fontSize: 16,
   },
   subtitleText: {
     color: colors.mediumGrey,

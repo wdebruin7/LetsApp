@@ -6,10 +6,12 @@ import {
   Dimensions,
   Switch,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import {Avatar} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import storage from '@react-native-firebase/storage';
 import {
   getGroupMembersString,
   getActivityParticipantsString,
@@ -17,7 +19,7 @@ import {
 import {colors, fonts} from '../../../constants';
 
 const ActivityTile = ({activity, group}) => {
-  const [hasThumbnail, setHasThumbnail] = useState(group && group.thumbnailURL);
+  const [photoRefURL, setPhotoRefURL] = useState(group && group.thumbnailURL);
   const userData = useSelector((state) =>
     state.user ? state.user.data : null,
   );
@@ -37,8 +39,11 @@ const ActivityTile = ({activity, group}) => {
   }, [userData, activity]);
 
   useEffect(() => {
-    setHasThumbnail(group && group.thumbnailURL);
-  }, [group]);
+    if (group.thumbnailImagePath) {
+      const ref = storage().ref(`${group.uid}/thumbnail`);
+      ref.getDownloadURL().then((url) => setPhotoRefURL(url));
+    }
+  }, [group.thumbnailImagePath, group.uid]);
 
   const handleSwitchToggle = () => {
     setUserIsParticipant(!userIsParticipant);
@@ -66,11 +71,6 @@ const ActivityTile = ({activity, group}) => {
         </Text>
       </View>
       <View style={styles.rightContainer}>
-        <View>
-          {hasThumbnail ? (
-            <Avatar rounded source={{uri: group.thumbnailURL}} />
-          ) : null}
-        </View>
         <Switch
           trackColor={{false: colors.darkGrey, true: colors.brightGreen}}
           thumbColor="white"
@@ -79,6 +79,13 @@ const ActivityTile = ({activity, group}) => {
           value={userIsParticipant}
           style={styles.switch}
         />
+        <View style={styles.groupAvatar}>
+          {photoRefURL ? (
+            <Image style={styles.groupPhoto} source={{uri: photoRefURL}} />
+          ) : (
+            <Avatar rounded title={group.name[0]} size={50} />
+          )}
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -126,8 +133,17 @@ const styles = StyleSheet.create({
   },
   switch: {
     transform: [{scaleX: 0.7}, {scaleY: 0.7}],
-    marginBottom: 14,
+    marginTop: 15,
     marginRight: 10,
+  },
+  groupAvatar: {
+    marginRight: 15,
+    marginBottom: 15,
+  },
+  groupPhoto: {
+    height: 50,
+    width: 50,
+    borderRadius: 50,
   },
 });
 
