@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
   touchable: {
     flex: 1,
     height: 39,
-    backgroundColor: '#F5F5F5',
   },
   container: {
     flex: 1,
