@@ -5,6 +5,8 @@ const firestoreTypes = {
   REMOVE_GROUP: 'REMOVE_GROUP',
   UPDATE_USER: 'UPDATE_USER',
   CLEAR: 'CLEAR',
+  UPDATE_ACTION: 'UPDATE_ACTION',
+  REMOVE_ACTION: 'REMOVE_ACTION',
 };
 
 export default firestoreTypes;
