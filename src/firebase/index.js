@@ -1,10 +1,10 @@
 export {
-  getActivityListener,
-  getGroupListener,
   getUserListener,
   toggleUserIsParticipant,
   setUserData,
   submitNewActivity,
   createGroup,
+  getFirestoreListener,
+  listenerTypes,
 } from './firestore';
 export {useSession, useAuth} from './auth';

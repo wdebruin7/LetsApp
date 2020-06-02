@@ -15,12 +15,7 @@ import {
   removeAction,
   updateAction,
 } from './actions/firestoreActions';
-import {
-  getUserListener,
-  getActivityListener,
-  getGroupListener,
-  getActionListener,
-} from './firebase/firestore';
+import {getUserListener, getFirestoreListener, listenerTypes} from './firebase';
 import {getSearchParams} from './utils';
 import {DynamicLinkProvider} from './firebase/dynamicLinkContext';
 
@@ -101,12 +96,21 @@ const App = () => {
 
   useEffect(() => {
     if (!userData || !session.user) return;
-    const activityUnsubscriber = getActivityListener(
+    const activityUnsubscriber = getFirestoreListener(
       userData,
       onActivitySnapshot,
+      listenerTypes.ACTIVITY,
     );
-    const groupUnsubscriber = getGroupListener(userData, onGroupSnapshot);
-    const actionUnsubscriber = getActionListener(userData, onActionSnapshot);
+    const groupUnsubscriber = getFirestoreListener(
+      userData,
+      onGroupSnapshot,
+      listenerTypes.GROUP,
+    );
+    const actionUnsubscriber = getFirestoreListener(
+      userData,
+      onActionSnapshot,
+      listenerTypes.ACTION,
+    );
 
     return () => {
       activityUnsubscriber();

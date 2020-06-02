@@ -15,9 +15,10 @@ const getFirestoreListener = (userData, onSnapshot, listenerType) => {
     .filter((uid) => uid);
 
   groupIDs.forEach((uid) => {
+    const searchField = listenerType === 'groups' ? 'uid' : 'group.uid';
     const unsubscriber = firestore()
       .collection(listenerType)
-      .where('group.uid', '==', uid)
+      .where(searchField, '==', uid)
       .onSnapshot(onSnapshot);
     snapshotListeners.push(() => unsubscriber());
   });

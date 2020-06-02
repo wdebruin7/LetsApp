@@ -53,7 +53,7 @@ const createGroup = (groupName, imagePath, userData) => {
     type: actionTypes.GROUP,
     action: groupActionTypes.CREATE,
     user: {
-      name: userData.name,
+      name: userData.displayName,
       uid: userData.uid,
     },
     hidden: false,

@@ -45,7 +45,7 @@ const submitNewActivity = (
         type: actionTypes.ACTIVITY,
         action: activityActionTypes.CREATE,
         user: {
-          name: userData.name,
+          name: userData.displayName,
           uid: userData.uid,
         },
         hidden: false,
