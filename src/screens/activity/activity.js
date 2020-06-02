@@ -2,7 +2,6 @@ import React from 'react';
 import {SafeAreaView, Text, StyleSheet, FlatList, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {AppHeader} from '../../components';
-import {} from 'react-native-gesture-handler';
 
 const Activity = () => {
   const actions = useSelector((state) => state.actions || {});
@@ -11,7 +10,7 @@ const Activity = () => {
     <SafeAreaView style={styles.safeView}>
       <AppHeader />
       <FlatList
-        data={Object.values(actions)}
+        data={Object.values(actions).filter((item) => !item.hidden)}
         renderItem={({item}) => (
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text>{item.group.name}</Text>
@@ -20,6 +19,7 @@ const Activity = () => {
             <Text>{item.type}</Text>
           </View>
         )}
+        keyExtractor={(item) => item.uid}
       />
     </SafeAreaView>
   );
