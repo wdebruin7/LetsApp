@@ -36,7 +36,9 @@ const App = () => {
   useEffect(() => {
     dynamicLinks()
       .getInitialLink()
-      .then((link) => handleDynamicLink(link));
+      .then((link) => {
+        if (link) handleDynamicLink(link);
+      });
     const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
     return () => unsubscribe();
   }, []);
