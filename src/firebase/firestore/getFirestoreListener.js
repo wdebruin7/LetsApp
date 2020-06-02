@@ -1,6 +1,12 @@
 import firestore from '@react-native-firebase/firestore';
 
-const getGroupListener = (userData, onSnapshot) => {
+const listenerTypes = {
+  GROUP: 'groups',
+  ACTIVITY: 'activities',
+  ACTION: 'actions',
+};
+
+const getFirestoreListener = (userData, onSnapshot, listenerType) => {
   if (!userData || !userData.groups) return () => {};
 
   const snapshotListeners = [];
@@ -10,8 +16,8 @@ const getGroupListener = (userData, onSnapshot) => {
 
   groupIDs.forEach((uid) => {
     const unsubscriber = firestore()
-      .collection('groups')
-      .where('uid', '==', uid)
+      .collection(listenerType)
+      .where('group.uid', '==', uid)
       .onSnapshot(onSnapshot);
     snapshotListeners.push(() => unsubscriber());
   });
@@ -21,4 +27,4 @@ const getGroupListener = (userData, onSnapshot) => {
   };
 };
 
-export default getGroupListener;
+export {listenerTypes, getFirestoreListener};

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, createContext} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
@@ -12,11 +12,14 @@ import {
   removeActivity,
   updateGroup,
   removeGroup,
+  removeAction,
+  updateAction,
 } from './actions/firestoreActions';
 import {
   getUserListener,
   getActivityListener,
   getGroupListener,
+  getActionListener,
 } from './firebase/firestore';
 import {getSearchParams} from './utils';
 import {DynamicLinkProvider} from './firebase/dynamicLinkContext';
@@ -77,6 +80,19 @@ const App = () => {
     });
   };
 
+  const onActionSnapshot = (querySnapshot) => {
+    querySnapshot.docChanges().forEach((docChange) => {
+      const data = docChange.doc.data();
+      switch (docChange.type) {
+        case 'removed':
+          store.dispatch(removeAction(data));
+          return;
+        default:
+          store.dispatch(updateAction(data));
+      }
+    });
+  };
+
   useEffect(() => {
     if (!session.user) return;
     const unsubscribe = getUserListener(session.user, onUserSnapshot);
@@ -90,9 +106,12 @@ const App = () => {
       onActivitySnapshot,
     );
     const groupUnsubscriber = getGroupListener(userData, onGroupSnapshot);
+    const actionUnsubscriber = getActionListener(userData, onActionSnapshot);
+
     return () => {
       activityUnsubscriber();
       groupUnsubscriber();
+      actionUnsubscriber();
     };
   }, [userData, session]);
 
