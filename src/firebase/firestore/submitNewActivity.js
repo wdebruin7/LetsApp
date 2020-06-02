@@ -1,4 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
+import {actionTypes, activityActionTypes} from './actionTypes';
 
 const submitNewActivity = (
   selectedGroups,
@@ -30,14 +31,32 @@ const submitNewActivity = (
         const update = firestore.FieldValue.arrayUnion(activity);
         batch.update(userDocRef, {participants: update});
       }
+      const actionRef = db.collection('actions').doc();
+      const actionData = {
+        uid: actionRef.id,
+        group: {
+          uid: group.uid,
+          name: group.name,
+        },
+        activity: {
+          date,
+          uid: docRef.id,
+        },
+        type: actionTypes.ACTIVITY,
+        action: activityActionTypes.CREATE,
+        user: {
+          name: userData.name,
+          uid: userData.uid,
+        },
+        hidden: false,
+        timestamp: firestore.Timestamp.now(),
+      };
+      batch.set(actionRef, actionData);
       batch.set(docRef, data);
     });
   });
 
-  batch
-    .commit()
-    .then(() => console.log('success!'))
-    .catch(() => console.log('Bugger failed :('));
+  return batch.commit();
 };
 
 export default submitNewActivity;

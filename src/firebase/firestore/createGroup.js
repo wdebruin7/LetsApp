@@ -49,12 +49,15 @@ const createGroup = (groupName, imagePath, userData) => {
       uid: group.uid,
       name: group.name,
     },
+    activity: {},
     type: actionTypes.GROUP,
     action: groupActionTypes.CREATE,
     user: {
       name: userData.name,
       uid: userData.uid,
     },
+    hidden: false,
+    timestamp: firestore.Timestamp.now(),
   };
 
   batch.set(actionRef, actionData);
