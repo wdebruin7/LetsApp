@@ -42,6 +42,27 @@ const submitNewActivity = (
       if (false || userIsParticipant) {
         const activity = {description, uid: docRef.id};
         const update = firestore.FieldValue.arrayUnion(activity);
+        const actionRef = db.collection('actions').doc();
+        const actionData = {
+          uid: actionRef.id,
+          group: {
+            uid: group.uid,
+            name: group.name,
+          },
+          activity: {
+            date,
+            uid: docRef.id,
+          },
+          type: actionTypes.ACTIVITY,
+          action: activityActionTypes.JOIN,
+          user: {
+            name: userData.displayName,
+            uid: userData.uid,
+          },
+          hidden: false,
+          timestamp: firestore.Timestamp.now(),
+        };
+        batch.set(actionRef, actionData);
         batch.update(userDocRef, {participants: update});
       }
       const actionRef = db.collection('actions').doc();
