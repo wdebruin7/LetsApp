@@ -1,4 +1,4 @@
-import React, {useEffect, useState, createContext} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
@@ -12,12 +12,10 @@ import {
   removeActivity,
   updateGroup,
   removeGroup,
+  removeAction,
+  updateAction,
 } from './actions/firestoreActions';
-import {
-  getUserListener,
-  getActivityListener,
-  getGroupListener,
-} from './firebase/firestore';
+import {getUserListener, getFirestoreListener, listenerTypes} from './firebase';
 import {getSearchParams} from './utils';
 import {DynamicLinkProvider} from './firebase/dynamicLinkContext';
 
@@ -36,7 +34,9 @@ const App = () => {
   useEffect(() => {
     dynamicLinks()
       .getInitialLink()
-      .then((link) => handleDynamicLink(link));
+      .then((link) => {
+        if (link) handleDynamicLink(link);
+      });
     const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
     return () => unsubscribe();
   }, []);
@@ -75,6 +75,19 @@ const App = () => {
     });
   };
 
+  const onActionSnapshot = (querySnapshot) => {
+    querySnapshot.docChanges().forEach((docChange) => {
+      const data = docChange.doc.data();
+      switch (docChange.type) {
+        case 'removed':
+          store.dispatch(removeAction(data));
+          return;
+        default:
+          store.dispatch(updateAction(data));
+      }
+    });
+  };
+
   useEffect(() => {
     if (!session.user) return;
     const unsubscribe = getUserListener(session.user, onUserSnapshot);
@@ -83,14 +96,26 @@ const App = () => {
 
   useEffect(() => {
     if (!userData || !session.user) return;
-    const activityUnsubscriber = getActivityListener(
+    const activityUnsubscriber = getFirestoreListener(
       userData,
       onActivitySnapshot,
+      listenerTypes.ACTIVITY,
     );
-    const groupUnsubscriber = getGroupListener(userData, onGroupSnapshot);
+    const groupUnsubscriber = getFirestoreListener(
+      userData,
+      onGroupSnapshot,
+      listenerTypes.GROUP,
+    );
+    const actionUnsubscriber = getFirestoreListener(
+      userData,
+      onActionSnapshot,
+      listenerTypes.ACTION,
+    );
+
     return () => {
       activityUnsubscriber();
       groupUnsubscriber();
+      actionUnsubscriber();
     };
   }, [userData, session]);
 

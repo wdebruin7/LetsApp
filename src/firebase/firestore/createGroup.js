@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
+import {actionTypes, groupActionTypes} from './actionTypes';
 
 const createGroup = (groupName, imagePath, userData) => {
   const user = auth().currentUser;
@@ -41,6 +42,25 @@ const createGroup = (groupName, imagePath, userData) => {
       .then(() => group);
   }
 
+  const actionRef = db.collection('actions').doc();
+  const actionData = {
+    uid: actionRef.id,
+    group: {
+      uid: group.uid,
+      name: group.name,
+    },
+    activity: {},
+    type: actionTypes.GROUP,
+    action: groupActionTypes.CREATE,
+    user: {
+      name: userData.displayName,
+      uid: userData.uid,
+    },
+    hidden: false,
+    timestamp: firestore.Timestamp.now(),
+  };
+
+  batch.set(actionRef, actionData);
   batch.update(userRef, {groups: update});
   batch.set(groupRef, group);
 

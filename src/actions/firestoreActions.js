@@ -41,6 +41,20 @@ const clear = () => {
   };
 };
 
+const updateAction = (activity) => {
+  return {
+    type: firestoreTypes.UPDATE_ACTION,
+    payload: activity,
+  };
+};
+
+const removeAction = (activity) => {
+  return {
+    type: firestoreTypes.UPDATE_ACTION,
+    payload: activity,
+  };
+};
+
 export {
   updateActivity,
   removeActivity,
@@ -48,4 +62,6 @@ export {
   removeGroup,
   updateUser,
   clear,
+  updateAction,
+  removeAction,
 };

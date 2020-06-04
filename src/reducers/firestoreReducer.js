@@ -4,11 +4,22 @@ const initialState = () => {
   return {
     groups: null,
     activities: null,
+    actions: null,
     user: {
       data: null,
       initializing: true,
     },
   };
+};
+
+const getUpdatedActions = (actions, action, removed) => {
+  const newActions = {...actions};
+  if (removed) {
+    delete newActions[action.uid];
+  } else {
+    newActions[action.uid] = action;
+  }
+  return newActions;
 };
 
 const getUpdatedActivities = (activityDays, activity, removed) => {
@@ -99,8 +110,20 @@ const firestoreReducer = (state, action) => {
         user: {data: action.payload, initializing: false},
       };
     }
+    case firestoreTypes.UPDATE_ACTION: {
+      return {
+        ...state,
+        actions: getUpdatedActions(state.actions, action.payload, false),
+      };
+    }
+    case firestoreTypes.REMOVE_ACTION: {
+      return {
+        ...state,
+        actions: getUpdatedActions(state.actions, action.payload, true),
+      };
+    }
     case firestoreTypes.CLEAR: {
-      return [];
+      return initialState();
     }
     default:
       return state;

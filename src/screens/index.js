@@ -10,3 +10,4 @@ export {default as GroupCreate} from './groupCreate';
 export {default as ActivityDatePicker} from './activityDatePicker';
 export {default as ActivityGroupPicker} from './activityGroupPicker';
 export {default as ActivityAdder} from './activityAdder';
+export {default as Activity} from './activity';

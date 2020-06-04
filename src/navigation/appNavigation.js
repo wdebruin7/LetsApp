@@ -4,6 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import HomeNavigation from './homeNavigation';
 import GroupNavigation from './groupNavigation';
 import {dynamicLinkContext} from '../firebase/dynamicLinkContext';
+import {Activity} from '../screens';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,6 +31,7 @@ const AppNavigation = () => {
     <Tab.Navigator initialRouteName="Home">
       <Tab.Screen name="Home" component={HomeNavigation} />
       <Tab.Screen name="Groups" component={GroupNavigation} />
+      <Tab.Screen name="Activity" component={Activity} />
     </Tab.Navigator>
   );
 };
