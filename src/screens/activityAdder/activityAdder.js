@@ -29,6 +29,7 @@ const ActivityAdder = () => {
   const groups = params.groups || cloneDeep(userGroups);
   const [canSave, setCanSave] = useState(false);
   const [userIsParticipant, setUserIsParticipant] = useState(false);
+  const userData = useSelector((state) => state.user.data || {});
 
   useEffect(() => {
     setCanSave(
@@ -54,30 +55,22 @@ const ActivityAdder = () => {
     return groupUIDs.filter((uid) => groups[uid].selected);
   };
 
+  const getSelectedGroups = () => {
+    return Object.values(groups).filter((group) => group.selected);
+  };
+
   const handleSave = () => {
     if (!canSave) {
       return;
     }
 
-    // COMMENTED OUT FOR STYLE TESTING
-    // submitNewActivity(
-    //   getSelectedGroups(),
-    //   getSelectedDateStrings(),
-    //   userIsParticipant,
-    //   userData,
-    //   undefined,
-    // );
-
-    Alert.alert(
-      'save happens now :)',
-      'boobz',
-      [
-        {text: 'cancel', style: 'cancel'},
-        {text: 'default', style: 'default'},
-        {text: 'destructive', style: 'destructive'},
-      ],
-      {cancelable: false},
-    );
+    submitNewActivity(
+      getSelectedGroups(),
+      getSelectedDateStrings(),
+      userIsParticipant,
+      userData,
+      undefined,
+    ).then(() => navigation.goBack());
   };
 
   const onPressBack = () => {

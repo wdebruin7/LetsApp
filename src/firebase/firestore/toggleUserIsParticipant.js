@@ -35,6 +35,7 @@ const toggleUserIsParticipant = (userData, activityData) => {
     db.collection('actions')
       .where('activity.uid', '==', activityData.uid)
       .where('user.uid', '==', userData.uid)
+      .where('action', '==', activityActionTypes.JOIN)
       .get()
       .then((querySnapshot) => {
         const actionRef = querySnapshot.empty

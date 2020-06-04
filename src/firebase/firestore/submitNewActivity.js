@@ -13,20 +13,33 @@ const submitNewActivity = (
   const timeStamp = firestore.Timestamp;
   const userDocRef = db.collection('users').doc(userData.uid);
 
+  if (!userData) {
+    return new Promise((resolve, reject) => {
+      reject(new Error('No user data'));
+    });
+  }
+
+  if (!selectedGroups || selectedGroups.lenght < 1) {
+    return new Promise((resolve, reject) => {
+      reject(new Error('No Selected Groups'));
+    });
+  }
+
   selectedGroups.forEach((group) => {
     selectedDateStrings.forEach((dateString) => {
       const date = timeStamp.fromDate(new Date(dateString));
       const docRef = db.collection('activities').doc();
       const data = {
         date,
-        description,
+        description: description || '',
         group: {name: group.name, uid: group.uid},
-        participants: userIsParticipant
-          ? [{uid: userData.uid, name: userData.displayName}]
-          : [],
+        participants:
+          false || userIsParticipant
+            ? [{uid: userData.uid, name: userData.displayName}]
+            : [],
         uid: docRef.id,
       };
-      if (userIsParticipant) {
+      if (false || userIsParticipant) {
         const activity = {description, uid: docRef.id};
         const update = firestore.FieldValue.arrayUnion(activity);
         batch.update(userDocRef, {participants: update});
