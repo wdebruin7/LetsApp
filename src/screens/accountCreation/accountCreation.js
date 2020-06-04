@@ -12,7 +12,9 @@ import {
 import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-picker';
 import {useSelector} from 'react-redux';
-import {useRoute} from '@react-navigation/native';
+import {useRoute, useNavigation} from '@react-navigation/native';
+import {Icon} from 'react-native-elements';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useSession, setUserData} from '../../firebase';
 import {getDownloadURL} from '../../utils';
 import {Button, TextBox} from '../../components';
@@ -28,6 +30,7 @@ const AccountCreation = () => {
   const [canSave, setCanSave] = useState(false);
   const imgageSource = {uri: localFilepath || photoURL};
   const {params} = useRoute();
+  const navigation = useNavigation();
 
   useEffect(() => {
     if (!userData) return;
@@ -93,16 +96,28 @@ const AccountCreation = () => {
       }
     });
   };
+
+  const onPressBack = () => {
+    navigation.goBack();
+  };
+
   return (
     <SafeAreaView style={styles.safeView}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
+          <TouchableOpacity
+            containerStyle={styles.backButton}
+            onPress={onPressBack}>
+            <Icon name="chevron-left" type="entypo" />
+          </TouchableOpacity>
+
           <View style={styles.header}>
             <Text style={styles.logo}>Let&apos;s</Text>
             <Text style={styles.subtitle}>
               {params.update ? 'Update your account!' : 'Create your acount!'}
             </Text>
           </View>
+
           <TouchableWithoutFeedback onPress={hanldeImagePicker}>
             {localFilepath || photoURL ? (
               <Image style={styles.profilePhoto} source={imgageSource} />
@@ -114,6 +129,7 @@ const AccountCreation = () => {
               </View>
             )}
           </TouchableWithoutFeedback>
+
           <View style={styles.verfificationBox}>
             <Text style={styles.infoTitleText}>Name</Text>
             <TextBox
@@ -127,6 +143,7 @@ const AccountCreation = () => {
               value={session.user && session.user.phoneNumber}
             />
           </View>
+
           <Button
             onPress={handleSave}
             title="save"
@@ -149,6 +166,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  backButton: {
+    alignSelf: 'flex-start',
+    marginTop: 25,
+    marginLeft: 25,
+  },
   logo: {
     fontFamily: fonts.logo,
     paddingBottom: 10,
@@ -160,11 +187,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     color: '#8D8D8D',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
   },
   verfificationBox: {
     alignItems: 'flex-start',
