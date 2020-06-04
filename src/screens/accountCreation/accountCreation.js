@@ -12,6 +12,7 @@ import {
 import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-picker';
 import {useSelector} from 'react-redux';
+import {useRoute} from '@react-navigation/native';
 import {useSession, setUserData} from '../../firebase';
 import {getDownloadURL} from '../../utils';
 import {Button, TextBox} from '../../components';
@@ -26,6 +27,7 @@ const AccountCreation = () => {
   const [localFilepath, setLocalFilepath] = useState('');
   const [canSave, setCanSave] = useState(false);
   const imgageSource = {uri: localFilepath || photoURL};
+  const {params} = useRoute();
 
   useEffect(() => {
     if (!userData) return;
@@ -97,7 +99,9 @@ const AccountCreation = () => {
         <View style={styles.container}>
           <View style={styles.header}>
             <Text style={styles.logo}>Let&apos;s</Text>
-            <Text style={styles.subtitle}>Create your acount!</Text>
+            <Text style={styles.subtitle}>
+              {params.update ? 'Update your account!' : 'Create your acount!'}
+            </Text>
           </View>
           <TouchableWithoutFeedback onPress={hanldeImagePicker}>
             {localFilepath || photoURL ? (

@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {Icon, Avatar} from 'react-native-elements';
 import {useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 import {getDownloadURL} from '../../utils';
 import {colors, fonts} from '../../constants';
 
@@ -17,6 +18,11 @@ const AppHeader = () => {
   const [downloadURL, setDownloadURL] = useState(undefined);
   const imageSource = {uri: downloadURL};
   const icon = {name: 'user', type: 'font-awesome', size: 24};
+  const {navigate} = useNavigation();
+
+  const onPressAvatar = () => {
+    navigate('AccountCreate', {update: true});
+  };
 
   // useEffect(() => {
   //   if (profileImagePath) getDownloadURL(profileImagePath, setDownloadURL);
@@ -29,7 +35,7 @@ const AppHeader = () => {
         <TouchableOpacity style={styles.touchable}>
           <Icon name="bell" type="font-awesome" size={30} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.touchable}>
+        <TouchableOpacity style={styles.touchable} onPress={onPressAvatar}>
           {/* {downloadURL ? ( */}
           {/* <Avatar rounded source={imageSource} size={35} /> */}
           {/* ) : ( */}
