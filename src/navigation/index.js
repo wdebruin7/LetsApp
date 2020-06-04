@@ -21,35 +21,6 @@ const AppContainer = () => {
       : false,
   );
 
-  const screen =
-    session.initializing ||
-    (session.user && user.initializing) ||
-    awaitingMigration ? (
-      <Stack.Screen
-        name="Initializing"
-        component={Initializing}
-        options={{animationEnabled: false}}
-      />
-    ) : !session.user ? (
-      <Stack.Screen
-        name="Auth"
-        component={AuthNavigation}
-        options={{animationEnabled: false}}
-      />
-    ) : !user.data || !user.data.userDataConfirmed ? (
-      <Stack.Screen
-        name="AccountCreate"
-        component={AccountCreation}
-        options={{animationEnabled: false}}
-      />
-    ) : (
-      <Stack.Screen
-        name="App"
-        component={AppNavigation}
-        options={{animationEnabled: false}}
-      />
-    );
-
   const initiateMigration = async () => {
     try {
       await onNewAuth();
@@ -64,17 +35,49 @@ const AppContainer = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        headerMode="none"
-        mode="modal"
-        initialRouteName={screen.name}>
-        {screen}
-        <Stack.Screen name="AddActivity" component={AddActivityNavigation} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  if (
+    session.initializing ||
+    (session.user && user.initializing) ||
+    awaitingMigration
+  ) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator headerMode="none">
+          <Stack.Screen name="Initializing" component={Initializing} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  } else if (!session.user) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator headerMode="none">
+          <Stack.Screen name="Auth" component={AuthNavigation} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  } else if (!user.data || !user.data.userDataConfirmed) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator headerMode="none">
+          <Stack.Screen name="AccountCreate" component={AccountCreation} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  } else {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator headerMode="none" mode="modal" initialRouteName="App">
+          <Stack.Screen
+            name="App"
+            component={AppNavigation}
+            options={{animationEnabled: false}}
+          />
+          <Stack.Screen name="AccountCreate" component={AccountCreation} />
+          <Stack.Screen name="AddActivity" component={AddActivityNavigation} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
 };
 
 export default AppContainer;
