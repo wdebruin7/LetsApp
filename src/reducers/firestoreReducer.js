@@ -22,46 +22,14 @@ const getUpdatedActions = (actions, action, removed) => {
   return newActions;
 };
 
-const getUpdatedActivities = (activityDays, activity, removed) => {
-  const newActivityDays = activityDays
-    ? activityDays.filter(
-        (day) =>
-          day.activities.filter((elem) => elem.uid !== activity.uid).length > 0,
-      )
-    : [];
-
-  // Create new date
-  const date = new Date(0);
-  date.setSeconds(activity.date._seconds);
-  date.setHours(0, 0, 0, 0);
-
-  const dayPresent = newActivityDays.some(
-    (day) => day.date.getTime() === date.getTime(),
-  );
-
-  return removed
-    ? newActivityDays
-    : dayPresent
-    ? newActivityDays.map((day) =>
-        day.date.getTime() !== date.getTime()
-          ? day
-          : {
-              date: day.date,
-              activities: day.activities
-                .filter((elem) => elem.uid !== activity.uid)
-                .concat(activity)
-                .sort((a, b) => {
-                  if (a.group.name < b.group.name) return -1;
-                  else if (a.group.name > b.group.name) return 1;
-                  else return 0;
-                }),
-            },
-      )
-    : newActivityDays.concat({date, activities: [activity]}).sort((a, b) => {
-        if (a.date < b.date) return -1;
-        else if (a.date > b.date) return 1;
-        else return 0;
-      });
+const getUpdatedActivities = (activities, activity, removed) => {
+  const newActivities = {...activities};
+  if (removed) {
+    delete newActivities[activity.uid];
+  } else {
+    newActivities[activity.uid] = activity;
+  }
+  return newActivities;
 };
 
 const getUpdatedGroups = (groups, group, removed) => {
@@ -79,7 +47,11 @@ const firestoreReducer = (state, action) => {
     case firestoreTypes.UPDATE_ACTIVITY: {
       return {
         ...state,
-        activities: getUpdatedActivities(state.activities, action.payload),
+        activities: getUpdatedActivities(
+          state.activities,
+          action.payload,
+          false,
+        ),
       };
     }
     case firestoreTypes.REMOVE_ACTIVITY: {
@@ -95,7 +67,7 @@ const firestoreReducer = (state, action) => {
     case firestoreTypes.UPDATE_GROUP: {
       return {
         ...state,
-        groups: getUpdatedGroups(state.groups, action.payload),
+        groups: getUpdatedGroups(state.groups, action.payload, false),
       };
     }
     case firestoreTypes.REMOVE_GROUP: {

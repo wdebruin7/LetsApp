@@ -13,7 +13,11 @@ import {useSelector} from 'react-redux';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import Clipboard from '@react-native-community/clipboard';
 import storage from '@react-native-firebase/storage';
-import {buildDynamicLink, getGroupMembersString} from '../../utils';
+import {
+  buildDynamicLink,
+  getGroupMembersString,
+  getActivityDays,
+} from '../../utils';
 import {AddActivityButton, GroupInfoTile} from '../../components';
 import {colors} from '../../constants';
 
@@ -21,7 +25,7 @@ const GroupInfo = () => {
   const {params} = useRoute();
   const userData = useSelector((state) => state.user.data || {});
   const groups = useSelector((state) => state.groups || {});
-  const activityDays = useSelector((state) => state.activities || []);
+  const allActivities = useSelector((state) => state.activities || {});
   const [photoRefURL, setPhotoRefURL] = useState('');
   const {navigate} = useNavigation();
 
@@ -44,7 +48,7 @@ const GroupInfo = () => {
   useEffect(() => {
     if (!group || !activityDays) return;
     setActivities(
-      activityDays
+      getActivityDays(allActivities)
         .map((day) =>
           day.activities.filter((activity) => activity.group.uid === group.uid),
         )
