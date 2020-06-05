@@ -46,7 +46,7 @@ const GroupInfo = () => {
   }, [group]);
 
   useEffect(() => {
-    if (!group || !activityDays) return;
+    if (!group || !allActivities) return;
     setActivities(
       getActivityDays(allActivities)
         .map((day) =>
@@ -54,7 +54,7 @@ const GroupInfo = () => {
         )
         .flat(),
     );
-  }, [activityDays, group]);
+  }, [allActivities, group]);
 
   const onPressCopy = async () => {
     const searchParams = {
