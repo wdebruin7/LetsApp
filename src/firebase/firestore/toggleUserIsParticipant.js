@@ -2,34 +2,24 @@ import firestore from '@react-native-firebase/firestore';
 import {actionTypes, activityActionTypes} from './actionTypes';
 
 const toggleUserIsParticipant = (userData, activityData) => {
-  const userIsParticipant = Object.values(activityData.participants).some(
-    (elem) => elem.uid === userData.uid,
-  );
+  const userIsParticipant =
+    activityData.participants[userData.uid] !== undefined;
   const db = firestore();
   const batch = db.batch();
 
-  const updateUserDoc = () => {
-    const userRef = db.collection('users').doc(userData.uid);
-    const {description, uid} = activityData;
-    const activity = {description, uid};
-    const update = userIsParticipant
-      ? firestore.FieldValue.arrayRemove(activity)
-      : firestore.FieldValue.arrayUnion(activity);
-    batch.update(userRef, {activities: update});
-  };
+  const userRef = db.collection('users').doc(userData.uid);
+  const userUpdate = {};
+  userUpdate[`activities.${activityData.uid}`] = userIsParticipant
+    ? {description: activityData.description, uid: activityData.uid}
+    : firestore.FieldValue.delete();
+  batch.update(userRef, userUpdate);
 
-  const updateActivityDoc = () => {
-    const activityRef = db.collection('activities').doc(activityData.uid);
-    const {displayName, uid} = userData;
-    const participant = {name: displayName, uid};
-    const update = userIsParticipant
-      ? firestore.FieldValue.arrayRemove(participant)
-      : firestore.FieldValue.arrayUnion(participant);
-    batch.update(activityRef, {participants: update});
-  };
-
-  updateUserDoc();
-  updateActivityDoc();
+  const activityRef = db.collection('activities').doc(activityData.uid);
+  const activityUpdate = {};
+  activityUpdate[`participants.${userData.uid}`] = userIsParticipant
+    ? {name: userData.displayName, uid: userData.uid}
+    : firestore.FieldValue.delete();
+  batch.update(activityRef, activityUpdate);
 
   return batch.commit().then(() => {
     db.collection('actions')
