@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
-import {useRoute} from '@react-navigation/native';
+import {useRoute, useNavigation} from '@react-navigation/native';
 import Clipboard from '@react-native-community/clipboard';
 import storage from '@react-native-firebase/storage';
 import {buildDynamicLink, getGroupMembersString} from '../../utils';
@@ -23,18 +23,26 @@ const GroupInfo = () => {
   const groups = useSelector((state) => state.groups || {});
   const activityDays = useSelector((state) => state.activities || []);
   const [photoRefURL, setPhotoRefURL] = useState('');
+  const {navigate} = useNavigation();
 
-  const group = params.group || groups[params.groupUID] || {};
+  const group = params.group || groups[params.groupUID];
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
-    if (group.thumbnailImagePath) {
+    if (!group) {
+      navigate('GroupsHome', {groupUID: params.groupUID});
+    }
+  }, [params, group, navigate]);
+
+  useEffect(() => {
+    if (group && group.thumbnailImagePath) {
       const ref = storage().ref(`${group.uid}/thumbnail`);
       ref.getDownloadURL().then((url) => setPhotoRefURL(url));
     }
-  }, [group.thumbnailImagePath, group.uid]);
+  }, [group]);
 
   useEffect(() => {
+    if (!group || !activityDays) return;
     setActivities(
       activityDays
         .map((day) =>
@@ -42,7 +50,7 @@ const GroupInfo = () => {
         )
         .flat(),
     );
-  }, [activityDays, group.uid]);
+  }, [activityDays, group]);
 
   const onPressCopy = async () => {
     const searchParams = {
@@ -54,6 +62,10 @@ const GroupInfo = () => {
       .then((link) => Clipboard.setString(link))
       .catch((error) => console.log(error));
   };
+
+  if (!group) {
+    return null;
+  }
 
   return (
     <SafeAreaView style={styles.safeView}>
