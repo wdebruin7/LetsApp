@@ -10,9 +10,7 @@ const getFirestoreListener = (userData, onSnapshot, listenerType) => {
   if (!userData || !userData.groups) return () => {};
 
   const snapshotListeners = [];
-  const groupIDs = Object.values(userData.groups)
-    .map((group) => group.uid)
-    .filter((uid) => uid);
+  const groupIDs = Object.keys(userData.groups);
 
   groupIDs.forEach((uid) => {
     const searchField = listenerType === 'groups' ? 'uid' : 'group.uid';
