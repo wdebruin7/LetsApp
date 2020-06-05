@@ -10,12 +10,13 @@ import {
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
-import {useRoute} from '@react-navigation/native';
+import {useRoute, useNavigation} from '@react-navigation/native';
 import Clipboard from '@react-native-community/clipboard';
 import storage from '@react-native-firebase/storage';
 import {buildDynamicLink, getGroupMembersString} from '../../utils';
 import {AddActivityButton, GroupInfoTile} from '../../components';
 import {colors} from '../../constants';
+import {addUserToGroup} from '../../firebase';
 
 const GroupInfo = () => {
   const {params} = useRoute();
@@ -23,9 +24,17 @@ const GroupInfo = () => {
   const groups = useSelector((state) => state.groups || {});
   const activityDays = useSelector((state) => state.activities || []);
   const [photoRefURL, setPhotoRefURL] = useState('');
+  const {navigate} = useNavigation();
 
-  const group = params.group || groups[params.groupUID] || {};
+  const group = params.group || groups[params.groupUID];
   const [activities, setActivities] = useState([]);
+
+  useEffect(() => {
+    if (!group) {
+      if (params.joinGroup) addUserToGroup(params.groupUID, userData);
+      navigate('GroupsHome', {groupUID: params.groupUID});
+    }
+  }, [params, group, userData, navigate]);
 
   useEffect(() => {
     if (group.thumbnailImagePath) {
@@ -54,6 +63,10 @@ const GroupInfo = () => {
       .then((link) => Clipboard.setString(link))
       .catch((error) => console.log(error));
   };
+
+  if (!group) {
+    return null;
+  }
 
   return (
     <SafeAreaView style={styles.safeView}>
