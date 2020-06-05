@@ -16,7 +16,6 @@ import storage from '@react-native-firebase/storage';
 import {buildDynamicLink, getGroupMembersString} from '../../utils';
 import {AddActivityButton, GroupInfoTile} from '../../components';
 import {colors} from '../../constants';
-import {addUserToGroup} from '../../firebase';
 
 const GroupInfo = () => {
   const {params} = useRoute();
@@ -31,19 +30,19 @@ const GroupInfo = () => {
 
   useEffect(() => {
     if (!group) {
-      if (params.joinGroup) addUserToGroup(params.groupUID, userData);
       navigate('GroupsHome', {groupUID: params.groupUID});
     }
-  }, [params, group, userData, navigate]);
+  }, [params, group, navigate]);
 
   useEffect(() => {
-    if (group.thumbnailImagePath) {
+    if (group && group.thumbnailImagePath) {
       const ref = storage().ref(`${group.uid}/thumbnail`);
       ref.getDownloadURL().then((url) => setPhotoRefURL(url));
     }
-  }, [group.thumbnailImagePath, group.uid]);
+  }, [group]);
 
   useEffect(() => {
+    if (!group || !activityDays) return;
     setActivities(
       activityDays
         .map((day) =>
@@ -51,7 +50,7 @@ const GroupInfo = () => {
         )
         .flat(),
     );
-  }, [activityDays, group.uid]);
+  }, [activityDays, group]);
 
   const onPressCopy = async () => {
     const searchParams = {

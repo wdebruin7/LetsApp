@@ -21,10 +21,11 @@ const addUserToGroup = (groupUID, userData) => {
   }
 
   const db = firestore();
+  const groupRef = db.collection('groups').doc(groupUID);
   return db.runTransaction((transaction) => {
-    const groupRef = db.collection('groups').doc(groupUID);
-    transaction.get(groupRef).then((documentSnapshot) => {
+    return transaction.get(groupRef).then((documentSnapshot) => {
       const data = documentSnapshot.data();
+
       if (!data) {
         return new Promise((resolve, reject) => {
           reject(new Error('Invalid Group'));
@@ -41,8 +42,10 @@ const addUserToGroup = (groupUID, userData) => {
         uid: data.uid,
       });
 
-      transaction.update(groupRef, {members: groupUpdate});
+      transaction.get(userRef);
       transaction.update(userRef, {groups: userUpdate});
+      transaction.update(groupRef, {members: groupUpdate});
+      return data;
     });
   });
 };

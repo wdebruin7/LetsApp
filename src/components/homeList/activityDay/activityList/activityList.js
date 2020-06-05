@@ -30,7 +30,6 @@ const ActivityList = ({activity}) => {
 
   useEffect(() => {
     if (userData && activity) {
-      console.log(activity.participants);
       setIsParticipant(
         activity.participants.some((elem) => elem.uid === userData.uid),
       );
