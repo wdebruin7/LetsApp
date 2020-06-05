@@ -22,7 +22,7 @@ const onNewAuth = async () => {
 
   const newUserData = {
     displayName: user.displayName || tempDocData.displayName,
-    activities: [],
+    activities: {},
     groups: tempDocData.groups || {},
     email: tempDocData.email || user.email,
     phoneNumber: user.phoneNumber,
@@ -34,16 +34,19 @@ const onNewAuth = async () => {
   const batch = db.batch();
 
   batch.set(userRef, newUserData);
+
   Object.values(tempDocData.groups).forEach((group) => {
     const groupRef = db.collection('groups').doc(group.uid);
-    const removeUpdate = firestore.FieldValue.arrayRemove({
-      name: tempDocData.displayName,
-      uid: tempDocData.uid,
-    });
-    const includeUpdate = firestore.FieldValue.arrayUnion({
+
+    const removeUpdate = {};
+    removeUpdate[`members.${tempDocData.uid}`] = firestore.FieldValue.delete();
+
+    const includeUpdate = {};
+    includeUpdate[`members.${newUserData.uid}`] = {
       name: newUserData.displayName,
       uid: user.uid,
-    });
+    };
+
     batch.update(groupRef, {members: removeUpdate});
     batch.update(groupRef, {members: includeUpdate});
   });
