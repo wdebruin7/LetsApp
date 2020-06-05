@@ -60,8 +60,8 @@ const Groups = () => {
   }, [groupSearchString, groups]);
 
   return (
-    <View>
-      {addUserToGroup ? (
+    <View style={styles.overlayContainer}>
+      {addingUserToGroup ? (
         <View style={styles.overlay}>
           <ActivityIndicator />
         </View>
@@ -93,6 +93,7 @@ const Groups = () => {
 };
 
 const styles = StyleSheet.create({
+  overlayContainer: {flex: 1},
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
