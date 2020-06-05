@@ -1,5 +1,5 @@
 const getGroupMembersString = (group, userData, long) => {
-  const otherMembers = group.members.filter(
+  const otherMembers = Object.values(group.members).filter(
     (member) => member.uid !== userData.uid,
   );
 

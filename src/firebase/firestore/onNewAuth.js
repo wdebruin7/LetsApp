@@ -23,7 +23,7 @@ const onNewAuth = async () => {
   const newUserData = {
     displayName: user.displayName || tempDocData.displayName,
     activities: [],
-    groups: tempDocData.groups || [],
+    groups: tempDocData.groups || {},
     email: tempDocData.email || user.email,
     phoneNumber: user.phoneNumber,
     uid: user.uid,
@@ -34,7 +34,7 @@ const onNewAuth = async () => {
   const batch = db.batch();
 
   batch.set(userRef, newUserData);
-  tempDocData.groups.forEach((group) => {
+  Object.values(tempDocData.groups).forEach((group) => {
     const groupRef = db.collection('groups').doc(group.uid);
     const removeUpdate = firestore.FieldValue.arrayRemove({
       name: tempDocData.displayName,

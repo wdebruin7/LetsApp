@@ -2,7 +2,7 @@ import firestore from '@react-native-firebase/firestore';
 import {actionTypes, activityActionTypes} from './actionTypes';
 
 const toggleUserIsParticipant = (userData, activityData) => {
-  const userIsParticipant = activityData.participants.some(
+  const userIsParticipant = Object.values(activityData.participants).some(
     (elem) => elem.uid === userData.uid,
   );
   const db = firestore();

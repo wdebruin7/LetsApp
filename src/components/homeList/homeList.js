@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, Text, Button, FlatList, StyleSheet} from 'react-native';
+import {View, Button, FlatList, StyleSheet} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import ActivityDay from './activityDay';
 
-const HomeList = ({activities, setActiveDate}) => {
+const HomeList = ({activityDays, setActiveDate}) => {
   const handleSignOut = async () => {
     auth().signOut();
   };
@@ -11,9 +11,9 @@ const HomeList = ({activities, setActiveDate}) => {
   return (
     <View style={styles.container}>
       <Button title="sign out" onPress={handleSignOut} />
-      {activities.length > 0 ? (
+      {activityDays.length > 0 ? (
         <FlatList
-          data={activities}
+          data={activityDays}
           renderItem={({item}) => (
             <ActivityDay activityDay={item} setActiveDate={setActiveDate} />
           )}

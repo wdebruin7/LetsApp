@@ -30,7 +30,7 @@ const Home = () => {
     <SafeAreaView style={styles.safeView}>
       <StatusBar barStyle="dark-content" />
       <AppHeader />
-      <HomeList activities={activityDays} setActiveDate={setActiveDate} />
+      <HomeList activityDays={activityDays} setActiveDate={setActiveDate} />
       <AddActivityButton />
     </SafeAreaView>
   );

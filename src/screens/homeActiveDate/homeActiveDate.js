@@ -15,7 +15,7 @@ const HomeActiveDate = () => {
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
-    setActivities(getActivityDay(allActivities, activeDate));
+    setActivities(getActivityDay(allActivities, activeDate).activities);
   }, [activeDate, allActivities]);
 
   useEffect(() => {

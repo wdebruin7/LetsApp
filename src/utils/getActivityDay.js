@@ -6,7 +6,7 @@ const getActivityDay = (activities, date) => {
 
   return {
     date: activeDate,
-    activities: activities
+    activities: Object.values(activities)
       .filter((activity) => {
         const activityDate = activity.date.toDate();
         activityDate.setHours(0, 0, 0, 0);
