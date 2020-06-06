@@ -21,7 +21,7 @@ const AppHeader = () => {
   const {navigate} = useNavigation();
 
   const onPressAvatar = () => {
-    navigate('AccountCreate', {update: true});
+    navigate('AccountUpdate', {update: true});
   };
 
   // useEffect(() => {
