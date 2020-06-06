@@ -77,7 +77,6 @@ const AccountCreation = () => {
       saveData.displayName = displayName;
     }
     try {
-      console.log(saveData);
       await setUserData(saveData);
       Alert.alert('Profile saved', "Let's get back to it!");
     } catch (err) {
@@ -105,16 +104,20 @@ const AccountCreation = () => {
     <SafeAreaView style={styles.safeView}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
-          <TouchableOpacity
-            containerStyle={styles.backButton}
-            onPress={onPressBack}>
-            <Icon name="chevron-left" type="entypo" />
-          </TouchableOpacity>
+          {params && params.update ? (
+            <TouchableOpacity
+              containerStyle={styles.backButton}
+              onPress={onPressBack}>
+              <Icon name="chevron-left" type="entypo" />
+            </TouchableOpacity>
+          ) : null}
 
           <View style={styles.header}>
             <Text style={styles.logo}>Let&apos;s</Text>
             <Text style={styles.subtitle}>
-              {params.update ? 'Update your account!' : 'Create your acount!'}
+              {params && params.update
+                ? 'Update your account!'
+                : 'Create your acount!'}
             </Text>
           </View>
 

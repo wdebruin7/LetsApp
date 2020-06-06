@@ -18,7 +18,7 @@ const onNewAuth = async () => {
   const tempRef = db.collection('users').doc(uid);
   const userRef = db.collection('users').doc(user.uid);
   const tempDoc = await tempRef.get();
-  const tempDocData = tempDoc.exists ? tempDoc.data() : {};
+  const tempDocData = tempDoc.data() || {};
 
   const newUserData = {
     displayName: user.displayName || tempDocData.displayName,
@@ -35,21 +35,25 @@ const onNewAuth = async () => {
 
   batch.set(userRef, newUserData);
 
-  Object.values(tempDocData.groups).forEach((group) => {
-    const groupRef = db.collection('groups').doc(group.uid);
+  if (tempDoc.exists) {
+    Object.values(tempDocData.groups).forEach((group) => {
+      const groupRef = db.collection('groups').doc(group.uid);
 
-    const removeUpdate = {};
-    removeUpdate[`members.${tempDocData.uid}`] = firestore.FieldValue.delete();
+      const removeUpdate = {};
+      removeUpdate[
+        `members.${tempDocData.uid}`
+      ] = firestore.FieldValue.delete();
 
-    const includeUpdate = {};
-    includeUpdate[`members.${newUserData.uid}`] = {
-      name: newUserData.displayName,
-      uid: user.uid,
-    };
+      const includeUpdate = {};
+      includeUpdate[`members.${newUserData.uid}`] = {
+        name: newUserData.displayName,
+        uid: user.uid,
+      };
 
-    batch.update(groupRef, {members: removeUpdate});
-    batch.update(groupRef, {members: includeUpdate});
-  });
+      batch.update(groupRef, {members: removeUpdate});
+      batch.update(groupRef, {members: includeUpdate});
+    });
+  }
 
   return batch.commit();
 };
