@@ -10,15 +10,17 @@ const toggleUserIsParticipant = (userData, activityData) => {
   const userRef = db.collection('users').doc(userData.uid);
   const userUpdate = {};
   userUpdate[`activities.${activityData.uid}`] = userIsParticipant
-    ? {description: activityData.description, uid: activityData.uid}
-    : firestore.FieldValue.delete();
+    ? firestore.FieldValue.delete()
+    : {description: activityData.description, uid: activityData.uid};
   batch.update(userRef, userUpdate);
+
+  console.log(userUpdate);
 
   const activityRef = db.collection('activities').doc(activityData.uid);
   const activityUpdate = {};
   activityUpdate[`participants.${userData.uid}`] = userIsParticipant
-    ? {name: userData.displayName, uid: userData.uid}
-    : firestore.FieldValue.delete();
+    ? firestore.FieldValue.delete()
+    : {name: userData.displayName, uid: userData.uid};
   batch.update(activityRef, activityUpdate);
 
   return batch.commit().then(() => {

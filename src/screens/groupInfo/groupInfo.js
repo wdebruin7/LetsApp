@@ -23,9 +23,9 @@ import {colors} from '../../constants';
 
 const GroupInfo = () => {
   const {params} = useRoute();
-  const userData = useSelector((state) => state.user.data || {});
-  const groups = useSelector((state) => state.groups || {});
-  const allActivities = useSelector((state) => state.activities || {});
+  const userData = useSelector((state) => state.user.data);
+  const groups = useSelector((state) => state.groups);
+  const allActivities = useSelector((state) => state.activities);
   const [photoRefURL, setPhotoRefURL] = useState('');
   const {navigate} = useNavigation();
 
