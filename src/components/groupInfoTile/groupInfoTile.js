@@ -6,11 +6,7 @@ import {getDisplayDate, getActivityParticipantsString} from '../../utils';
 import {toggleUserIsParticipant} from '../../firebase';
 
 const GroupInfoTile = ({activity, userData}) => {
-  const [isParticipant, setIsParticipant] = useState(
-    userData &&
-      activity &&
-      activity.participants.some((elem) => elem.uid === userData.uid),
-  );
+  const [isParticipant, setIsParticipant] = useState(false);
 
   const toggleSwitch = () => {
     toggleUserIsParticipant(userData, activity);
@@ -18,9 +14,7 @@ const GroupInfoTile = ({activity, userData}) => {
 
   useEffect(() => {
     if (userData && activity) {
-      setIsParticipant(
-        activity.participants.some((elem) => elem.uid === userData.uid),
-      );
+      setIsParticipant(activity.participants[userData.uid] !== undefined);
     }
   }, [activity, userData]);
 

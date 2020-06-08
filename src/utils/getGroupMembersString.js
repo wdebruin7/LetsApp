@@ -1,5 +1,24 @@
 const getGroupMembersString = (group, userData, long) => {
-  const otherMembers = group.members.filter(
+  if (!userData) {
+    const names = Object.values(group.members).map((member) => member.name);
+    switch (names.length) {
+      case 0:
+        return '';
+      case 1:
+        return names[0];
+      case 2:
+        return `${names[0]} and ${names[1]}`;
+      case 3:
+        return `${names[0]}, ${names[1]}, and ${names[2]}`;
+      default:
+        return names
+          .slice(0, names.length - 1)
+          .map((name) => `${name}, `)
+          .concat(`and ${names[names.length - 1]}`)
+          .join('');
+    }
+  }
+  const otherMembers = Object.values(group.members).filter(
     (member) => member.uid !== userData.uid,
   );
 

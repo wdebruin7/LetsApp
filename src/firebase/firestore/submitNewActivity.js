@@ -29,19 +29,21 @@ const submitNewActivity = (
     selectedDateStrings.forEach((dateString) => {
       const date = timeStamp.fromDate(new Date(dateString));
       const docRef = db.collection('activities').doc();
+      const participants = {};
+      if (false || userIsParticipant) {
+        participants[`${userData.uid}`] = {
+          uid: userData.uid,
+          name: userData.displayName,
+        };
+      }
       const data = {
         date,
         description: description || '',
         group: {name: group.name, uid: group.uid},
-        participants:
-          false || userIsParticipant
-            ? [{uid: userData.uid, name: userData.displayName}]
-            : [],
+        participants,
         uid: docRef.id,
       };
       if (false || userIsParticipant) {
-        const activity = {description, uid: docRef.id};
-        const update = firestore.FieldValue.arrayUnion(activity);
         const actionRef = db.collection('actions').doc();
         const actionData = {
           uid: actionRef.id,
@@ -63,7 +65,10 @@ const submitNewActivity = (
           timestamp: firestore.Timestamp.now(),
         };
         batch.set(actionRef, actionData);
-        batch.update(userDocRef, {participants: update});
+
+        const userUpdate = {};
+        userUpdate[`activities.${docRef.id}`] = {description, uid: docRef.id};
+        batch.update(userDocRef, userUpdate);
       }
       const actionRef = db.collection('actions').doc();
       const actionData = {

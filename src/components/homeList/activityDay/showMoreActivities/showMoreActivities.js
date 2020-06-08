@@ -1,9 +1,16 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {fonts, colors} from '../../../../constants';
 
-const ShowMoreActivities = ({numAdditionalActivities, setShowAll}) => {
+const ShowMoreActivities = ({numAdditionalActivities, date}) => {
+  const {navigate} = useNavigation();
+
+  const onPress = () => {
+    navigate('HomeActiveDate', {activeDateTime: date.getTime()});
+  };
   return (
-    <TouchableOpacity onPress={setShowAll(true)} style={styles.touchable}>
+    <TouchableOpacity onPress={onPress} style={styles.touchable}>
       <Text style={styles.text}>+ {numAdditionalActivities} more</Text>
     </TouchableOpacity>
   );
@@ -20,7 +27,8 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 12,
   },
   text: {
-    fontSize: 16,
+    fontFamily: fonts.body_regular,
+    color: colors.darkGrey,
   },
 });
 

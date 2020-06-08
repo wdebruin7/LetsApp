@@ -21,7 +21,7 @@ import {Button, TextBox} from '../../components';
 import Colors from '../../constants/colors';
 import {fonts} from '../../constants';
 
-const AccountCreation = () => {
+const AccountUpdate = () => {
   const session = useSession();
   const userData = useSelector((state) => state.user.data || {});
   const [displayName, setDisplayname] = useState('');
@@ -218,4 +218,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AccountCreation;
+export default AccountUpdate;

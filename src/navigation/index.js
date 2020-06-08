@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 import AuthNavigation from './authNavigation';
 import AppNavigation from './appNavigation';
 import {useSession} from '../firebase';
-import {Initializing, AccountCreation} from '../screens';
+import {Initializing, AccountCreation, AccountUpdate} from '../screens';
 import onNewAuth from '../firebase/firestore/onNewAuth';
 import AddActivityNavigation from './addActivityNavigation';
 
@@ -14,12 +14,7 @@ const Stack = createStackNavigator();
 const AppContainer = () => {
   const session = useSession();
   const user = useSelector((state) => state.user);
-  const [awaitingMigration, setAwaitingMigration] = useState(
-    session.user
-      ? session.user.metadata.creationTime ===
-          session.user.metadata.lastSignInTime
-      : false,
-  );
+  const [awaitingMigration, setAwaitingMigration] = useState(false);
 
   const initiateMigration = async () => {
     try {
@@ -32,8 +27,15 @@ const AppContainer = () => {
 
   useEffect(() => {
     if (awaitingMigration) initiateMigration();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [awaitingMigration]);
+
+  useEffect(() => {
+    if (user.initializing || user.data || !session.user) return;
+    const {creationTime} = session.user.metadata;
+    const {lastSignInTime} = session.user.metadata;
+
+    setAwaitingMigration(creationTime === lastSignInTime);
+  }, [session.user, user.data, user.initializing]);
 
   if (
     session.initializing ||
@@ -63,7 +65,7 @@ const AppContainer = () => {
         </Stack.Navigator>
       </NavigationContainer>
     );
-  } else {
+  } else if (user.data && user.data.userDataConfirmed) {
     return (
       <NavigationContainer>
         <Stack.Navigator headerMode="none" mode="modal" initialRouteName="App">
@@ -72,7 +74,7 @@ const AppContainer = () => {
             component={AppNavigation}
             options={{animationEnabled: false}}
           />
-          <Stack.Screen name="AccountCreate" component={AccountCreation} />
+          <Stack.Screen name="AccountUpdate" component={AccountUpdate} />
           <Stack.Screen name="AddActivity" component={AddActivityNavigation} />
         </Stack.Navigator>
       </NavigationContainer>

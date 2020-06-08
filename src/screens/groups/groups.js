@@ -16,10 +16,10 @@ import {colors} from '../../constants';
 import {addUserToGroup} from '../../firebase';
 
 const Groups = () => {
-  const groups = useSelector((state) => state.groups || {});
+  const groups = useSelector((state) => state.groups);
   const {navigate} = useNavigation();
   const [groupSearchString, setGroupSearchString] = useState('');
-  const [filteredGroups, setFilteredGroups] = useState(groups);
+  const [filteredGroups, setFilteredGroups] = useState([]);
   const {params} = useRoute();
   const userData = useSelector((state) => state.user.data);
   const [addingUserToGroup, setAddingUserToGroup] = useState(false);
@@ -48,14 +48,16 @@ const Groups = () => {
 
   useEffect(() => {
     setFilteredGroups(
-      groupSearchString
+      !groups
+        ? []
+        : groupSearchString
         ? Object.values(groups).filter((group) =>
             group.name
               .toLowerCase()
               .trim()
               .includes(groupSearchString.toLowerCase().trim()),
           )
-        : groups,
+        : Object.values(groups),
     );
   }, [groupSearchString, groups]);
 
@@ -81,7 +83,7 @@ const Groups = () => {
         </View>
         <View style={styles.listContainer}>
           <FlatList
-            data={Object.values(filteredGroups)}
+            data={filteredGroups}
             renderItem={({item}) => <GroupTile group={item} />}
             keyExtractor={(item) => item.uid}
             style={styles.list}

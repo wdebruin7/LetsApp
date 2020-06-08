@@ -31,16 +31,22 @@ const addUserToGroup = (groupUID, userData) => {
           reject(new Error('Invalid Group'));
         });
       }
-      const groupUpdate = firestore.FieldValue.arrayUnion({
+      const groupUpdate = {};
+      const groupFieldName = `members.${userData.uid}`;
+      const groupFieldVal = {
         name: userData.displayName,
         uid: userData.uid,
-      });
+      };
+      groupUpdate[groupFieldName] = groupFieldVal;
 
       const userRef = db.collection('users').doc(userData.uid);
-      const userUpdate = firestore.FieldValue.arrayUnion({
+      const userUpdate = {};
+      const userFieldName = `groups.${data.uid}`;
+      const userFieldVal = {
         name: data.name,
         uid: data.uid,
-      });
+      };
+      userUpdate[userFieldName] = userFieldVal;
 
       transaction.get(userRef);
       transaction.update(userRef, {groups: userUpdate});

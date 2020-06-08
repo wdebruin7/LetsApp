@@ -13,10 +13,12 @@ const createGroup = (groupName, imagePath, userData) => {
 
   const groupRef = db.collection('groups').doc();
   const userRef = db.collection('users').doc(user.uid);
+  const members = {};
+  members[userData.uid] = {name: userData.displayName, uid: user.uid};
 
   const group = {
     name: groupName,
-    members: [{name: userData.displayName, uid: user.uid}],
+    members,
     thumbnailURL: '',
     thumbnailImagePath: '',
     uid: groupRef.id,
@@ -24,23 +26,11 @@ const createGroup = (groupName, imagePath, userData) => {
 
   const batch = db.batch();
 
-  const update = firestore.FieldValue.arrayUnion({
+  const userUpdate = {};
+  userUpdate[`groups.${groupRef.id}`] = {
     name: groupName,
     uid: groupRef.id,
-  });
-
-  if (imagePath) {
-    return storage()
-      .ref(`${group.uid}/thumbnail`)
-      .putFile(imagePath)
-      .then(() => {
-        group.thumbnailImagePath = `${groupRef.id}/thumbnail`;
-        batch.update(userRef, {groups: update});
-        batch.set(groupRef, group);
-        return batch.commit();
-      })
-      .then(() => group);
-  }
+  };
 
   const actionRef = db.collection('actions').doc();
   const actionData = {
@@ -61,10 +51,23 @@ const createGroup = (groupName, imagePath, userData) => {
   };
 
   batch.set(actionRef, actionData);
-  batch.update(userRef, {groups: update});
+  batch.update(userRef, userUpdate);
   batch.set(groupRef, group);
 
-  return batch.commit().then(() => group);
+  return batch
+    .commit()
+    .then(() => {
+      if (imagePath) {
+        storage()
+          .ref(`${group.uid}/thumbnail`)
+          .putFile(imagePath)
+          .then(() => {
+            group.thumbnailImagePath = `${groupRef.id}/thumbnail`;
+            db.collection('groups').doc(groupRef.id).set(group);
+          });
+      }
+    })
+    .then(() => group);
 };
 
 export default createGroup;

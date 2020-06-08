@@ -6,3 +6,5 @@ export {default as getActivityParticipantsString} from './getActivityParticipant
 export {default as getDisplayDate} from './getDisplayDate';
 export {default as buildDynamicLink} from './buildDynamicLink';
 export {default as getSearchParams} from './getSearchParams';
+export {default as getActivityDays} from './getActivityDays';
+export {default as getActivityDay} from './getActivityDay';

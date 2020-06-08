@@ -8,11 +8,8 @@ import {fonts, colors} from '../../../../constants';
 
 const ActivityList = ({activity}) => {
   const userData = useSelector((state) => state.user.data);
-  const [isParticipant, setIsParticipant] = useState(
-    userData &&
-      activity &&
-      activity.participants.some((elem) => elem.uid === userData.uid),
-  );
+  const [participants, setParticipants] = useState([]);
+  const [isParticipant, setIsParticipant] = useState(false);
   const {navigate} = useNavigation();
 
   const onPress = () => {
@@ -29,10 +26,9 @@ const ActivityList = ({activity}) => {
   };
 
   useEffect(() => {
+    if (activity) setParticipants(Object.values(activity.participants));
     if (userData && activity) {
-      setIsParticipant(
-        activity.participants.some((elem) => elem.uid === userData.uid),
-      );
+      setIsParticipant(activity.participants[userData.uid] !== undefined);
     }
   }, [activity, userData]);
 
@@ -41,7 +37,7 @@ const ActivityList = ({activity}) => {
       <View style={styles.container}>
         <View style={styles.activityInfoView}>
           <Text style={styles.activityInfoElement}>{activity.group.name}</Text>
-          {activity.participants.slice(0, 2).map((participant) => {
+          {participants.slice(0, 2).map((participant) => {
             const initials = participant.name
               .split(' ')
               .map((e) => e[0])
@@ -55,13 +51,13 @@ const ActivityList = ({activity}) => {
               />
             );
           })}
-          {activity.participants.length > 2 ? (
+          {participants.length > 2 ? (
             <Text
               style={{
                 ...styles.activityInfoElement,
                 ...styles.activityInfoElementText,
               }}>
-              +{activity.participants.length - 2}
+              +{participants.length - 2}
             </Text>
           ) : null}
         </View>

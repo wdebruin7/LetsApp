@@ -23,27 +23,8 @@ const ActivityTile = ({activity, group}) => {
   const userData = useSelector((state) =>
     state.user ? state.user.data : null,
   );
-  const [userIsParticipant, setUserIsParticipant] = useState(
-    activity.participants.some(
-      (participant) => participant.uid === userData.uid,
-    ),
-  );
+  const [userIsParticipant, setUserIsParticipant] = useState(false);
   const {navigate} = useNavigation();
-
-  useEffect(() => {
-    setUserIsParticipant(
-      activity.participants.some(
-        (participant) => participant.uid === userData.uid,
-      ),
-    );
-  }, [userData, activity]);
-
-  useEffect(() => {
-    if (group.thumbnailImagePath) {
-      const ref = storage().ref(`${group.uid}/thumbnail`);
-      ref.getDownloadURL().then((url) => setPhotoRefURL(url));
-    }
-  }, [group.thumbnailImagePath, group.uid]);
 
   const handleSwitchToggle = () => {
     setUserIsParticipant(!userIsParticipant);
@@ -56,6 +37,17 @@ const ActivityTile = ({activity, group}) => {
       initial: false,
     });
   };
+
+  useEffect(() => {
+    setUserIsParticipant(activity.participants[userData.uid] !== undefined);
+  }, [userData, activity]);
+
+  useEffect(() => {
+    if (group.thumbnailImagePath) {
+      const ref = storage().ref(`${group.uid}/thumbnail`);
+      ref.getDownloadURL().then((url) => setPhotoRefURL(url));
+    }
+  }, [group.thumbnailImagePath, group.uid]);
 
   if (!(activity && group)) return null;
 

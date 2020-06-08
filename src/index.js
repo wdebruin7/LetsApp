@@ -43,10 +43,8 @@ const App = () => {
 
   const onUserSnapshot = (documentSnapshot) => {
     const data = documentSnapshot.data();
-    if (data) {
-      setUserData(data);
-      store.dispatch(updateUser(documentSnapshot.data()));
-    }
+    setUserData(data);
+    store.dispatch(updateUser(data));
   };
 
   const onActivitySnapshot = (querySnapshot) => {
