@@ -9,8 +9,7 @@ import TileHeader from '../../tileHeader';
 import TileBody from '../../tileBody/tileBody';
 
 const ActivityDay = ({activityDay, setActiveDate}) => {
-  const [showAll, setShowAll] = useState(false);
-  const activitiesHidden = !showAll && activityDay.activities > 3;
+  const activitiesHidden = activityDay.activities.length > 3;
 
   return (
     <View style={styles.container}>
@@ -20,20 +19,19 @@ const ActivityDay = ({activityDay, setActiveDate}) => {
       />
       <TileBody>
         <FlatList
-          data={
-            showAll
-              ? activityDay.activities
-              : activityDay.activities.slice(0, 2)
-          }
+          data={activityDay.activities.slice(0, 3)}
           renderItem={({item, index}) => <ActivityList activity={item} />}
           keyExtractor={(item) => item.uid}
           ItemSeparatorComponent={() => <Divider />}
         />
         {activitiesHidden ? (
-          <ShowMoreActivities
-            numAdditionalActivities={2}
-            setShowAll={setShowAll}
-          />
+          <View>
+            <Divider />
+            <ShowMoreActivities
+              numAdditionalActivities={2}
+              date={activityDay.date}
+            />
+          </View>
         ) : null}
       </TileBody>
     </View>
