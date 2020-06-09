@@ -7,7 +7,6 @@ import {
   Switch,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Alert,
 } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {Icon} from 'react-native-elements';
@@ -15,6 +14,7 @@ import {useSelector} from 'react-redux';
 import {cloneDeep} from 'lodash';
 import {submitNewActivity} from '../../firebase';
 import {Button} from '../../components';
+import {colors} from '../../constants';
 
 const getDateTimeString = (date) => {
   return `${date.getYear()}-${date.getMonth()}-${date.getDate()}`;
@@ -114,13 +114,19 @@ const ActivityAdder = () => {
           <Text>When are you free?</Text>
         </View>
         <View style={styles.rowItem}>
-          <View style={styles.rowItemHeader}>
+          <View
+            style={
+              userIsParticipant
+                ? styles.rowItemHeader
+                : {...styles.rowItemHeader, ...styles.userIsNotParticipant}
+            }>
             <Text style={styles.rowItemHeaderText}>I&apos;m free</Text>
             <Switch
               value={userIsParticipant}
               onValueChange={onChangeSwitch}
               thumbColor="#FFFFFF"
-              ios_backgroundColor="#009846"
+              trackColor={{false: colors.darkGrey, true: '#009846'}}
+              ios_backgroundColor={colors.darkGrey}
             />
           </View>
         </View>
@@ -200,6 +206,9 @@ const styles = StyleSheet.create({
     height: 80,
     backgroundColor: '#01D060',
     paddingHorizontal: 30,
+  },
+  userIsNotParticipant: {
+    backgroundColor: colors.mediumGrey,
   },
   rowItemContent: {
     flexDirection: 'row',
