@@ -14,7 +14,7 @@ import {useSelector} from 'react-redux';
 import {cloneDeep} from 'lodash';
 import {submitNewActivity} from '../../firebase';
 import {Button} from '../../components';
-import {colors} from '../../constants';
+import {colors, fonts} from '../../constants';
 
 const getDateTimeString = (date) => {
   return `${date.getYear()}-${date.getMonth()}-${date.getDate()}`;
@@ -110,8 +110,8 @@ const ActivityAdder = () => {
               <Icon name="chevron-left" type="entypo" />
             </View>
           </TouchableWithoutFeedback>
-          <Text style={styles.headerText}>Let&apos;s go!</Text>
-          <Text>When are you free?</Text>
+          <Text style={styles.headerText}>Create an activity</Text>
+          <Text style={styles.headerSubText}>Choose dates and groups</Text>
         </View>
         <View style={styles.rowItem}>
           <View
@@ -120,7 +120,17 @@ const ActivityAdder = () => {
                 ? styles.rowItemHeader
                 : {...styles.rowItemHeader, ...styles.userIsNotParticipant}
             }>
-            <Text style={styles.rowItemHeaderText}>I&apos;m free</Text>
+            <Text
+              style={
+                userIsParticipant
+                  ? styles.rowItemHeaderText
+                  : {
+                      ...styles.rowItemHeaderText,
+                      ...styles.userIsNotParticipant,
+                    }
+              }>
+              I&apos;m free
+            </Text>
             <Switch
               value={userIsParticipant}
               onValueChange={onChangeSwitch}
@@ -191,9 +201,13 @@ const styles = StyleSheet.create({
     padding: 30,
   },
   headerText: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    fontFamily: 'AppleSDGothicNeo-Regular',
+    fontSize: 24,
+    fontFamily: fonts.body_bold,
+    marginBottom: 5,
+  },
+  headerSubText: {
+    fontSize: 16,
+    fontFamily: fonts.body_regular,
   },
   rowItem: {
     flexDirection: 'row',
@@ -203,12 +217,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    height: 80,
+    height: 100,
     backgroundColor: '#01D060',
     paddingHorizontal: 30,
   },
   userIsNotParticipant: {
-    backgroundColor: colors.mediumGrey,
+    backgroundColor: '#FCFEFF',
+    color: 'black',
+    borderBottomWidth: 1,
+    borderBottomColor: '#EBF0F3',
   },
   rowItemContent: {
     flexDirection: 'row',
@@ -222,20 +239,18 @@ const styles = StyleSheet.create({
   },
   contentTitleText: {
     fontSize: 16,
-    fontFamily: 'AppleSDGothicNeo-Regular',
-    fontWeight: '900',
+    fontFamily: fonts.body_bold,
     marginBottom: 5,
   },
   rowItemHeaderText: {
     fontSize: 16,
-    fontFamily: 'AppleSDGothicNeo-Regular',
-    fontWeight: 'bold',
+    fontFamily: fonts.body_bold,
     color: 'white',
   },
   contentSubtitleText: {
     fontSize: 14,
-    fontFamily: 'AppleSDGothicNeo-Regular',
-    color: '#BCBCBC',
+    fontFamily: fonts.body_regular,
+    color: colors.mediumGrey,
   },
   button: {
     width: 250,
