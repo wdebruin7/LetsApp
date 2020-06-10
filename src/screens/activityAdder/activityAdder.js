@@ -7,7 +7,6 @@ import {
   Switch,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Alert,
 } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {Icon} from 'react-native-elements';

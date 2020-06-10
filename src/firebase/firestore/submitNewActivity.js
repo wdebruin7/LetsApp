@@ -1,6 +1,18 @@
 import firestore from '@react-native-firebase/firestore';
 import {actionTypes, activityActionTypes} from './actionTypes';
 
+const getTimeStamp = (dateString) => {
+  const date = new Date();
+  const [year, month, day] = dateString.split('-');
+  date.setFullYear(
+    parseInt(year, 10),
+    parseInt(month, 10) - 1,
+    parseInt(day, 10),
+  );
+
+  return firestore.Timestamp.fromDate(date);
+};
+
 const submitNewActivity = (
   selectedGroups,
   selectedDateStrings,
@@ -10,7 +22,6 @@ const submitNewActivity = (
 ) => {
   const db = firestore();
   const batch = db.batch();
-  const timeStamp = firestore.Timestamp;
   const userDocRef = db.collection('users').doc(userData.uid);
 
   if (!userData) {
@@ -27,9 +38,10 @@ const submitNewActivity = (
 
   selectedGroups.forEach((group) => {
     selectedDateStrings.forEach((dateString) => {
-      const date = timeStamp.fromDate(new Date(dateString));
       const docRef = db.collection('activities').doc();
       const participants = {};
+      const date = getTimeStamp(dateString);
+
       if (false || userIsParticipant) {
         participants[`${userData.uid}`] = {
           uid: userData.uid,
