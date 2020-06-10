@@ -8,7 +8,6 @@ import {
   Image,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import {Avatar} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import {getGroupMembersString, getDownloadURL} from '../../utils';
 import {fonts, colors} from '../../constants';
