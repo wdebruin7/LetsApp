@@ -8,7 +8,6 @@ import {
   Image,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import {Avatar} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import {getGroupMembersString, getDownloadURL} from '../../utils';
 import {fonts, colors} from '../../constants';
@@ -37,10 +36,8 @@ const GroupTile = ({group}) => {
         </Text>
       </View>
       <View style={styles.groupAvatar}>
-        {photoRefURL ? (
+        {!!photoRefURL && (
           <Image style={styles.groupPhoto} source={{uri: photoRefURL}} />
-        ) : (
-          <Avatar rounded title={group.name[0]} size={50} />
         )}
       </View>
     </TouchableOpacity>
