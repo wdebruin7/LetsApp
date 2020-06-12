@@ -1,5 +1,5 @@
 const getActivityDays = (activities) => {
-  if (!activities) return [];
+  if (!activities || activities === {}) return [];
 
   const activityDays = [];
   let remainingActivities = Object.values(activities);

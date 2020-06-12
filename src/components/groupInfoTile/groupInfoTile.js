@@ -13,7 +13,7 @@ const GroupInfoTile = ({activity, userData}) => {
   };
 
   useEffect(() => {
-    if (userData && activity) {
+    if (userData && userData !== {} && activity) {
       setIsParticipant(activity.participants[userData.uid] !== undefined);
     }
   }, [activity, userData]);

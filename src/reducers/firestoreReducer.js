@@ -2,11 +2,11 @@ import firestoreTypes from '../actions/firestoreTypes';
 
 const initialState = () => {
   return {
-    groups: null,
-    activities: null,
-    actions: null,
+    groups: {},
+    activities: {},
+    actions: {},
     user: {
-      data: null,
+      data: {},
       initializing: true,
     },
   };

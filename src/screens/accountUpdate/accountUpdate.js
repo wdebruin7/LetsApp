@@ -21,9 +21,9 @@ import {Button, TextBox} from '../../components';
 import Colors from '../../constants/colors';
 import {fonts} from '../../constants';
 
-const AccountUpdate = () => {
+const AccountCreation = () => {
   const session = useSession();
-  const userData = useSelector((state) => state.user.data || {});
+  const userData = useSelector((state) => state.user.data);
   const [displayName, setDisplayname] = useState('');
   const [photoURL, setPhotoURL] = useState('');
   const [localFilepath, setLocalFilepath] = useState('');
@@ -33,7 +33,7 @@ const AccountUpdate = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (!userData) return;
+    if (!userData || userData === {}) return;
     if (userData.displayName && !displayName) {
       setDisplayname(userData.displayName);
     }
@@ -218,4 +218,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AccountUpdate;
+export default AccountCreation;

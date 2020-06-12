@@ -24,7 +24,7 @@ const submitNewActivity = (
   const batch = db.batch();
   const userDocRef = db.collection('users').doc(userData.uid);
 
-  if (!userData) {
+  if (!userData || userData === {}) {
     return new Promise((resolve, reject) => {
       reject(new Error('No user data'));
     });

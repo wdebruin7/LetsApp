@@ -32,6 +32,7 @@ const Groups = () => {
     if (
       params.groupUID &&
       userData &&
+      userData !== {} &&
       !groups[params.groupUID] &&
       !addingUserToGroup
     ) {
@@ -47,18 +48,17 @@ const Groups = () => {
   }, [addingUserToGroup, groups, navigate, params.groupUID, userData]);
 
   useEffect(() => {
-    setFilteredGroups(
-      !groups
-        ? []
-        : groupSearchString
-        ? Object.values(groups).filter((group) =>
-            group.name
-              .toLowerCase()
-              .trim()
-              .includes(groupSearchString.toLowerCase().trim()),
-          )
-        : Object.values(groups),
-    );
+    const groupsArray = Object.values(groups);
+    const newFilteredGroups = groupSearchString
+      ? groupsArray.filter((group) =>
+          group.name
+            .toLowerCase()
+            .trim()
+            .includes(groupSearchString.toLowerCase().trim()),
+        )
+      : groupsArray;
+
+    setFilteredGroups(newFilteredGroups);
   }, [groupSearchString, groups]);
 
   return (

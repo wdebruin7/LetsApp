@@ -23,13 +23,13 @@ const getDateTimeString = (date) => {
 const ActivityAdder = () => {
   const navigation = useNavigation();
   const params = useRoute().params || {};
-  const userGroups = useSelector((state) => state.groups || {});
+  const userGroups = useSelector((state) => state.groups);
   const {dateTime, groupUID} = params;
   const markedDates = {...params.markedDates};
   const groups = params.groups || cloneDeep(userGroups);
   const [canSave, setCanSave] = useState(false);
   const [userIsParticipant, setUserIsParticipant] = useState(false);
-  const userData = useSelector((state) => state.user.data || {});
+  const userData = useSelector((state) => state.user.data);
 
   useEffect(() => {
     setCanSave(
