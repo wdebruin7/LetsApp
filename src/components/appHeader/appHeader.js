@@ -13,7 +13,7 @@ import {getDownloadURL} from '../../utils';
 import {colors, fonts} from '../../constants';
 
 const AppHeader = () => {
-  const {profileImagePath} = useSelector((state) => state.user.data || {});
+  const userData = useSelector((state) => state.user.data);
   const header = "Let's";
   const [downloadURL, setDownloadURL] = useState(undefined);
   const imageSource = {uri: downloadURL};
@@ -25,7 +25,7 @@ const AppHeader = () => {
   };
 
   // useEffect(() => {
-  //   if (profileImagePath) getDownloadURL(profileImagePath, setDownloadURL);
+  //   if (userData && userData.profileImagePath) getDownloadURL(userData.profileImagePath, setDownloadURL);
   // }, [profileImagePath]);
 
   return (
