@@ -10,7 +10,7 @@ import {
 import {CalendarList} from 'react-native-calendars';
 import {Icon} from 'react-native-elements';
 import Button from '../../components/button/button';
-import {fonts} from '../../constants';
+import {fonts, colors} from '../../constants';
 
 const ActivityDatePicker = () => {
   const {navigate} = useNavigation();
@@ -65,8 +65,10 @@ const ActivityDatePicker = () => {
             <Icon name="chevron-left" type="entypo" />
           </View>
         </TouchableWithoutFeedback>
-        <Text style={styles.headerText}>Let&apos;s go!</Text>
-        <Text>When are you free?</Text>
+        <Text style={styles.headerText}>Choose dates</Text>
+        <Text style={styles.headerSubText}>
+          Each date will be a new activity
+        </Text>
       </View>
       <CalendarList
         horizontal
@@ -118,9 +120,14 @@ const styles = StyleSheet.create({
     padding: 30,
   },
   headerText: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    fontFamily: 'AppleSDGothicNeo-Regular',
+    fontSize: 24,
+    fontFamily: fonts.body_medium,
+    marginBottom: 5,
+  },
+  headerSubText: {
+    fontSize: 16,
+    fontFamily: fonts.body_regular,
+    color: colors.darkGrey,
   },
   saveButton: {
     width: 250,

@@ -11,6 +11,7 @@ import {
 import {Icon} from 'react-native-elements';
 import {cloneDeep} from 'lodash';
 import {GroupSelect, Button, TextBox} from '../../components';
+import {colors, fonts} from '../../constants';
 
 const ActivityGroupPicker = () => {
   const {params} = useRoute();
@@ -89,13 +90,12 @@ const ActivityGroupPicker = () => {
             <Icon name="chevron-left" type="entypo" />
           </View>
         </TouchableWithoutFeedback>
-        <Text style={styles.headerText}>Let&apos;s go!</Text>
-        <Text>When are you free?</Text>
+        <Text style={styles.headerText}>Choose groups</Text>
+        <Text style={styles.headerSubText}>
+          Activities will be created in these groups
+        </Text>
       </View>
       <View style={styles.filterView}>
-        <Text style={styles.selectText}>
-          Select groups that can see you&apos;re free
-        </Text>
         <TextBox
           placeholder="Search"
           value={filterString}
@@ -152,19 +152,19 @@ const styles = StyleSheet.create({
     padding: 30,
   },
   headerText: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    fontFamily: 'AppleSDGothicNeo-Regular',
+    fontSize: 24,
+    fontFamily: fonts.body_medium,
+    marginBottom: 5,
+  },
+  headerSubText: {
+    fontSize: 16,
+    fontFamily: fonts.body_regular,
+    color: colors.darkGrey,
   },
   filterView: {
     alignItems: 'center',
     paddingTop: 20,
     paddingHorizontal: 20,
-  },
-  selectText: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    width: '100%',
   },
   searchBox: {
     width: '100%',

@@ -202,12 +202,13 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 24,
-    fontFamily: fonts.body_bold,
+    fontFamily: fonts.body_medium,
     marginBottom: 5,
   },
   headerSubText: {
     fontSize: 16,
     fontFamily: fonts.body_regular,
+    color: colors.darkGrey,
   },
   rowItem: {
     flexDirection: 'row',
