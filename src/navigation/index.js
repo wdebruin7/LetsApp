@@ -30,18 +30,23 @@ const AppContainer = () => {
   }, [awaitingMigration]);
 
   useEffect(() => {
-    if (user.initializing || user.data || !session.user) return;
+    if (user.initializing || user.data !== {} || !session.user) return;
     const {creationTime} = session.user.metadata;
     const {lastSignInTime} = session.user.metadata;
-
-    setAwaitingMigration(creationTime === lastSignInTime);
+    if (creationTime === lastSignInTime) setAwaitingMigration(true);
   }, [session.user, user.data, user.initializing]);
 
-  if (
+  const initializing =
     session.initializing ||
     (session.user && user.initializing) ||
-    awaitingMigration
-  ) {
+    awaitingMigration;
+
+  const loggedOut = !session.user;
+
+  const awaitingAccountCreation =
+    !user.data || user.data === {} || !user.data.userDataConfirmed;
+
+  if (initializing) {
     return (
       <NavigationContainer>
         <Stack.Navigator headerMode="none">
@@ -49,7 +54,7 @@ const AppContainer = () => {
         </Stack.Navigator>
       </NavigationContainer>
     );
-  } else if (!session.user) {
+  } else if (loggedOut) {
     return (
       <NavigationContainer>
         <Stack.Navigator headerMode="none">
@@ -57,7 +62,7 @@ const AppContainer = () => {
         </Stack.Navigator>
       </NavigationContainer>
     );
-  } else if (!user.data || !user.data.userDataConfirmed) {
+  } else if (awaitingAccountCreation) {
     return (
       <NavigationContainer>
         <Stack.Navigator headerMode="none">
@@ -65,7 +70,7 @@ const AppContainer = () => {
         </Stack.Navigator>
       </NavigationContainer>
     );
-  } else if (user.data && user.data.userDataConfirmed) {
+  } else {
     return (
       <NavigationContainer>
         <Stack.Navigator headerMode="none" mode="modal" initialRouteName="App">

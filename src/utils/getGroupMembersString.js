@@ -1,5 +1,5 @@
 const getGroupMembersString = (group, userData, long) => {
-  if (!userData) {
+  if (!userData || userData === {}) {
     const names = Object.values(group.members).map((member) => member.name);
     switch (names.length) {
       case 0:

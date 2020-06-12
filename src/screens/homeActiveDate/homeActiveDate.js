@@ -7,7 +7,7 @@ import {getActivityDay} from '../../utils';
 
 const HomeActiveDate = () => {
   const navigation = useNavigation();
-  const allActivities = useSelector((state) => state.activities || {});
+  const allActivities = useSelector((state) => state.activities);
   const {activeDateTime} = useRoute().params || {};
   const [activeDate, setActiveDate] = useState(
     activeDateTime ? new Date(activeDateTime) : null,

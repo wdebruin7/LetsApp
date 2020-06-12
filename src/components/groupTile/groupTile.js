@@ -13,7 +13,7 @@ import {getGroupMembersString, getDownloadURL} from '../../utils';
 import {fonts, colors} from '../../constants';
 
 const GroupTile = ({group}) => {
-  const userData = useSelector((state) => state.user.data || {});
+  const userData = useSelector((state) => state.user.data);
   const [photoRefURL, setPhotoRefURL] = useState('');
   const {navigate} = useNavigation();
 

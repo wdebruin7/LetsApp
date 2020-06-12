@@ -7,7 +7,7 @@ import {getGroupMembersString} from '../../utils';
 import {colors, fonts} from '../../constants';
 
 const GroupSelect = ({group, onToggleGroup}) => {
-  const userData = useSelector((state) => state.user.data || {});
+  const userData = useSelector((state) => state.user.data);
   const [photoRefURL, setPhotoRefURL] = useState('');
 
   useEffect(() => {

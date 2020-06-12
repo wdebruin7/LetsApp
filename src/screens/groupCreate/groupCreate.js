@@ -22,7 +22,7 @@ const GroupCreate = () => {
   const imgageSource = {uri: localFilepath};
   const {navigate} = useNavigation();
   const lets = "Let's";
-  const userData = useSelector((state) => state.user.data || {});
+  const userData = useSelector((state) => state.user.data);
 
   useEffect(() => {
     if (groupName) {

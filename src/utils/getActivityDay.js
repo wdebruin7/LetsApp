@@ -1,5 +1,5 @@
 const getActivityDay = (activities, date) => {
-  if (!activities) return [];
+  if (!activities || activities === {}) return [];
 
   const activeDate = new Date(date);
   activeDate.setHours(0, 0, 0, 0);

@@ -21,13 +21,13 @@ const ActivityList = ({activity}) => {
   };
 
   const toggleSwitch = () => {
-    if (!userData) return;
+    if (!userData || userData === {}) return;
     toggleUserIsParticipant(userData, activity);
   };
 
   useEffect(() => {
     if (activity) setParticipants(Object.values(activity.participants));
-    if (userData && activity) {
+    if (userData !== {} && activity) {
       setIsParticipant(activity.participants[userData.uid] !== undefined);
     }
   }, [activity, userData]);

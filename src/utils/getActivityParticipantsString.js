@@ -4,7 +4,7 @@ const getActivityParticipantsString = (
   userIsParticipant,
   long,
 ) => {
-  if (!activity || !userData) return '';
+  if (!activity || userData === {}) return '';
 
   const participants = Object.values(activity.participants);
 

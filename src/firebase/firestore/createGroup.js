@@ -7,7 +7,7 @@ const createGroup = (groupName, imagePath, userData) => {
   const user = auth().currentUser;
   if (!auth) throw new Error('No user signed in');
 
-  if (!userData) throw new Error('User data not supplied');
+  if (!userData || userData === {}) throw new Error('User data not supplied');
 
   const db = firestore();
 

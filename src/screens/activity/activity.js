@@ -4,13 +4,16 @@ import {useSelector} from 'react-redux';
 import {AppHeader} from '../../components';
 
 const Activity = () => {
-  const actions = useSelector((state) => state.actions || {});
+  const actions = useSelector((state) => state.actions);
+
+  const actionsArray =
+    actions !== {} ? Object.values(actions).filter((item) => !item.hidden) : [];
 
   return (
     <SafeAreaView style={styles.safeView}>
       <AppHeader />
       <FlatList
-        data={Object.values(actions).filter((item) => !item.hidden)}
+        data={actionsArray}
         renderItem={({item}) => (
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text>{item.group.name}</Text>
