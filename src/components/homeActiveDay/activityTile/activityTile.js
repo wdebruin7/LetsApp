@@ -20,9 +20,7 @@ import {colors, fonts} from '../../../constants';
 
 const ActivityTile = ({activity, group}) => {
   const [photoRefURL, setPhotoRefURL] = useState(group && group.thumbnailURL);
-  const userData = useSelector((state) =>
-    state.user ? state.user.data : null,
-  );
+  const userData = useSelector((state) => state.user.data);
   const [userIsParticipant, setUserIsParticipant] = useState(false);
   const {navigate} = useNavigation();
 
@@ -39,6 +37,7 @@ const ActivityTile = ({activity, group}) => {
   };
 
   useEffect(() => {
+    if (!userData) return;
     setUserIsParticipant(activity.participants[userData.uid] !== undefined);
   }, [userData, activity]);
 
