@@ -10,6 +10,7 @@ import {
 import {CalendarList} from 'react-native-calendars';
 import {Icon} from 'react-native-elements';
 import Button from '../../components/button/button';
+import {fonts} from '../../constants';
 
 const ActivityDatePicker = () => {
   const {navigate} = useNavigation();
@@ -37,11 +38,11 @@ const ActivityDatePicker = () => {
     setMarkedDates(toUpdate);
   };
 
-  const numSelectedDates = () => {
-    return Object.keys(markedDates).filter(
-      (dateString) => markedDates[dateString].selected,
-    ).length;
-  };
+  const selectedDateStrings = Object.keys(markedDates).filter(
+    (dateString) => markedDates[dateString].selected,
+  );
+
+  const numSelectedDates = () => selectedDateStrings.length;
 
   const getSaveText = () => {
     return `Select ${numSelectedDates()} day${
@@ -56,7 +57,6 @@ const ActivityDatePicker = () => {
   const onPressSave = () => {
     navigate('ActivityAdder', {markedDates});
   };
-
   return (
     <SafeAreaView style={styles.safeView}>
       <View style={styles.header}>
@@ -76,13 +76,18 @@ const ActivityDatePicker = () => {
         markedDates={markedDates}
         pastScrollRange={0}
       />
-      <Button
-        title={getSaveText()}
-        raised
-        onPress={onPressSave}
-        disabled={!canSave}
-        style={styles.saveButton}
-      />
+      <View style={styles.container}>
+        <Button
+          title={getSaveText()}
+          raised
+          onPress={onPressSave}
+          disabled={!canSave}
+          style={styles.saveButton}
+        />
+        {selectedDateStrings.map((date) => {
+          return <Text style={styles.markedDates}>{date}</Text>;
+        })}
+      </View>
     </SafeAreaView>
   );
 };
@@ -93,8 +98,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FCFEFF',
   },
   container: {
-    flex: 1,
-    justifyContent: 'flex-start',
+    flexDirection: 'column',
     alignItems: 'center',
   },
   backButton: {
@@ -119,8 +123,11 @@ const styles = StyleSheet.create({
     fontFamily: 'AppleSDGothicNeo-Regular',
   },
   saveButton: {
-    alignSelf: 'center',
     width: 250,
+  },
+  markedDates: {
+    marginTop: 10,
+    fontFamily: fonts.body_light,
   },
 });
 
