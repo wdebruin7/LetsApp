@@ -7,6 +7,7 @@ import {
   Switch,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  TextInput,
 } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {Icon} from 'react-native-elements';
@@ -28,6 +29,7 @@ const ActivityAdder = () => {
   const markedDates = {...params.markedDates};
   const groups = params.groups || cloneDeep(userGroups);
   const [canSave, setCanSave] = useState(false);
+  const [activityName, updateActivityName] = useState('');
   const [userIsParticipant, setUserIsParticipant] = useState(false);
   const userData = useSelector((state) => state.user.data);
 
@@ -140,6 +142,21 @@ const ActivityAdder = () => {
             />
           </View>
         </View>
+        <TouchableOpacity onPress={() => {}} style={styles.rowItem}>
+          <View style={styles.rowItemContent}>
+            <View>
+              <TextInput
+                placeholder="Activity name (optional)"
+                style={styles.contentTitleText}
+                onChangeText={(e) => updateActivityName(e)}
+                value={activityName}
+              />
+              <Text style={styles.contentSubtitleText}>
+                Help others understand your activity
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
         <TouchableOpacity onPress={onPressChooseDates} style={styles.rowItem}>
           <View style={styles.rowItemContent}>
             <View>
@@ -248,7 +265,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   contentSubtitleText: {
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: fonts.body_regular,
     color: colors.mediumGrey,
   },
