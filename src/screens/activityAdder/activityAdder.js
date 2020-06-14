@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -32,6 +32,7 @@ const ActivityAdder = () => {
   const [activityName, updateActivityName] = useState('');
   const [userIsParticipant, setUserIsParticipant] = useState(false);
   const userData = useSelector((state) => state.user.data);
+  const inputEl = useRef(null);
 
   useEffect(() => {
     setCanSave(
@@ -103,90 +104,103 @@ const ActivityAdder = () => {
     return `${numSelectedGroups} Group${s} selected`;
   };
 
+  const onFocusName = () => {
+    inputEl.current.focus();
+  };
+
+  const onRemoveFocus = () => {
+    inputEl.current.blur();
+  };
+
   return (
     <SafeAreaView style={styles.safeView}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableWithoutFeedback onPress={onPressBack}>
-            <View style={styles.backButton}>
-              <Icon name="chevron-left" type="entypo" />
-            </View>
-          </TouchableWithoutFeedback>
-          <Text style={styles.headerText}>Create an activity</Text>
-          <Text style={styles.headerSubText}>Choose dates and groups</Text>
-        </View>
-        <View style={styles.rowItem}>
-          <View
-            style={
-              userIsParticipant
-                ? styles.rowItemHeader
-                : {...styles.rowItemHeader, ...styles.userIsNotParticipant}
-            }>
-            <Text
+      <TouchableWithoutFeedback onPress={onRemoveFocus}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <TouchableWithoutFeedback onPress={onPressBack}>
+              <View style={styles.backButton}>
+                <Icon name="chevron-left" type="entypo" />
+              </View>
+            </TouchableWithoutFeedback>
+            <Text style={styles.headerText}>Create an activity</Text>
+            <Text style={styles.headerSubText}>Choose dates and groups</Text>
+          </View>
+          <View style={styles.rowItem}>
+            <View
               style={
                 userIsParticipant
-                  ? styles.rowItemHeaderText
-                  : {
-                      ...styles.rowItemHeaderText,
-                      ...styles.userIsNotParticipant,
-                    }
+                  ? styles.rowItemHeader
+                  : {...styles.rowItemHeader, ...styles.userIsNotParticipant}
               }>
-              I&apos;m free
-            </Text>
-            <Switch
-              value={userIsParticipant}
-              onValueChange={onChangeSwitch}
-              thumbColor="#FFFFFF"
-              trackColor={{false: colors.darkGrey, true: '#009846'}}
-              ios_backgroundColor={colors.darkGrey}
-            />
-          </View>
-        </View>
-        <TouchableOpacity onPress={() => {}} style={styles.rowItem}>
-          <View style={styles.rowItemContent}>
-            <View>
-              <TextInput
-                placeholder="Activity name (optional)"
-                style={styles.contentTitleText}
-                onChangeText={(e) => updateActivityName(e)}
-                value={activityName}
+              <Text
+                style={
+                  userIsParticipant
+                    ? styles.rowItemHeaderText
+                    : {
+                        ...styles.rowItemHeaderText,
+                        ...styles.userIsNotParticipant,
+                      }
+                }>
+                I&apos;m free
+              </Text>
+              <Switch
+                value={userIsParticipant}
+                onValueChange={onChangeSwitch}
+                thumbColor="#FFFFFF"
+                trackColor={{false: colors.darkGrey, true: '#009846'}}
+                ios_backgroundColor={colors.darkGrey}
               />
-              <Text style={styles.contentSubtitleText}>
-                Help others understand your activity
-              </Text>
             </View>
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onPressChooseDates} style={styles.rowItem}>
-          <View style={styles.rowItemContent}>
-            <View>
-              <Text style={styles.contentTitleText}>Choose dates</Text>
-              <Text style={styles.contentSubtitleText}>
-                {getDatesSubtitle()}
-              </Text>
+          <TouchableOpacity onPress={onFocusName} style={styles.rowItem}>
+            <View style={styles.rowItemContent}>
+              <View>
+                <TextInput
+                  placeholder="Activity name (optional)"
+                  style={styles.contentTitleText}
+                  onChangeText={(e) => updateActivityName(e)}
+                  value={activityName}
+                  ref={inputEl}
+                />
+                <Text style={styles.contentSubtitleText}>
+                  Help others understand your activity
+                </Text>
+              </View>
             </View>
-            <Icon name="chevron-right" type="entypo" />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onPressChooseGroups} style={styles.rowItem}>
-          <View style={styles.rowItemContent}>
-            <View>
-              <Text style={styles.contentTitleText}>Choose groups</Text>
-              <Text style={styles.contentSubtitleText}>
-                {getGroupsSubtitle()}
-              </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onPressChooseDates} style={styles.rowItem}>
+            <View style={styles.rowItemContent}>
+              <View>
+                <Text style={styles.contentTitleText}>Choose dates</Text>
+                <Text style={styles.contentSubtitleText}>
+                  {getDatesSubtitle()}
+                </Text>
+              </View>
+              <Icon name="chevron-right" type="entypo" />
             </View>
-            <Icon name="chevron-right" type="entypo" />
-          </View>
-        </TouchableOpacity>
-        <Button
-          onPress={handleSave}
-          title="Save"
-          disabled={!canSave}
-          style={styles.button}
-          raised
-        />
-      </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={onPressChooseGroups}
+            style={styles.rowItem}>
+            <View style={styles.rowItemContent}>
+              <View>
+                <Text style={styles.contentTitleText}>Choose groups</Text>
+                <Text style={styles.contentSubtitleText}>
+                  {getGroupsSubtitle()}
+                </Text>
+              </View>
+              <Icon name="chevron-right" type="entypo" />
+            </View>
+          </TouchableOpacity>
+          <Button
+            onPress={handleSave}
+            title="Save"
+            disabled={!canSave}
+            style={styles.button}
+            raised
+          />
+        </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 };
