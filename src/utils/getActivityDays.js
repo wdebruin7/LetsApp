@@ -6,6 +6,7 @@ const getActivityDays = (activities) => {
 
   while (remainingActivities.length > 0) {
     const date = remainingActivities[0].date.toDate();
+    date.setHours(0, 0, 0, 0);
     const activityDay = {
       date,
       activities: [],
@@ -13,6 +14,7 @@ const getActivityDays = (activities) => {
 
     remainingActivities = remainingActivities.filter((activity) => {
       const activityDate = activity.date.toDate();
+      activityDate.setHours(0, 0, 0, 0);
       if (date.getTime() === activityDate.getTime()) {
         activityDay.activities.push(activity);
         return false;
