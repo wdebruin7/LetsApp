@@ -47,7 +47,12 @@ const ActivityList = ({activity}) => {
           ) : null}
         </View>
         <View style={styles.bottomGroup}>
-          <Text style={{...styles.bodyText, ...styles.italicText}}>
+          <Text
+            style={{
+              ...styles.bodyText,
+              ...styles.italicText,
+              ...styles.participantsElement,
+            }}>
             {getActivityParticipantsString(
               activity,
               userData,
@@ -96,7 +101,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   descriptionElement: {
+    fontSize: 14,
     marginLeft: 14,
+  },
+  participantsElement: {
+    fontSize: 13,
   },
   semiBoldText: {
     color: colors.darkGrey,
