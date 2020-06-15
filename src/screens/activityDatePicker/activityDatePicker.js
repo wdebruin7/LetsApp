@@ -10,6 +10,7 @@ import {
 import {CalendarList} from 'react-native-calendars';
 import {Icon} from 'react-native-elements';
 import Button from '../../components/button/button';
+import {fonts, colors} from '../../constants';
 
 const ActivityDatePicker = () => {
   const {navigate} = useNavigation();
@@ -37,11 +38,11 @@ const ActivityDatePicker = () => {
     setMarkedDates(toUpdate);
   };
 
-  const numSelectedDates = () => {
-    return Object.keys(markedDates).filter(
-      (dateString) => markedDates[dateString].selected,
-    ).length;
-  };
+  const selectedDateStrings = Object.keys(markedDates).filter(
+    (dateString) => markedDates[dateString].selected,
+  );
+
+  const numSelectedDates = () => selectedDateStrings.length;
 
   const getSaveText = () => {
     return `Select ${numSelectedDates()} day${
@@ -56,7 +57,6 @@ const ActivityDatePicker = () => {
   const onPressSave = () => {
     navigate('ActivityAdder', {markedDates});
   };
-
   return (
     <SafeAreaView style={styles.safeView}>
       <View style={styles.header}>
@@ -65,8 +65,10 @@ const ActivityDatePicker = () => {
             <Icon name="chevron-left" type="entypo" />
           </View>
         </TouchableWithoutFeedback>
-        <Text style={styles.headerText}>Let&apos;s go!</Text>
-        <Text>When are you free?</Text>
+        <Text style={styles.headerText}>Choose dates</Text>
+        <Text style={styles.headerSubText}>
+          Each date will be a new activity
+        </Text>
       </View>
       <CalendarList
         horizontal
@@ -76,13 +78,18 @@ const ActivityDatePicker = () => {
         markedDates={markedDates}
         pastScrollRange={0}
       />
-      <Button
-        title={getSaveText()}
-        raised
-        onPress={onPressSave}
-        disabled={!canSave}
-        style={styles.saveButton}
-      />
+      <View style={styles.container}>
+        <Button
+          title={getSaveText()}
+          raised
+          onPress={onPressSave}
+          disabled={!canSave}
+          style={styles.saveButton}
+        />
+        {selectedDateStrings.map((date) => {
+          return <Text style={styles.markedDates}>{date}</Text>;
+        })}
+      </View>
     </SafeAreaView>
   );
 };
@@ -93,8 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FCFEFF',
   },
   container: {
-    flex: 1,
-    justifyContent: 'flex-start',
+    flexDirection: 'column',
     alignItems: 'center',
   },
   backButton: {
@@ -114,13 +120,21 @@ const styles = StyleSheet.create({
     padding: 30,
   },
   headerText: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    fontFamily: 'AppleSDGothicNeo-Regular',
+    fontSize: 24,
+    fontFamily: fonts.body_medium,
+    marginBottom: 5,
+  },
+  headerSubText: {
+    fontSize: 16,
+    fontFamily: fonts.body_regular,
+    color: colors.darkGrey,
   },
   saveButton: {
-    alignSelf: 'center',
     width: 250,
+  },
+  markedDates: {
+    marginTop: 10,
+    fontFamily: fonts.body_light,
   },
 });
 
