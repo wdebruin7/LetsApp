@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {SafeAreaView, StyleSheet, StatusBar} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useNavigation, useIsFocused} from '@react-navigation/native';
-import {HomeList, AppHeader, AddActivityButton} from '../../components';
+import {HomeList, AppHeader} from '../../components';
 import {getActivityDays} from '../../utils';
 
 const Home = () => {
@@ -31,7 +31,6 @@ const Home = () => {
       <StatusBar barStyle="dark-content" />
       <AppHeader />
       <HomeList activityDays={activityDays} setActiveDate={setActiveDate} />
-      <AddActivityButton />
     </SafeAreaView>
   );
 };

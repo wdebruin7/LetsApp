@@ -6,11 +6,12 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import {Icon, Avatar} from 'react-native-elements';
+import {Avatar} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {getDownloadURL} from '../../utils';
 import {colors, fonts} from '../../constants';
+import {AddActivityButton} from '..';
 
 const AppHeader = () => {
   const userData = useSelector((state) => state.user.data);
@@ -30,11 +31,7 @@ const AppHeader = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{header}</Text>
-      <View style={styles.rightButtons}>
-        <TouchableOpacity style={styles.touchable}>
-          <Icon name="bell" type="font-awesome" size={30} />
-        </TouchableOpacity>
+      <View style={styles.leftButtons}>
         <TouchableOpacity style={styles.touchable} onPress={onPressAvatar}>
           {/* {downloadURL ? ( */}
           {/* <Avatar rounded source={imageSource} size={35} /> */}
@@ -42,6 +39,10 @@ const AppHeader = () => {
           <Avatar rounded icon={icon} size={35} />
           {/* )} */}
         </TouchableOpacity>
+      </View>
+      <Text style={styles.text}>{header}</Text>
+      <View style={styles.rightButtons}>
+        <AddActivityButton />
       </View>
     </View>
   );
@@ -61,7 +62,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     flexDirection: 'row',
-    right: 10,
+    right: 30,
+  },
+  leftButtons: {
+    position: 'absolute',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    left: 30,
   },
   touchable: {
     height: 40,

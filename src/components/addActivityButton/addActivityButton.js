@@ -19,7 +19,7 @@ const AddActivityButton = ({dateTime, groupUID}) => {
         name="plus"
         type="entypo"
         color="#FFFFFF"
-        size={45}
+        size={35}
         iconStyle={styles.icon}
       />
     </TouchableHighlight>
@@ -28,19 +28,16 @@ const AddActivityButton = ({dateTime, groupUID}) => {
 
 const styles = StyleSheet.create({
   addButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 50,
+    width: 35,
+    height: 35,
+    borderRadius: 35,
     backgroundColor: '#0066FF',
     justifyContent: 'center',
-    position: 'absolute',
-    bottom: 15,
-    right: 15,
   },
   icon: {
     textAlign: 'center',
-    height: 45,
-    width: 45,
+    height: 36,
+    width: 36,
   },
 });
 

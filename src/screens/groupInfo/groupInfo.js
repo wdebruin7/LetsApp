@@ -18,7 +18,7 @@ import {
   getGroupMembersString,
   getActivityDays,
 } from '../../utils';
-import {AddActivityButton, GroupInfoTile} from '../../components';
+import {GroupInfoTile} from '../../components';
 import {colors} from '../../constants';
 
 const GroupInfo = () => {
@@ -112,7 +112,6 @@ const GroupInfo = () => {
         keyExtractor={(item) => item.uid}
         style={styles.list}
       />
-      <AddActivityButton groupUID={group.uid} />
     </SafeAreaView>
   );
 };
