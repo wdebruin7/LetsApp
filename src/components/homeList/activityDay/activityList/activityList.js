@@ -47,7 +47,8 @@ const ActivityList = ({activity}) => {
                 rounded
                 size={25}
                 title={initials}
-                containerStyle={styles.activityInfoElement}
+                titleStyle={styles.avatarText}
+                containerStyle={styles.avatarContainerStyle}
                 key={participant.uid}
               />
             );
@@ -97,8 +98,13 @@ const styles = StyleSheet.create({
   },
   activityInfoElement: {
     marginLeft: 7,
-    fontFamily: fonts.body_regular,
     color: colors.darkGrey,
+  },
+  avatarContainerStyle: {
+    marginLeft: 7,
+  },
+  avatarText: {
+    fontFamily: fonts.body_regular,
   },
   activityInfoElementText: {
     fontSize: 16,
