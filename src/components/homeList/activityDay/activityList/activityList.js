@@ -48,6 +48,7 @@ const ActivityList = ({activity}) => {
                 size={25}
                 title={initials}
                 containerStyle={styles.activityInfoElement}
+                key={participant.uid}
               />
             );
           })}

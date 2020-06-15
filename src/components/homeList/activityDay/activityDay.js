@@ -20,7 +20,7 @@ const ActivityDay = ({activityDay, setActiveDate}) => {
       <TileBody>
         <FlatList
           data={activityDay.activities.slice(0, 3)}
-          renderItem={({item, index}) => <ActivityList activity={item} />}
+          renderItem={({item}) => <ActivityList activity={item} />}
           keyExtractor={(item) => item.uid}
           ItemSeparatorComponent={() => <Divider />}
         />
