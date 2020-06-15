@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Text, Dimensions} from 'react-native';
+import {fonts} from '../../constants';
 
 const TileHeader = ({
   style,
@@ -39,7 +40,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowOffset: {width: 3, height: 3},
   },
-  title: {color: '#FFFFFF'},
+  title: {
+    fontSize: 14,
+    fontFamily: fonts.body_semi_bold,
+    color: '#FFFFFF',
+  },
 });
 
 export default TileHeader;

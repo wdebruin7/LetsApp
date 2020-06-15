@@ -8,6 +8,10 @@ const getActivityParticipantsString = (
 
   const participants = Object.values(activity.participants);
 
+  const userParticipating =
+    userIsParticipant ||
+    participants.some((participant) => participant.uid === userData.uid);
+
   const otherParticipants = long
     ? participants
         .filter((participant) => participant.uid !== userData.uid)
@@ -16,13 +20,9 @@ const getActivityParticipantsString = (
         .filter((participant) => participant.name !== userData.displayName)
         .map((participant) => participant.name.split(' ')[0]);
 
-  const numParticipants = otherParticipants.length;
+  const numOtherParticipants = otherParticipants.length;
 
-  const userParticipating =
-    userIsParticipant ||
-    otherParticipants.some((participant) => participant.uid === userData.uid);
-
-  switch (numParticipants) {
+  switch (numOtherParticipants) {
     case 0:
       if (userParticipating) return 'Nobody else is free... yet';
       else return 'Nobody is free... yet';
@@ -37,17 +37,17 @@ const getActivityParticipantsString = (
         ? otherParticipants[0]
             .concat(
               otherParticipants
-                .slice(1, numParticipants - 1)
+                .slice(1, numOtherParticipants - 1)
                 .map((participant) => `, ${participant}`),
             )
-            .concat(`, and ${otherParticipants[numParticipants]} are free`)
+            .concat(`, and ${otherParticipants[numOtherParticipants]} are free`)
         : otherParticipants[0]
             .concat(
               otherParticipants
                 .slice(1, 2)
                 .map((participant) => `, ${participant}`),
             )
-            .concat(`and ${numParticipants - 3} more are free`);
+            .concat(`and ${numOtherParticipants - 3} more are free`);
   }
 };
 

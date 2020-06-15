@@ -11,7 +11,7 @@ import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {getDownloadURL} from '../../utils';
 import {colors, fonts} from '../../constants';
-import {AddActivityButton} from '..';
+import AddActivityButton from '../addActivityButton';
 
 const AppHeader = () => {
   const userData = useSelector((state) => state.user.data);
