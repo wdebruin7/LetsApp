@@ -72,7 +72,7 @@ const ActivityAdder = () => {
       getSelectedDateStrings(),
       userIsParticipant,
       userData,
-      undefined,
+      activityName,
     ).then(() => navigation.goBack());
   };
 

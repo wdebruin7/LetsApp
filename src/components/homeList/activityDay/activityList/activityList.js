@@ -5,6 +5,7 @@ import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {toggleUserIsParticipant} from '../../../../firebase';
 import {fonts, colors} from '../../../../constants';
+import {getActivityParticipantsString} from '../../../../utils';
 
 const ActivityList = ({activity}) => {
   const userData = useSelector((state) => state.user.data);
@@ -35,42 +36,39 @@ const ActivityList = ({activity}) => {
   return (
     <TouchableOpacity style={styles.touchable} onPress={onPress}>
       <View style={styles.container}>
-        <View style={styles.activityInfoView}>
-          <Text style={styles.activityInfoElement}>{activity.group.name}</Text>
-          {participants.slice(0, 2).map((participant) => {
-            const initials = participant.name
-              .split(' ')
-              .map((e) => e[0])
-              .join('');
-            return (
-              <Avatar
-                rounded
-                size={25}
-                title={initials}
-                titleStyle={styles.avatarText}
-                containerStyle={styles.avatarContainerStyle}
-                key={participant.uid}
-              />
-            );
-          })}
-          {participants.length > 2 ? (
-            <Text
-              style={{
-                ...styles.activityInfoElement,
-                ...styles.activityInfoElementText,
-              }}>
-              +{participants.length - 2}
+        <View style={styles.topGroup}>
+          <Text style={{...styles.semiBoldText, ...styles.nameElement}}>
+            {activity.group.name}
+          </Text>
+          {activity.name ? (
+            <Text style={{...styles.bodyText, ...styles.descriptionElement}}>
+              {activity.name}
             </Text>
           ) : null}
         </View>
-        <Switch
-          trackColor={{false: colors.mediumGrey, true: colors.brightGreen}}
-          thumbColor="white"
-          ios_backgroundColor={colors.mediumGrey}
-          onValueChange={toggleSwitch}
-          value={isParticipant}
-          style={styles.switch}
-        />
+        <View style={styles.bottomGroup}>
+          <Text
+            style={{
+              ...styles.bodyText,
+              ...styles.italicText,
+              ...styles.participantsElement,
+            }}>
+            {getActivityParticipantsString(
+              activity,
+              userData,
+              undefined,
+              false,
+            )}
+          </Text>
+          <Switch
+            trackColor={{false: colors.mediumGrey, true: colors.brightGreen}}
+            thumbColor="white"
+            ios_backgroundColor={colors.mediumGrey}
+            onValueChange={toggleSwitch}
+            value={isParticipant}
+            style={styles.switch}
+          />
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -79,34 +77,57 @@ const ActivityList = ({activity}) => {
 const styles = StyleSheet.create({
   touchable: {
     flex: 1,
-    height: 39,
   },
   container: {
     flex: 1,
+    flexDirection: 'column',
+  },
+  topGroup: {
     flexDirection: 'row',
+    paddingHorizontal: 22,
+    paddingTop: 10,
+    alignItems: 'center',
+  },
+  bottomGroup: {
+    flexDirection: 'row',
+    paddingTop: 3,
+    paddingBottom: 7,
+    paddingLeft: 22,
+    paddingRight: 12,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  touchableLastActivity: {
-    borderBottomRightRadius: 12,
-    borderBottomLeftRadius: 12,
+  nameElement: {
+    fontSize: 16,
   },
-  activityInfoView: {
+  descriptionElement: {
+    fontSize: 14,
+    marginLeft: 14,
+  },
+  participantsElement: {
+    fontSize: 13,
+  },
+  semiBoldText: {
+    color: colors.darkGrey,
+    fontFamily: fonts.body_semi_bold,
+  },
+  bodyText: {
+    color: colors.darkGrey,
+    fontFamily: fonts.body_regular,
+  },
+  italicText: {
+    fontStyle: 'italic',
+  },
+  infoView: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingLeft: 7,
   },
-  activityInfoElement: {
+  infoElement: {
     marginLeft: 7,
     color: colors.darkGrey,
   },
-  avatarContainerStyle: {
-    marginLeft: 7,
-  },
-  avatarText: {
-    fontFamily: fonts.body_regular,
-  },
-  activityInfoElementText: {
+  infoElementText: {
     fontSize: 16,
     color: colors.mediumGrey,
   },

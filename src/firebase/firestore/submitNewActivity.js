@@ -18,7 +18,7 @@ const submitNewActivity = (
   selectedDateStrings,
   userIsParticipant,
   userData,
-  description,
+  name,
 ) => {
   const db = firestore();
   const batch = db.batch();
@@ -50,7 +50,7 @@ const submitNewActivity = (
       }
       const data = {
         date,
-        description: description || '',
+        name,
         group: {name: group.name, uid: group.uid},
         participants,
         uid: docRef.id,
@@ -79,7 +79,10 @@ const submitNewActivity = (
         batch.set(actionRef, actionData);
 
         const userUpdate = {};
-        userUpdate[`activities.${docRef.id}`] = {description, uid: docRef.id};
+        userUpdate[`activities.${docRef.id}`] = {
+          description: name,
+          uid: docRef.id,
+        };
         batch.update(userDocRef, userUpdate);
       }
       const actionRef = db.collection('actions').doc();
