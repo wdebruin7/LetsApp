@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft: 23,
-    paddingTop: 15,
+    paddingTop: 11,
     paddingBottom: 10,
     paddingRight: 7,
   },
