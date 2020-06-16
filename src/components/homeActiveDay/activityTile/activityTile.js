@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.body_semi_bold,
     fontSize: 14,
     color: colors.darkGrey,
+    paddingBottom: 5,
   },
   nameElement: {
     paddingLeft: 11,
@@ -118,15 +119,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft: 23,
+    paddingTop: 15,
+    paddingBottom: 10,
+    paddingRight: 7,
   },
   textInfoContainer: {
     flexDirection: 'column',
     justifyContent: 'flex-end',
-  },
-  members: {
-    color: colors.mediumGrey,
-    fontSize: 13,
-    fontFamily: fonts.body_regular,
   },
   participants: {
     fontSize: 13,
