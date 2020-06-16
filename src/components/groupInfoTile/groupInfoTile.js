@@ -4,6 +4,7 @@ import TileHeader from '../tileHeader';
 import TileBody from '../tileBody';
 import {getDisplayDate, getActivityParticipantsString} from '../../utils';
 import {toggleUserIsParticipant} from '../../firebase';
+import {colors, fonts} from '../../constants';
 
 const GroupInfoTile = ({activity, userData}) => {
   const [isParticipant, setIsParticipant] = useState(false);
@@ -24,9 +25,9 @@ const GroupInfoTile = ({activity, userData}) => {
         title={getDisplayDate(activity.date.toDate())}
         rightComponent={
           <Switch
-            trackColor={{false: '#767577', true: '#81b0ff'}}
-            thumbColor={isParticipant ? '#f5dd4b' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
+            trackColor={{false: colors.mediumGrey, true: colors.brightGreen}}
+            thumbColor="white"
+            ios_backgroundColor={colors.mediumGrey}
             onValueChange={toggleSwitch}
             value={isParticipant}
             style={styles.switch}
@@ -34,9 +35,14 @@ const GroupInfoTile = ({activity, userData}) => {
         }
       />
       <TileBody>
-        <Text style={styles.tileText}>
-          {getActivityParticipantsString(activity, userData, undefined, true)}
-        </Text>
+        <View style={styles.textInfoContainer}>
+          {activity.name ? (
+            <Text style={{...styles.semiBoldInfoText}}>{activity.name}</Text>
+          ) : null}
+          <Text style={styles.participants}>
+            {getActivityParticipantsString(activity, userData, undefined, true)}
+          </Text>
+        </View>
       </TileBody>
     </View>
   );
@@ -52,6 +58,19 @@ const styles = StyleSheet.create({
   tileText: {
     paddingVertical: 10,
     paddingHorizontal: 15,
+  },
+  semiBoldInfoText: {
+    fontFamily: fonts.body_semi_bold,
+    fontSize: 14,
+    color: colors.darkGrey,
+    padding: 15,
+  },
+  participants: {
+    fontSize: 13,
+    fontFamily: fonts.bodyItalic,
+    color: colors.mediumGrey,
+    paddingLeft: 15,
+    paddingBottom: 15,
   },
 });
 
