@@ -29,7 +29,7 @@ const ActivityList = ({activity}) => {
   useEffect(() => {
     if (activity) setParticipants(Object.values(activity.participants));
     if (userData !== {} && activity) {
-      setIsParticipant(activity.participants[userData.uid] !== undefined);
+      setIsParticipant(!!activity.participants[userData.uid]);
     }
   }, [activity, userData]);
 
