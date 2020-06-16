@@ -14,6 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 import storage from '@react-native-firebase/storage';
 import {getActivityParticipantsString} from '../../../utils';
 import {colors, fonts} from '../../../constants';
+import {toggleUserIsParticipant} from '../../../firebase';
 
 const ActivityTile = ({activity, group}) => {
   const [photoRefURL, setPhotoRefURL] = useState('');
@@ -23,6 +24,7 @@ const ActivityTile = ({activity, group}) => {
 
   const handleSwitchToggle = () => {
     setUserIsParticipant(!userIsParticipant);
+    toggleUserIsParticipant(userData, activity);
   };
 
   const onTilePress = () => {
