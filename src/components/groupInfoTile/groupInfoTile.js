@@ -23,6 +23,7 @@ const GroupInfoTile = ({activity, userData}) => {
     <View style={styles.container}>
       <TileHeader
         title={getDisplayDate(activity.date.toDate())}
+        disabled={true}
         rightComponent={
           <Switch
             trackColor={{false: colors.mediumGrey, true: colors.brightGreen}}
