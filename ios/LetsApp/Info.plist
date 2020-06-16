@@ -62,15 +62,24 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Inter-Thin-slnt=0.ttf</string>
-		<string>Inter-SemiBold-slnt=0.ttf</string>
-		<string>Inter-Regular-slnt=0.ttf</string>
-		<string>Inter-Medium-slnt=0.ttf</string>
-		<string>Inter-Light-slnt=0.ttf</string>
-		<string>Inter-ExtraLight-slnt=0.ttf</string>
-		<string>Inter-ExtraBold-slnt=0.ttf</string>
-		<string>Inter-Bold-slnt=0.ttf</string>
 		<string>Inter-Black-slint=0.ttf</string>
+		<string>Inter-Bold-slnt=0.ttf</string>
+		<string>Inter-BoldItalic.ttf</string>
+		<string>Inter-ExtraBold-slnt=0.ttf</string>
+		<string>Inter-ExtraBoldItalic.ttf</string>
+		<string>Inter-ExtraLight-slnt=0.ttf</string>
+		<string>Inter-ExtraLightItalic-BETA.ttf</string>
+		<string>Inter-Italic.ttf</string>
+		<string>Inter-Light-slnt=0.ttf</string>
+		<string>Inter-ListItalic-BETA.ttf</string>
+		<string>Inter-Medium-slnt=0.ttf</string>
+		<string>Inter-MediumItalic.ttf</string>
+		<string>Inter-Regular-slnt=0.ttf</string>
+		<string>Inter-SemiBold-slnt=0.ttf</string>
+		<string>Inter-SemiBoldItalic.ttf</string>
+		<string>Inter-Thin-slnt=0.ttf</string>
+		<string>Inter-ThinItalic-BETA.ttf</string>
+		<string>Inter-UI-BlackItalic.ttf</string>
 		<string>ShadowsIntoLightTwo-Regular.ttf</string>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>

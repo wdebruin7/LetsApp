@@ -12,10 +12,7 @@ import {Avatar} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import storage from '@react-native-firebase/storage';
-import {
-  getGroupMembersString,
-  getActivityParticipantsString,
-} from '../../../utils';
+import {getActivityParticipantsString} from '../../../utils';
 import {colors, fonts} from '../../../constants';
 
 const ActivityTile = ({activity, group}) => {
@@ -38,7 +35,7 @@ const ActivityTile = ({activity, group}) => {
 
   useEffect(() => {
     if (!userData || userData === {}) return;
-    setUserIsParticipant(activity.participants[userData.uid] !== undefined);
+    setUserIsParticipant(!!activity.participants[userData.uid]);
   }, [userData, activity]);
 
   useEffect(() => {
@@ -52,16 +49,25 @@ const ActivityTile = ({activity, group}) => {
 
   return (
     <TouchableOpacity style={styles.container} onPress={onTilePress}>
-      <View style={styles.textContainer}>
-        <Text style={styles.header}>{group.name}</Text>
-        <Text style={styles.members}>
-          {getGroupMembersString(group, userData)}
-        </Text>
-        <Text style={styles.participants}>
-          {getActivityParticipantsString(activity, userData, userIsParticipant)}
+      <View style={styles.headerContainer}>
+        {photoRefURL ? (
+          <Image style={styles.groupPhoto} source={{uri: photoRefURL}} />
+        ) : (
+          <Avatar rounded icon={{name: 'group', type: 'font-awesome'}} />
+        )}
+        <Text style={{...styles.nameElement, ...styles.nameText}}>
+          {group.name}
         </Text>
       </View>
-      <View style={styles.rightContainer}>
+      <View style={styles.bodyContainer}>
+        <View style={styles.textInfoContainer}>
+          {activity.name ? (
+            <Text style={{...styles.semiBoldInfoText}}>{activity.name}</Text>
+          ) : null}
+          <Text style={styles.participants}>
+            {getActivityParticipantsString(activity, userData, undefined, true)}
+          </Text>
+        </View>
         <Switch
           trackColor={{false: colors.darkGrey, true: colors.brightGreen}}
           thumbColor="white"
@@ -70,13 +76,6 @@ const ActivityTile = ({activity, group}) => {
           value={userIsParticipant}
           style={styles.switch}
         />
-        <View style={styles.groupAvatar}>
-          {photoRefURL ? (
-            <Image style={styles.groupPhoto} source={{uri: photoRefURL}} />
-          ) : (
-            <Avatar rounded title={group.name[0]} size={50} />
-          )}
-        </View>
       </View>
     </TouchableOpacity>
   );
@@ -87,7 +86,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width - 50,
     marginHorizontal: 25,
     marginVertical: 10,
-    height: 130,
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#EBF0F3',
@@ -95,41 +93,48 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     shadowOpacity: 0.25,
     shadowOffset: {width: 1, height: 3},
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
-  textContainer: {
-    flex: 2,
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingLeft: 23,
     paddingTop: 20,
   },
-  header: {
+  nameText: {
     fontFamily: fonts.body_medium,
     fontSize: 16,
+    color: colors.darkGrey,
+  },
+  semiBoldInfoText: {
+    fontFamily: fonts.body_semi_bold,
+    fontSize: 14,
+    color: colors.darkGrey,
+  },
+  nameElement: {
+    paddingLeft: 11,
+  },
+  bodyContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 23,
+  },
+  textInfoContainer: {
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
   },
   members: {
     color: colors.mediumGrey,
     fontSize: 13,
-    paddingTop: 6,
     fontFamily: fonts.body_regular,
   },
   participants: {
-    paddingTop: 10,
     fontSize: 13,
-    fontFamily: fonts.body_regular,
-  },
-  rightContainer: {
-    flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
+    fontFamily: fonts.bodyItalic,
+    color: colors.mediumGrey,
   },
   switch: {
     transform: [{scaleX: 0.7}, {scaleY: 0.7}],
-    marginTop: 15,
-    marginRight: 10,
-  },
-  groupAvatar: {
-    marginRight: 15,
-    marginBottom: 15,
   },
   groupPhoto: {
     height: 50,

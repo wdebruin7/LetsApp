@@ -29,6 +29,14 @@
 		AA7298752481626500761E03 /* Inter-Regular-slnt=0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA72986C2481626400761E03 /* Inter-Regular-slnt=0.ttf */; };
 		AA7298762481626500761E03 /* Inter-SemiBold-slnt=0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA72986D2481626400761E03 /* Inter-SemiBold-slnt=0.ttf */; };
 		B50634E1247ED5BF00AE2971 /* ShadowsIntoLightTwo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B50634E0247ED5BF00AE2971 /* ShadowsIntoLightTwo-Regular.ttf */; };
+		B52D141F2499371900D594D2 /* Inter-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B52D14152499307A00D594D2 /* Inter-BoldItalic.ttf */; };
+		B52D14202499371E00D594D2 /* Inter-ExtraLightItalic-BETA.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B52D14162499307A00D594D2 /* Inter-ExtraLightItalic-BETA.ttf */; };
+		B52D14212499372100D594D2 /* Inter-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B52D141A2499307A00D594D2 /* Inter-Italic.ttf */; };
+		B52D14222499372300D594D2 /* Inter-LightItalic-BETA.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B52D14182499307A00D594D2 /* Inter-LightItalic-BETA.ttf */; };
+		B52D14232499372600D594D2 /* Inter-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B52D14122499307900D594D2 /* Inter-MediumItalic.ttf */; };
+		B52D14242499372800D594D2 /* Inter-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B52D14192499307A00D594D2 /* Inter-SemiBoldItalic.ttf */; };
+		B52D14252499372A00D594D2 /* Inter-ThinItalic-BETA.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B52D14132499307900D594D2 /* Inter-ThinItalic-BETA.ttf */; };
+		B52D14272499374900D594D2 /* Inter-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B52D14262499374900D594D2 /* Inter-ExtraBoldItalic.ttf */; };
 		B5E58B77243BD6070025B9AF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5E58B76243BD6070025B9AF /* GoogleService-Info.plist */; };
 		BEC2A82E8E1C038B088929C7 /* libPods-LetsApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF559592EB646B9EEB565FE /* libPods-LetsApp-tvOS.a */; };
 /* End PBXBuildFile section */
@@ -79,6 +87,14 @@
 		AA72986C2481626400761E03 /* Inter-Regular-slnt=0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Regular-slnt=0.ttf"; sourceTree = "<group>"; };
 		AA72986D2481626400761E03 /* Inter-SemiBold-slnt=0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold-slnt=0.ttf"; sourceTree = "<group>"; };
 		B50634E0247ED5BF00AE2971 /* ShadowsIntoLightTwo-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ShadowsIntoLightTwo-Regular.ttf"; sourceTree = "<group>"; };
+		B52D14122499307900D594D2 /* Inter-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-MediumItalic.ttf"; sourceTree = "<group>"; };
+		B52D14132499307900D594D2 /* Inter-ThinItalic-BETA.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ThinItalic-BETA.ttf"; sourceTree = "<group>"; };
+		B52D14152499307A00D594D2 /* Inter-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-BoldItalic.ttf"; sourceTree = "<group>"; };
+		B52D14162499307A00D594D2 /* Inter-ExtraLightItalic-BETA.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraLightItalic-BETA.ttf"; sourceTree = "<group>"; };
+		B52D14182499307A00D594D2 /* Inter-LightItalic-BETA.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-LightItalic-BETA.ttf"; sourceTree = "<group>"; };
+		B52D14192499307A00D594D2 /* Inter-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		B52D141A2499307A00D594D2 /* Inter-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Italic.ttf"; sourceTree = "<group>"; };
+		B52D14262499374900D594D2 /* Inter-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		B5E58B75243BD5CC0025B9AF /* LetsApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LetsApp.entitlements; path = LetsApp/LetsApp.entitlements; sourceTree = "<group>"; };
 		B5E58B76243BD6070025B9AF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BAF559592EB646B9EEB565FE /* libPods-LetsApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LetsApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -228,13 +244,21 @@
 			children = (
 				AA7298652481626100761E03 /* Inter-Black-slnt=0.ttf */,
 				AA7298662481626200761E03 /* Inter-Bold-slnt=0.ttf */,
+				B52D14152499307A00D594D2 /* Inter-BoldItalic.ttf */,
 				AA7298692481626300761E03 /* Inter-ExtraBold-slnt=0.ttf */,
+				B52D14262499374900D594D2 /* Inter-ExtraBoldItalic.ttf */,
 				AA72986A2481626300761E03 /* Inter-ExtraLight-slnt=0.ttf */,
+				B52D14162499307A00D594D2 /* Inter-ExtraLightItalic-BETA.ttf */,
+				B52D141A2499307A00D594D2 /* Inter-Italic.ttf */,
 				AA72986B2481626300761E03 /* Inter-Light-slnt=0.ttf */,
+				B52D14182499307A00D594D2 /* Inter-LightItalic-BETA.ttf */,
 				AA7298672481626200761E03 /* Inter-Medium-slnt=0.ttf */,
+				B52D14122499307900D594D2 /* Inter-MediumItalic.ttf */,
 				AA72986C2481626400761E03 /* Inter-Regular-slnt=0.ttf */,
 				AA72986D2481626400761E03 /* Inter-SemiBold-slnt=0.ttf */,
+				B52D14192499307A00D594D2 /* Inter-SemiBoldItalic.ttf */,
 				AA7298682481626200761E03 /* Inter-Thin-slnt=0.ttf */,
+				B52D14132499307900D594D2 /* Inter-ThinItalic-BETA.ttf */,
 				B50634E0247ED5BF00AE2971 /* ShadowsIntoLightTwo-Regular.ttf */,
 			);
 			path = fonts;
@@ -385,19 +409,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B52D14212499372100D594D2 /* Inter-Italic.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				AA7298742481626500761E03 /* Inter-Light-slnt=0.ttf in Resources */,
+				B52D14242499372800D594D2 /* Inter-SemiBoldItalic.ttf in Resources */,
+				B52D14272499374900D594D2 /* Inter-ExtraBoldItalic.ttf in Resources */,
 				AA72986E2481626500761E03 /* Inter-Black-slnt=0.ttf in Resources */,
 				AA7298752481626500761E03 /* Inter-Regular-slnt=0.ttf in Resources */,
+				B52D14252499372A00D594D2 /* Inter-ThinItalic-BETA.ttf in Resources */,
+				B52D14222499372300D594D2 /* Inter-LightItalic-BETA.ttf in Resources */,
+				B52D14202499371E00D594D2 /* Inter-ExtraLightItalic-BETA.ttf in Resources */,
 				AA7298722481626500761E03 /* Inter-ExtraBold-slnt=0.ttf in Resources */,
 				AA7298702481626500761E03 /* Inter-Medium-slnt=0.ttf in Resources */,
 				B5E58B77243BD6070025B9AF /* GoogleService-Info.plist in Resources */,
 				AA72986F2481626500761E03 /* Inter-Bold-slnt=0.ttf in Resources */,
 				AA7298712481626500761E03 /* Inter-Thin-slnt=0.ttf in Resources */,
 				B50634E1247ED5BF00AE2971 /* ShadowsIntoLightTwo-Regular.ttf in Resources */,
+				B52D14232499372600D594D2 /* Inter-MediumItalic.ttf in Resources */,
 				AA7298762481626500761E03 /* Inter-SemiBold-slnt=0.ttf in Resources */,
 				AA7298732481626500761E03 /* Inter-ExtraLight-slnt=0.ttf in Resources */,
+				B52D141F2499371900D594D2 /* Inter-BoldItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

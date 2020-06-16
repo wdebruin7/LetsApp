@@ -5,4 +5,6 @@ export default {
   body_light: 'Inter-Light',
   body_regular: 'Inter-Regular',
   body_semi_bold: 'Inter-SemiBold',
+  bodySemiBoldItalic: 'Inter-SemiBoldItalic',
+  bodyItalic: 'Inter-Italic',
 };

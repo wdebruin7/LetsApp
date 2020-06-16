@@ -2,8 +2,7 @@ import firestore from '@react-native-firebase/firestore';
 import {actionTypes, activityActionTypes} from './actionTypes';
 
 const toggleUserIsParticipant = (userData, activityData) => {
-  const userIsParticipant =
-    activityData.participants[userData.uid] !== undefined;
+  const userIsParticipant = !!activityData.participants[userData.uid];
   const db = firestore();
   const batch = db.batch();
 
