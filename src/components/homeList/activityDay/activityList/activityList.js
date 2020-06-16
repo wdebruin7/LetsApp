@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     paddingTop: 3,
     paddingBottom: 7,
     paddingLeft: 22,
-    paddingRight: 12,
+    paddingRight: 7,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
