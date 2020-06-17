@@ -13,7 +13,11 @@ const GroupNavigation = () => {
         options={{headerShown: false}}
         initialParams
       />
-      <Stack.Screen name="GroupInfo" component={GroupInfo} />
+      <Stack.Screen
+        name="GroupInfo"
+        component={GroupInfo}
+        options={{headerShown: false}}
+      />
       <Stack.Screen name="GroupCreate" component={GroupCreate} />
     </Stack.Navigator>
   );

@@ -18,7 +18,7 @@ import {
   getGroupMembersString,
   getActivityDays,
 } from '../../utils';
-import {GroupInfoTile} from '../../components';
+import {GroupInfoTile, AppHeader} from '../../components';
 import {colors} from '../../constants';
 
 const GroupInfo = () => {
@@ -73,6 +73,7 @@ const GroupInfo = () => {
 
   return (
     <SafeAreaView style={styles.safeView}>
+      <AppHeader />
       <View style={styles.header}>
         <View style={styles.groupInfo}>
           <View style={styles.groupPhoto}>
