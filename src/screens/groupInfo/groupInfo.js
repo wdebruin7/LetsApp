@@ -31,6 +31,7 @@ const GroupInfo = () => {
 
   const group = params.group || groups[params.groupUID];
   const [activities, setActivities] = useState([]);
+  const emptyStateImage = require('../../images/groupEmptyState.png');
 
   useEffect(() => {
     if (!group) {
@@ -105,6 +106,9 @@ const GroupInfo = () => {
           </View>
         </View>
       </View>
+      {activities.length === 0 && (
+        <Image style={styles.emptyStateImage} source={emptyStateImage} />
+      )}
       <FlatList
         data={activities}
         renderItem={({item}) => (
@@ -169,6 +173,13 @@ const styles = StyleSheet.create({
   },
   groupDetails: {
     marginLeft: 15,
+  },
+  emptyStateImage: {
+    width: 278,
+    height: 129,
+    alignSelf: 'flex-end',
+    marginRight: 50,
+    marginTop: 5,
   },
 });
 

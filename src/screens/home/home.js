@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, StyleSheet, StatusBar} from 'react-native';
+import {SafeAreaView, StyleSheet, StatusBar, Image} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useNavigation, useIsFocused} from '@react-navigation/native';
 import {HomeList, AppHeader} from '../../components';
@@ -11,6 +11,7 @@ const Home = () => {
   const isFocused = useIsFocused();
   const [activeDate, setActiveDate] = useState(null);
   const [activityDays, setActivityDays] = useState([]);
+  const emptyStateImage = require('../../images/homeEmptyState.png');
 
   useEffect(() => {
     setActivityDays(getActivityDays(activities));
@@ -26,11 +27,16 @@ const Home = () => {
     if (isFocused) setActiveDate(null);
   }, [isFocused]);
 
+  console.log(activities);
+
   return (
     <SafeAreaView style={styles.safeView}>
       <StatusBar barStyle="dark-content" />
       <AppHeader />
       <HomeList activityDays={activityDays} setActiveDate={setActiveDate} />
+      {!activityDays && (
+        <Image style={styles.emptyStateImage} source={emptyStateImage} />
+      )}
     </SafeAreaView>
   );
 };
@@ -44,6 +50,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  emptyStateImage: {
+    width: 217,
+    height: 223,
+    alignSelf: 'center',
+    marginBottom: 10,
   },
 });
 
