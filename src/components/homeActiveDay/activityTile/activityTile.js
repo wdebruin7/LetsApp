@@ -64,7 +64,9 @@ const ActivityTile = ({activity, group}) => {
       <View style={styles.bodyContainer}>
         <View style={styles.textInfoContainer}>
           {activity.name ? (
-            <Text style={{...styles.semiBoldInfoText}}>{activity.name}</Text>
+            <Text style={{...styles.semiBoldInfoText, ...styles.activityName}}>
+              {activity.name}
+            </Text>
           ) : null}
           <Text style={styles.participants}>
             {getActivityParticipantsString(activity, userData, undefined, true)}
@@ -108,6 +110,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.darkGrey,
   },
+  activityName: {
+    marginTop: 5,
+    marginBottom: 2,
+  },
   semiBoldInfoText: {
     fontFamily: fonts.body_semi_bold,
     fontSize: 14,
@@ -120,8 +126,9 @@ const styles = StyleSheet.create({
   bodyContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingLeft: 23,
-    paddingTop: 11,
+    paddingTop: 7,
     paddingBottom: 10,
     paddingRight: 7,
   },
