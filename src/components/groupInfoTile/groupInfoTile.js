@@ -64,14 +64,15 @@ const styles = StyleSheet.create({
     fontFamily: fonts.body_semi_bold,
     fontSize: 14,
     color: colors.darkGrey,
-    padding: 15,
+    paddingTop: 15,
+    paddingLeft: 15,
+    paddingRight: 15,
   },
   participants: {
     fontSize: 13,
     fontFamily: fonts.bodyItalic,
     color: colors.mediumGrey,
-    paddingLeft: 15,
-    paddingBottom: 15,
+    padding: 15,
   },
 });
 
