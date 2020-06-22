@@ -20,8 +20,11 @@ import {
 } from '../../utils';
 import {GroupInfoTile, AppHeader} from '../../components';
 import {colors, fonts} from '../../constants';
+import emptyStateImage from '../../images/groupEmptyState.png';
 
 const LINK_COPIED_FEEDBACK_TIMEOUT_SECONDS = 1.5;
+
+const TAP_HERE_TIMEOUT_SECONDS = 5;
 
 const GroupInfo = () => {
   const {params} = useRoute();
@@ -34,7 +37,6 @@ const GroupInfo = () => {
 
   const group = params.group || groups[params.groupUID];
   const [activities, setActivities] = useState([]);
-  const emptyStateImage = require('../../images/groupEmptyState.png');
 
   useEffect(() => {
     if (!group) {
