@@ -95,7 +95,16 @@ const ActivityDatePicker = () => {
         onDayPress={onDayPress}
         markedDates={markedDates}
         pastScrollRange={0}
-        theme={{todayTextColor: 'blue'}}
+        theme={{
+          todayTextColor: colors.primaryBlue,
+          selectedDayBackgroundColor: colors.primaryBlue,
+          textDayFontFamily: fonts.body_bold,
+          textDayHeaderFontFamily: fonts.body_bold,
+          textMonthFontFamily: fonts.body_bold,
+          textDayFontWeight: '400',
+          textDayHeaderFontWeight: '400',
+          textMonthFontWeight: 'bold',
+        }}
       />
       <View style={styles.container}>
         <Button
