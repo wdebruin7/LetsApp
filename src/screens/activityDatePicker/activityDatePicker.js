@@ -6,11 +6,14 @@ import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
+  FlatList,
+  Dimensions,
 } from 'react-native';
 import {CalendarList} from 'react-native-calendars';
 import {Icon} from 'react-native-elements';
 import Button from '../../components/button/button';
 import {fonts, colors} from '../../constants';
+import {getDisplayDate} from '../../utils';
 
 const ActivityDatePicker = () => {
   const {navigate} = useNavigation();
@@ -21,6 +24,8 @@ const ActivityDatePicker = () => {
   }
   const [markedDates, setMarkedDates] = useState(selectedDates);
   const [canSave, setCanSave] = useState(false);
+
+  console.log(markedDates);
 
   useEffect(() => {
     setCanSave(numSelectedDates() > 0);
@@ -38,11 +43,24 @@ const ActivityDatePicker = () => {
     setMarkedDates(toUpdate);
   };
 
-  const selectedDateStrings = Object.keys(markedDates).filter(
-    (dateString) => markedDates[dateString].selected,
-  );
+  const getSelectedDateStrings = () =>
+    Object.keys(markedDates).filter(
+      (dateString) => markedDates[dateString].selected,
+    );
 
-  const numSelectedDates = () => selectedDateStrings.length;
+  const getSelectedDates = () =>
+    getSelectedDateStrings().map((dateString) => {
+      const [year, month, day] = dateString.split('-');
+      const date = new Date();
+      date.setFullYear(
+        parseInt(year, 10),
+        parseInt(month, 10) - 1,
+        parseInt(day, 10),
+      );
+      return date;
+    });
+
+  const numSelectedDates = () => getSelectedDateStrings().length;
 
   const getSaveText = () => {
     return `Select ${numSelectedDates()} day${
@@ -77,6 +95,7 @@ const ActivityDatePicker = () => {
         onDayPress={onDayPress}
         markedDates={markedDates}
         pastScrollRange={0}
+        theme={{todayTextColor: 'blue'}}
       />
       <View style={styles.container}>
         <Button
@@ -86,9 +105,14 @@ const ActivityDatePicker = () => {
           disabled={!canSave}
           style={styles.saveButton}
         />
-        {selectedDateStrings.map((date) => {
-          return <Text style={styles.markedDates}>{date}</Text>;
-        })}
+        <FlatList
+          data={getSelectedDates()}
+          renderItem={({item}) => (
+            <Text style={{...styles.markedDates}}>{getDisplayDate(item)}</Text>
+          )}
+          keyExtractor={(item) => item.getTime().toString()}
+          contentContainerStyle={styles.dateList}
+        />
       </View>
     </SafeAreaView>
   );
@@ -133,8 +157,15 @@ const styles = StyleSheet.create({
     width: 250,
   },
   markedDates: {
-    marginTop: 10,
+    marginTop: 5,
     fontFamily: fonts.body_light,
+    fontSize: 15,
+  },
+  dateList: {
+    flex: 1,
+    width: Dimensions.get('window').width,
+    alignItems: 'center',
+    paddingTop: 15,
   },
 });
 
