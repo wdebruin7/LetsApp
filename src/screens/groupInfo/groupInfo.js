@@ -34,9 +34,16 @@ const GroupInfo = () => {
   const [photoRefURL, setPhotoRefURL] = useState('');
   const {navigate} = useNavigation();
   const [showLinkCopied, setShowLinkCopied] = useState(false);
+  const [showTapHere, setShowHere] = useState(true);
 
   const group = params.group || groups[params.groupUID];
   const [activities, setActivities] = useState([]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowHere(false);
+    }, 1000 * TAP_HERE_TIMEOUT_SECONDS);
+  }, []);
 
   useEffect(() => {
     if (!group) {
@@ -103,7 +110,9 @@ const GroupInfo = () => {
             <View style={styles.groupDetails}>
               <Text style={styles.groupName}>{group.name}</Text>
               <Text style={styles.groupMembers}>
-                {getGroupMembersString(group, userData)}
+                {showTapHere
+                  ? 'Tap here for details!'
+                  : getGroupMembersString(group, userData)}
               </Text>
             </View>
           </TouchableOpacity>
