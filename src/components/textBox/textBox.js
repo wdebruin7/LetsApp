@@ -12,6 +12,7 @@ const TextBox = ({
   onBlur,
   placeholderTextColor,
   keyboardType,
+  maxLength,
 }) => {
   return (
     <TextInput
@@ -28,6 +29,7 @@ const TextBox = ({
       onBlur={onBlur}
       placeholderTextColor={placeholderTextColor}
       keyboardType={keyboardType}
+      maxLength={maxLength}
     />
   );
 };

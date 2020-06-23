@@ -47,7 +47,6 @@ const GroupTile = ({group}) => {
 const styles = StyleSheet.create({
   container: {
     width: Dimensions.get('window').width - 50,
-    height: 90,
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#EBF0F3',
@@ -79,6 +78,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     paddingTop: 6,
     width: 200,
+    paddingBottom: 15,
   },
   groupAvatar: {
     marginRight: 15,
