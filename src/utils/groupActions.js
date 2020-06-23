@@ -1,18 +1,21 @@
 import {
   activityActionTypes,
   groupActionTypes,
+  actionTypes,
 } from '../firebase/firestore/actionTypes';
 
 const groupActions = (actions, userData) => {
   const groupedActions = [];
   let actionArray = Object.values(actions);
+  if (!userData || userData === {}) return [];
 
   while (actionArray.length > 0) {
     const action = actionArray.pop();
 
     if (
-      action.hidden
-      // || action.user.uid === userData.uid
+      action.hidden ||
+      action.user.uid === userData.uid ||
+      (action.action === 'CREATE' && action.type === actionTypes.GROUP)
     ) {
       continue;
     }
@@ -32,12 +35,11 @@ const groupActions = (actions, userData) => {
     ) {
       actionArray = actionArray.filter((elem) => {
         if (elem.hidden) return false;
-        // if (elem.user.uid === userData.uid) return false;
+        if (elem.user.uid === userData.uid) return false;
 
         if (elem.action !== action.action) return true;
         if (elem.type !== action.type) return true;
-        if (elem.activity !== action.activity) return true;
-        if (elem.group !== action.group) return true;
+        if (elem.group.uid !== action.group.uid) return true;
 
         groupedAction.users.push(elem.user);
 
