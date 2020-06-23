@@ -49,8 +49,8 @@ const addUserToGroup = (groupUID, userData) => {
       userUpdate[userFieldName] = userFieldVal;
 
       transaction.get(userRef);
-      transaction.update(userRef, {groups: userUpdate});
-      transaction.update(groupRef, {members: groupUpdate});
+      transaction.update(userRef, userUpdate);
+      transaction.update(groupRef, groupUpdate);
       return data;
     });
   });
