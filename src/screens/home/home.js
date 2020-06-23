@@ -27,8 +27,6 @@ const Home = () => {
     if (isFocused) setActiveDate(null);
   }, [isFocused]);
 
-  console.log(activities);
-
   return (
     <SafeAreaView style={styles.safeView}>
       <StatusBar barStyle="dark-content" />

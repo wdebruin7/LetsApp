@@ -8,8 +8,6 @@ const HomeList = ({activityDays, setActiveDate}) => {
     auth().signOut();
   };
 
-  console.log(activityDays);
-
   return (
     <View style={styles.container}>
       <Button title="sign out" onPress={handleSignOut} />
