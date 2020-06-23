@@ -8,7 +8,17 @@ import {
 import Colors from '../../constants/colors';
 import {fonts} from '../../constants';
 
-const Button = ({onPress, title, disabled, style, raised}) => {
+const Button = ({
+  onPress,
+  title,
+  disabled,
+  style,
+  raised,
+  icon,
+  color,
+  textColor,
+  bold,
+}) => {
   if (raised) {
     return (
       <TouchableHighlight
@@ -16,40 +26,70 @@ const Button = ({onPress, title, disabled, style, raised}) => {
         onPress={onPress}
         style={
           disabled
-            ? {...styles.highlightButton, ...styles.disabledHighlight, ...style}
-            : {...styles.highlightButton, ...style}
+            ? {
+                ...styles.highlightButton,
+                ...styles.disabledHighlight,
+                ...style,
+                ...(color ? {backgroundColor: color} : {}),
+              }
+            : {
+                ...styles.highlightButton,
+                ...style,
+                ...(color ? {backgroundColor: color} : {}),
+              }
         }>
-        <Text style={{...styles.buttonText, ...styles.highlightText}}>
-          {title}
-        </Text>
+        {icon || (
+          <Text
+            style={{
+              ...styles.buttonText,
+              ...styles.highlightText,
+              ...(bold ? styles.buttonTextBold : {}),
+              ...(textColor ? {color: textColor} : {}),
+            }}>
+            {title}
+          </Text>
+        )}
       </TouchableHighlight>
     );
   }
 
   return (
     <TouchableOpacity
-      style={{...styles.opacityButton, ...style}}
+      style={{
+        ...styles.opacityButton,
+        ...style,
+        ...(color ? {backgroundColor: color} : {}),
+      }}
       disabled={disabled}
       onPress={onPress}>
-      <Text
-        style={
-          disabled
-            ? {
-                ...styles.buttonText,
-                ...styles.opacityText,
-                ...styles.disabledOpacity,
-              }
-            : {...styles.buttonText, ...styles.opacityText}
-        }>
-        {title}
-      </Text>
+      {icon || (
+        <Text
+          style={
+            disabled
+              ? {
+                  ...styles.buttonText,
+                  ...styles.opacityText,
+                  ...styles.disabledOpacity,
+                  ...(bold ? styles.buttonTextBold : {}),
+                  ...(textColor ? {color: textColor} : {}),
+                }
+              : {
+                  ...styles.buttonText,
+                  ...styles.opacityText,
+                  ...(bold ? styles.buttonTextBold : {}),
+                  ...(textColor ? {color: textColor} : {}),
+                }
+          }>
+          {title}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   highlightButton: {
-    marginTop: 10,
+    marginVertical: 10,
     borderRadius: 5,
     width: 150,
     height: 53,
@@ -60,13 +100,16 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   opacityButton: {
-    marginTop: 10,
+    marginVertical: 10,
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
   buttonText: {
     fontSize: 16,
+    fontFamily: fonts.body_regular,
+  },
+  buttonTextBold: {
     fontFamily: fonts.body_bold,
   },
   highlightText: {
