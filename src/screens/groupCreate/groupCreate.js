@@ -82,12 +82,23 @@ const GroupCreate = () => {
         </TouchableWithoutFeedback>
         <View>
           <Text style={styles.inputTitle}>Group name</Text>
-          <TextBox
-            style={styles.nameInput}
-            value={groupName}
-            onChangeText={setGroupName}
-            placeholder="Choose a name for your group"
-          />
+          <View style={styles.inputGroup}>
+            <TextBox
+              style={styles.nameInput}
+              value={groupName}
+              onChangeText={setGroupName}
+              placeholder="Choose a name for your group"
+              maxLength={30}
+            />
+            <Text
+              style={
+                groupName.length < 30
+                  ? styles.nameCounter
+                  : {...styles.nameCounter, color: 'red'}
+              }>
+              {groupName.length}/30
+            </Text>
+          </View>
         </View>
       </View>
       <Button
@@ -145,6 +156,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 15,
     marginBottom: 15,
+  },
+  nameCounter: {
+    paddingLeft: 5,
+    fontFamily: fonts.body_light,
+    fontSize: 13,
+  },
+  inputGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

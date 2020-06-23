@@ -37,11 +37,15 @@ const ActivityList = ({activity}) => {
     <TouchableOpacity style={styles.touchable} onPress={onPress}>
       <View style={styles.container}>
         <View style={styles.topGroup}>
-          <Text style={{...styles.semiBoldText, ...styles.nameElement}}>
+          <Text
+            numberOfLines={1}
+            style={{...styles.semiBoldText, ...styles.nameElement}}>
             {activity.group.name}
           </Text>
           {activity.name ? (
-            <Text style={{...styles.bodyText, ...styles.descriptionElement}}>
+            <Text
+              numberOfLines={1}
+              style={{...styles.bodyText, ...styles.descriptionElement}}>
               {activity.name}
             </Text>
           ) : null}
@@ -114,6 +118,7 @@ const styles = StyleSheet.create({
   bodyText: {
     color: colors.darkGrey,
     fontFamily: fonts.body_regular,
+    flex: 1,
   },
   italicText: {
     fontStyle: 'italic',
