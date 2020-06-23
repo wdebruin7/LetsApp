@@ -25,8 +25,7 @@ const AppNavigation = () => {
         break;
       default:
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dynamicLinkParams]);
+  }, [dynamicLinkParams, navigate]);
 
   return (
     <Tab.Navigator
@@ -43,7 +42,6 @@ const AppNavigation = () => {
             iconName = 'bell';
           }
 
-          // You can return any component that you like here!
           return (
             <Icon
               name={iconName}
