@@ -10,7 +10,11 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  useNavigation,
+  useRoute,
+  useFocusEffect,
+} from '@react-navigation/native';
 import {GroupTile, AppHeader, TextBox} from '../../components';
 import {colors} from '../../constants';
 import {addUserToGroup} from '../../firebase';
@@ -30,6 +34,7 @@ const Groups = () => {
 
   useEffect(() => {
     if (
+      params &&
       params.groupUID &&
       userData &&
       userData !== {} &&
@@ -41,11 +46,13 @@ const Groups = () => {
         setAddingUserToGroup(false),
       );
     }
+  }, [addingUserToGroup, groups, params, userData]);
 
+  useFocusEffect(() => {
     if (params.groupUID && groups[params.groupUID]) {
       navigate('GroupInfo', {groupUID: params.groupUID});
     }
-  }, [addingUserToGroup, groups, navigate, params.groupUID, userData]);
+  }, [groups, navigate, params.groupUID]);
 
   useEffect(() => {
     const groupsArray = Object.values(groups);
