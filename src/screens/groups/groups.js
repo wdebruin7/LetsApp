@@ -23,6 +23,7 @@ const Groups = () => {
   const {params} = useRoute();
   const userData = useSelector((state) => state.user.data);
   const [addingUserToGroup, setAddingUserToGroup] = useState(false);
+  const [awaitingNavigation, setAwaitingNavigation] = useState(false);
 
   const onPressCreate = () => {
     navigate('GroupCreate');
@@ -30,6 +31,7 @@ const Groups = () => {
 
   useEffect(() => {
     if (
+      params &&
       params.groupUID &&
       userData &&
       userData !== {} &&
@@ -37,15 +39,20 @@ const Groups = () => {
       !addingUserToGroup
     ) {
       setAddingUserToGroup(true);
-      addUserToGroup(params.groupUID, userData).finally(() =>
-        setAddingUserToGroup(false),
-      );
+      addUserToGroup(params.groupUID, userData).finally(() => {
+        setAddingUserToGroup(false);
+        setAwaitingNavigation(true);
+      });
     }
+  }, [addingUserToGroup, groups, params, userData]);
 
+  useEffect(() => {
     if (params.groupUID && groups[params.groupUID]) {
       navigate('GroupInfo', {groupUID: params.groupUID});
+      console.log('here');
+      setAwaitingNavigation(false);
     }
-  }, [addingUserToGroup, groups, navigate, params.groupUID, userData]);
+  }, [awaitingNavigation]);
 
   useEffect(() => {
     const groupsArray = Object.values(groups);
