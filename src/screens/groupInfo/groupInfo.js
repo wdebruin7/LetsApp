@@ -19,7 +19,9 @@ import {
   getActivityDays,
 } from '../../utils';
 import {GroupInfoTile, AppHeader} from '../../components';
-import {colors} from '../../constants';
+import {colors, fonts} from '../../constants';
+
+const LINK_COPIED_FEEDBACK_TIMEOUT_SECONDS = 1.5;
 
 const GroupInfo = () => {
   const {params} = useRoute();
@@ -28,6 +30,7 @@ const GroupInfo = () => {
   const allActivities = useSelector((state) => state.activities);
   const [photoRefURL, setPhotoRefURL] = useState('');
   const {navigate} = useNavigation();
+  const [showLinkCopied, setShowLinkCopied] = useState(false);
 
   const group = params.group || groups[params.groupUID];
   const [activities, setActivities] = useState([]);
@@ -57,6 +60,13 @@ const GroupInfo = () => {
     );
   }, [allActivities, group]);
 
+  const showLinkCopiedFeedback = () => {
+    setShowLinkCopied(true);
+    setTimeout(() => {
+      setShowLinkCopied(false);
+    }, 1000 * LINK_COPIED_FEEDBACK_TIMEOUT_SECONDS);
+  };
+
   const onPressCopy = async () => {
     const searchParams = {
       type: 'group',
@@ -64,7 +74,10 @@ const GroupInfo = () => {
     };
 
     buildDynamicLink(searchParams, true)
-      .then((link) => Clipboard.setString(link))
+      .then((link) => {
+        Clipboard.setString(link);
+        showLinkCopiedFeedback();
+      })
       .catch((error) => console.log(error));
   };
 
@@ -75,7 +88,7 @@ const GroupInfo = () => {
   return (
     <SafeAreaView style={styles.safeView}>
       <AppHeader />
-      <View style={styles.header}>
+      <View style={styles.topGroup}>
         <View style={styles.groupInfo}>
           <View style={styles.groupPhoto}>
             {photoRefURL ? (
@@ -93,17 +106,17 @@ const GroupInfo = () => {
             </View>
           </TouchableOpacity>
         </View>
-        <View style={styles.link}>
-          <View>
-            <TouchableOpacity onPress={onPressCopy}>
-              <Icon
-                name="link"
-                type="material-icons"
-                color="#A6A6A6"
-                size={40}
-              />
-            </TouchableOpacity>
-          </View>
+        <View style={styles.bottomGroup}>
+          {showLinkCopied ? (
+            <View style={styles.linkCopiedView}>
+              <Text style={styles.linkCopiedText}>
+                Link copied to clipboard
+              </Text>
+            </View>
+          ) : null}
+          <TouchableOpacity onPress={onPressCopy}>
+            <Icon name="link" type="material-icons" color="#A6A6A6" size={40} />
+          </TouchableOpacity>
         </View>
       </View>
       {activities.length === 0 && (
@@ -131,7 +144,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 15,
   },
-  header: {
+  topGroup: {
     height: 140,
     width: '100%',
     backgroundColor: 'white',
@@ -165,11 +178,26 @@ const styles = StyleSheet.create({
     paddingTop: 6,
     width: 200,
   },
-  link: {
+  bottomGroup: {
+    flexDirection: 'row',
     width: '100%',
-    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
     paddingRight: 40,
-    paddingBottom: 10,
+    marginVertical: 5,
+  },
+  linkCopiedView: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+  },
+  linkCopiedText: {
+    fontFamily: fonts.bodyItalic,
+    color: colors.mediumGrey,
   },
   groupDetails: {
     marginLeft: 15,
