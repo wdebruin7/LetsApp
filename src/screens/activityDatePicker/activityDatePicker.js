@@ -49,16 +49,22 @@ const ActivityDatePicker = () => {
     );
 
   const getSelectedDates = () =>
-    getSelectedDateStrings().map((dateString) => {
-      const [year, month, day] = dateString.split('-');
-      const date = new Date();
-      date.setFullYear(
-        parseInt(year, 10),
-        parseInt(month, 10) - 1,
-        parseInt(day, 10),
-      );
-      return date;
-    });
+    getSelectedDateStrings()
+      .map((dateString) => {
+        const [year, month, day] = dateString.split('-');
+        const date = new Date();
+        date.setFullYear(
+          parseInt(year, 10),
+          parseInt(month, 10) - 1,
+          parseInt(day, 10),
+        );
+        return date;
+      })
+      .sort((a, b) => {
+        if (a < b) return -1;
+        else if (b < a) return 1;
+        else return 0;
+      });
 
   const numSelectedDates = () => getSelectedDateStrings().length;
 
@@ -175,6 +181,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     alignItems: 'center',
     paddingTop: 15,
+    paddingBottom: 15,
   },
 });
 
