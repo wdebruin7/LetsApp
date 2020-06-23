@@ -10,11 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import {
-  useNavigation,
-  useRoute,
-  useFocusEffect,
-} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {GroupTile, AppHeader, TextBox} from '../../components';
 import {colors} from '../../constants';
 import {addUserToGroup} from '../../firebase';
@@ -27,6 +23,7 @@ const Groups = () => {
   const {params} = useRoute();
   const userData = useSelector((state) => state.user.data);
   const [addingUserToGroup, setAddingUserToGroup] = useState(false);
+  const [awaitingNavigation, setAwaitingNavigation] = useState(false);
 
   const onPressCreate = () => {
     navigate('GroupCreate');
@@ -42,17 +39,20 @@ const Groups = () => {
       !addingUserToGroup
     ) {
       setAddingUserToGroup(true);
-      addUserToGroup(params.groupUID, userData).finally(() =>
-        setAddingUserToGroup(false),
-      );
+      addUserToGroup(params.groupUID, userData).finally(() => {
+        setAddingUserToGroup(false);
+        setAwaitingNavigation(true);
+      });
     }
   }, [addingUserToGroup, groups, params, userData]);
 
-  useFocusEffect(() => {
+  useEffect(() => {
     if (params.groupUID && groups[params.groupUID]) {
       navigate('GroupInfo', {groupUID: params.groupUID});
+      console.log('here');
+      setAwaitingNavigation(false);
     }
-  }, [groups, navigate, params.groupUID]);
+  }, [awaitingNavigation]);
 
   useEffect(() => {
     const groupsArray = Object.values(groups);
