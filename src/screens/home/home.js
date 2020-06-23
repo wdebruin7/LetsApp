@@ -4,6 +4,7 @@ import {useSelector} from 'react-redux';
 import {useNavigation, useIsFocused} from '@react-navigation/native';
 import {HomeList, AppHeader} from '../../components';
 import {getActivityDays} from '../../utils';
+import emptyStateImage from '../../images/homeEmptyState.png';
 
 const Home = () => {
   const activities = useSelector((state) => state.activities);
@@ -11,7 +12,6 @@ const Home = () => {
   const isFocused = useIsFocused();
   const [activeDate, setActiveDate] = useState(null);
   const [activityDays, setActivityDays] = useState([]);
-  const emptyStateImage = require('../../images/homeEmptyState.png');
 
   useEffect(() => {
     setActivityDays(getActivityDays(activities));

@@ -47,6 +47,7 @@ const AccountCreation = () => {
     if (!displayName && !localFilepath) return;
     if (
       localFilepath ||
+      (!userData && displayName) ||
       userData.displayName !== displayName ||
       !userData.userDataConfirmed
     ) {
@@ -72,7 +73,9 @@ const AccountCreation = () => {
     }
     if (
       displayName &&
-      (displayName !== userData.displayName || !userData.userDataConfirmed)
+      (!userData ||
+        displayName !== userData.displayName ||
+        !userData.userDataConfirmed)
     ) {
       saveData.displayName = displayName;
     }

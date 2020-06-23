@@ -25,8 +25,6 @@ const ActivityDatePicker = () => {
   const [markedDates, setMarkedDates] = useState(selectedDates);
   const [canSave, setCanSave] = useState(false);
 
-  console.log(markedDates);
-
   useEffect(() => {
     setCanSave(numSelectedDates() > 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -13,6 +13,7 @@ import PhoneInput from 'react-native-phone-input';
 import {normalizePhoneNumber, validatePhoneNumber} from '../../utils';
 import {Button} from '../../components';
 import {fonts, colors} from '../../constants';
+import phoneImage from '../../images/smartphone.png';
 
 const PhoneSignIn = () => {
   // If null, no SMS has been sent
@@ -50,10 +51,7 @@ const PhoneSignIn = () => {
             <Text style={styles.logo}>{lets}</Text>
             <Text style={styles.subtitle}>Get started!</Text>
           </View>
-          <Image
-            style={styles.graphic}
-            source={require('../../images/smartphone.png')}
-          />
+          <Image style={styles.graphic} source={phoneImage} />
           <View style={styles.verfificationBox}>
             <Text style={styles.title}>Verify your number</Text>
             <PhoneInput

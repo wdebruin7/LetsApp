@@ -11,8 +11,8 @@ import {
 import {useRoute} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import {Button, TextBox} from '../../components';
-import Colors from '../../constants/colors';
 import {fonts, colors} from '../../constants';
+import mailbox from '../../images/mailbox.png';
 
 const PhoneVerify = () => {
   const [confirmtionCode, setConfirmationCode] = useState('');
@@ -54,7 +54,7 @@ const PhoneVerify = () => {
           </View>
           <Image
             style={!textFocus ? styles.graphic : styles.graphic_hidden}
-            source={require('../../images/mailbox.png')}
+            source={mailbox}
           />
           <View style={styles.verfificationBox}>
             <Text style={styles.title}>Verification code</Text>

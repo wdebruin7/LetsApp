@@ -13,8 +13,6 @@ const toggleUserIsParticipant = (userData, activityData) => {
     : {description: activityData.description, uid: activityData.uid};
   batch.update(userRef, userUpdate);
 
-  console.log(userUpdate);
-
   const activityRef = db.collection('activities').doc(activityData.uid);
   const activityUpdate = {};
   activityUpdate[`participants.${userData.uid}`] = userIsParticipant
