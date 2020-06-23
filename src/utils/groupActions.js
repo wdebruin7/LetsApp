@@ -10,7 +10,12 @@ const groupActions = (actions, userData) => {
   while (actionArray.length > 0) {
     const action = actionArray.pop();
 
-    if (action.hidden || action.user.uid === userData.uid) continue;
+    if (
+      action.hidden
+      // || action.user.uid === userData.uid
+    ) {
+      continue;
+    }
 
     const groupedAction = {
       action: action.action,
@@ -27,7 +32,7 @@ const groupActions = (actions, userData) => {
     ) {
       actionArray = actionArray.filter((elem) => {
         if (elem.hidden) return false;
-        if (elem.user.uid === userData.uid) return false;
+        // if (elem.user.uid === userData.uid) return false;
 
         if (elem.action !== action.action) return true;
         if (elem.type !== action.type) return true;
