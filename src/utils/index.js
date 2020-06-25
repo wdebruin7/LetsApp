@@ -9,3 +9,5 @@ export {default as getSearchParams} from './getSearchParams';
 export {default as getActivityDays} from './getActivityDays';
 export {default as getActivityDay} from './getActivityDay';
 export {default as groupActions} from './groupActions';
+export {default as getActivityActorsString} from './getActivityActorsString';
+export {default as getActionString} from './getActionString';

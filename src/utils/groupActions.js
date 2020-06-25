@@ -22,7 +22,7 @@ const groupActions = (actions, userData) => {
 
     const groupedAction = {
       action: action.action,
-      activity: action.activity,
+      activities: [action.activity],
       group: action.group,
       date: action.timestamp.toDate(),
       type: action.type,
@@ -42,6 +42,7 @@ const groupActions = (actions, userData) => {
         if (elem.group.uid !== action.group.uid) return true;
 
         groupedAction.users.push(elem.user);
+        groupedAction.activities.push(elem.activity);
 
         const elemDate = elem.timestamp.toDate();
         if (elemDate.getTime() > groupedAction.date.getTime()) {

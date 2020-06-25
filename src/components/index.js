@@ -10,4 +10,4 @@ export {default as GroupSelect} from './groupSelect';
 export {default as TileHeader} from './tileHeader';
 export {default as TileBody} from './tileBody';
 export {default as GroupInfoTile} from './groupInfoTile';
-export {default as ActionRow} from './actionRow';
+export {default as ActivityRow} from './activityRow';
