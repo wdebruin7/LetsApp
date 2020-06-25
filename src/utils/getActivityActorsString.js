@@ -1,10 +1,17 @@
 const getActivityActorsString = (groupedAction) => {
-  const users = groupedAction.users.map((user) => {
-    const names = user.name.split(' ');
-    const first = names[0];
-    const last = names[names.length - 1];
-    return first.concat([' ', last[0].toUpperCase()]);
-  });
+  const uniqueUserUids = new Set();
+  const users = groupedAction.users
+    .filter((user) => {
+      if (uniqueUserUids.has(user.uid)) return false;
+      uniqueUserUids.add(user.uid);
+      return true;
+    })
+    .map((user) => {
+      const names = user.name.split(' ');
+      const first = names[0];
+      const last = names[names.length - 1];
+      return `${first} ${last[0].toUpperCase()}`;
+    });
 
   switch (users.length) {
     case 1:

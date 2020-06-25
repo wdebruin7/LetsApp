@@ -2,9 +2,9 @@ import React from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {Avatar} from 'react-native-elements';
 import {getActivityActorsString, getActionString} from '../../utils';
+import {fonts} from '../../constants';
 
 const ActivityRow = ({groupedAction}) => {
-  console.log(groupedAction);
   const actorsString = getActivityActorsString(groupedAction);
   const actionString = getActionString(groupedAction);
   const {users} = groupedAction;
@@ -53,7 +53,7 @@ const ActivityRow = ({groupedAction}) => {
       {users.length > 1 ? (
         <Avatar rounded icon={{name: 'group', type: 'font-awesome'}} />
       ) : (
-        <Avatar rounded title={users[initials]} />
+        <Avatar rounded title={initials} titleStyle={styles.initials} />
       )}
       <View>
         <Text>{actorsString}</Text>
@@ -70,6 +70,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderTopColor: '#EBF0F3',
     borderBottomColor: '#EBF0F3',
+  },
+  initials: {
+    fontFamily: fonts.body_regular,
   },
 });
 
