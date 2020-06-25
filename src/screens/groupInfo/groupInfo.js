@@ -91,6 +91,10 @@ const GroupInfo = () => {
       .catch((error) => console.log(error));
   };
 
+  const onPressDetails = () => {
+    navigate('GroupDetails', {group});
+  };
+
   if (!group) {
     return null;
   }
@@ -182,12 +186,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   groupName: {
-    fontWeight: 'bold',
+    fontFamily: fonts.body_medium,
     fontSize: 16,
   },
   groupMembers: {
-    color: '#8D8D8D',
+    color: colors.mediumGrey,
     fontSize: 13,
+    fontFamily: fonts.body_regular,
     paddingTop: 6,
     width: 200,
     minHeight: 40,

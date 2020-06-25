@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Groups, GroupInfo, GroupCreate} from '../screens';
+import {Groups, GroupInfo, GroupCreate, GroupDetails} from '../screens';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +16,11 @@ const GroupNavigation = () => {
       <Stack.Screen
         name="GroupInfo"
         component={GroupInfo}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="GroupDetails"
+        component={GroupDetails}
         options={{headerShown: false}}
       />
       <Stack.Screen name="GroupCreate" component={GroupCreate} />
