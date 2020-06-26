@@ -125,6 +125,12 @@ const GroupDetails = () => {
               </View>
             );
           })}
+          <Button
+            style={styles.leaveButton}
+            raised={false}
+            title="Leave group"
+            textColor="red"
+          />
         </View>
       </View>
     </SafeAreaView>
@@ -223,9 +229,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   memberName: {
-    fontFamily: fonts.body_medium,
+    fontFamily: fonts.body_regular,
     fontSize: 16,
     marginLeft: 50,
+  },
+  leaveButton: {
+    marginTop: 25,
   },
 });
 
