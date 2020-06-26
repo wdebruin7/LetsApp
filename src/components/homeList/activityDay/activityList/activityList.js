@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {TouchableOpacity, StyleSheet, View, Text, Switch} from 'react-native';
+import {
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  Text,
+  Switch,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {Avatar} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
@@ -64,14 +71,21 @@ const ActivityList = ({activity}) => {
               false,
             )}
           </Text>
-          <Switch
-            trackColor={{false: colors.mediumGrey, true: colors.brightGreen}}
-            thumbColor="white"
-            ios_backgroundColor={colors.mediumGrey}
-            onValueChange={toggleSwitch}
-            value={isParticipant}
-            style={styles.switch}
-          />
+          <TouchableWithoutFeedback onPress={toggleSwitch}>
+            <View style={styles.switchContainer}>
+              <Switch
+                trackColor={{
+                  false: colors.mediumGrey,
+                  true: colors.brightGreen,
+                }}
+                thumbColor="white"
+                ios_backgroundColor={colors.mediumGrey}
+                onValueChange={toggleSwitch}
+                value={isParticipant}
+                style={styles.switch}
+              />
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </View>
     </TouchableOpacity>
@@ -94,8 +108,6 @@ const styles = StyleSheet.create({
   },
   bottomGroup: {
     flexDirection: 'row',
-    paddingTop: 3,
-    paddingBottom: 7,
     paddingLeft: 22,
     paddingRight: 7,
     justifyContent: 'space-between',
@@ -138,6 +150,9 @@ const styles = StyleSheet.create({
   },
   switch: {
     transform: [{scaleX: 0.7}, {scaleY: 0.7}],
+  },
+  switchContainer: {
+    padding: 10,
   },
 });
 
