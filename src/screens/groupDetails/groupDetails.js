@@ -6,9 +6,11 @@ import {
   Text,
   Dimensions,
   Image,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import {useRoute, useNavigation} from '@react-navigation/native';
+import ImagePicker from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import {Button, TextBox} from '../../components';
 import {fonts, colors} from '../../constants';
@@ -20,7 +22,9 @@ const GroupDetails = () => {
   const {group} = params;
   const [photoRefURL, setPhotoRefURL] = useState('');
   const [groupName, setGroupName] = useState(group.name);
+  const [localFilepath, setLocalFilepath] = useState('');
   const memberNames = Object.values(group.members).map((member) => member.name);
+  const imgageSource = {uri: localFilepath || photoRefURL};
 
   useEffect(() => {
     if (group && group.thumbnailImagePath) {
@@ -29,10 +33,34 @@ const GroupDetails = () => {
     }
   }, [group]);
 
+  useEffect(() => {
+    if (localFilepath || group.name !== groupName) {
+      setCanSave(true);
+    } else {
+      setCanSave(false);
+    }
+  }, [groupName, group.name, localFilepath]);
+
   const onPressBack = () => {
     navigation.goBack();
   };
   const onPressSave = () => {};
+
+  const hanldeImagePicker = () => {
+    const options = {
+      title: 'Change Group Photo',
+      customButtons: [{name: 'emoji', title: 'Choose a group emoji'}],
+    };
+    ImagePicker.showImagePicker(options, (response) => {
+      if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton === 'emoji') {
+        console.log(response.customButton);
+      } else {
+        setLocalFilepath(response.uri);
+      }
+    });
+  };
 
   console.log(memberNames);
 
@@ -65,19 +93,25 @@ const GroupDetails = () => {
           </View>
         </View>
         <View style={styles.groupInfo}>
-          <View style={styles.groupInfoLeft}>
-            <View style={styles.groupPhoto}>
-              {photoRefURL ? (
-                <Image style={styles.groupPhoto} source={{uri: photoRefURL}} />
-              ) : (
-                <Icon name="group" type="material-icons" size={30} />
-              )}
+          <TouchableWithoutFeedback onPress={hanldeImagePicker}>
+            <View style={styles.groupInfoLeft}>
+              <View style={styles.groupPhoto}>
+                {photoRefURL ? (
+                  <Image style={styles.groupPhoto} source={imgageSource} />
+                ) : (
+                  <Icon name="group" type="material-icons" size={30} />
+                )}
+              </View>
+              <Text style={styles.photoHelpText}>Click to edit photo</Text>
             </View>
-            <Text style={styles.photoHelpText}>Click to edit photo</Text>
-          </View>
+          </TouchableWithoutFeedback>
           <View style={styles.groupInfoRight}>
             <Text style={styles.groupNameTitle}>Group name</Text>
-            <TextBox style={styles.groupName} value={groupName} />
+            <TextBox
+              style={styles.groupName}
+              value={groupName}
+              onChangeText={setGroupName}
+            />
           </View>
         </View>
         <View style={styles.memberInfo}>
