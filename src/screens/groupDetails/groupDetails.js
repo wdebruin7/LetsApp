@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     height: 45,
     width: '100%',
     borderWidth: 1,
-    borderColor: '#EBF0F3',
+    borderColor: colors.borderGrey,
     justifyContent: 'center',
   },
   memberName: {

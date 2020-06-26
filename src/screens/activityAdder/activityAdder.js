@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.offwhite,
     color: 'black',
     borderBottomWidth: 1,
-    borderBottomColor: '#EBF0F3',
+    borderBottomColor: colors.borderGrey,
   },
   rowItemContent: {
     flexDirection: 'row',
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     height: 100,
     paddingHorizontal: 30,
     borderBottomWidth: 1,
-    borderBottomColor: '#EBF0F3',
+    borderBottomColor: colors.borderGrey,
   },
   contentTitleText: {
     fontSize: 16,

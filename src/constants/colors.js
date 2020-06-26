@@ -7,4 +7,5 @@ export default {
   mediumGreen: '#01D060',
   darkGreen: '#009846',
   offwhite: '#FCFEFF',
+  borderGrey: '#EBF0F3',
 };
