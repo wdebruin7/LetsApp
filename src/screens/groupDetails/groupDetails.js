@@ -62,8 +62,6 @@ const GroupDetails = () => {
     });
   };
 
-  console.log(memberNames);
-
   return (
     <SafeAreaView style={styles.safeView}>
       <View style={styles.container}>
@@ -139,7 +137,7 @@ const GroupDetails = () => {
 
 const styles = StyleSheet.create({
   safeView: {
-    backgroundColor: '#FCFEFF',
+    backgroundColor: colors.offwhite,
     flex: 1,
   },
   container: {

@@ -6,4 +6,5 @@ export default {
   brightGreen: '#00EE6D',
   mediumGreen: '#01D060',
   darkGreen: '#009846',
+  offwhite: '#FCFEFF',
 };

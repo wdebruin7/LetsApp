@@ -4,6 +4,7 @@ import {useSelector} from 'react-redux';
 import {useNavigation, useRoute, StackActions} from '@react-navigation/native';
 import {HomeActiveDay, AppHeader} from '../../components';
 import {getActivityDay} from '../../utils';
+import {colors} from '../../constants';
 
 const HomeActiveDate = () => {
   const navigation = useNavigation();
@@ -37,7 +38,7 @@ const HomeActiveDate = () => {
 const styles = StyleSheet.create({
   safeView: {
     flex: 1,
-    backgroundColor: '#FCFEFF',
+    backgroundColor: colors.offwhite,
   },
   container: {
     flex: 1,

@@ -204,7 +204,7 @@ const ActivityAdder = () => {
 const styles = StyleSheet.create({
   safeView: {
     flex: 1,
-    backgroundColor: '#FCFEFF',
+    backgroundColor: colors.offwhite,
   },
   container: {
     flex: 1,
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   userIsNotParticipant: {
-    backgroundColor: '#FCFEFF',
+    backgroundColor: colors.offwhite,
     color: 'black',
     borderBottomWidth: 1,
     borderBottomColor: '#EBF0F3',

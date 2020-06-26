@@ -5,6 +5,7 @@ import {useNavigation, useIsFocused} from '@react-navigation/native';
 import {HomeList, AppHeader} from '../../components';
 import {getActivityDays} from '../../utils';
 import emptyStateImage from '../../images/homeEmptyState.png';
+import {colors} from '../../constants';
 
 const Home = () => {
   const activities = useSelector((state) => state.activities);
@@ -42,7 +43,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   safeView: {
     flex: 1,
-    backgroundColor: '#FCFEFF',
+    backgroundColor: colors.offwhite,
   },
   container: {
     flex: 1,

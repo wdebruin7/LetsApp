@@ -126,7 +126,7 @@ const ActivityDatePicker = () => {
 const styles = StyleSheet.create({
   safeView: {
     flex: 1,
-    backgroundColor: '#FCFEFF',
+    backgroundColor: colors.offwhite,
   },
   container: {
     flexDirection: 'column',

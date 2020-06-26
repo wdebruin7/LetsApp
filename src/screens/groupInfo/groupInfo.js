@@ -152,7 +152,7 @@ const GroupInfo = () => {
 
 const styles = StyleSheet.create({
   safeView: {
-    backgroundColor: '#FCFEFF',
+    backgroundColor: colors.offwhite,
     flex: 1,
   },
   list: {
