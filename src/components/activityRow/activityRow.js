@@ -8,7 +8,7 @@ const ActivityRow = ({groupedAction}) => {
   const actorsString = getActivityActorsString(groupedAction);
   const actionString = getActionString(groupedAction);
   const {users} = groupedAction;
-  const firstUserNames = users[0].name.split(' ');
+  const firstUserNames = Object.values(users)[0].name.split(' ');
   const initials =
     firstUserNames.length > 1
       ? firstUserNames[0]

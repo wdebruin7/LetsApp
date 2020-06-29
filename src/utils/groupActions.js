@@ -16,7 +16,7 @@ const groupActions = (actions, userData) => {
       key = JSON.stringify({
         action: 'JOIN',
         type: 'ACTIVITY',
-        date: date.getTime(),
+        date,
         groupUID: action.group.uid,
         activityDate,
       });
@@ -36,23 +36,20 @@ const groupActions = (actions, userData) => {
       });
     }
 
-    console.log(key);
-
     if (key && !action.hidden) {
-      const val = groupedActions[key];
-      if (val) {
-        val.users.push(action.user);
-        val.activities.push(action.activity);
-      } else {
+      const actionExists = !!groupedActions[key];
+      if (!actionExists) {
         groupedActions[key] = {
           action: action.action,
-          activities: [action.activity],
+          activities: {},
           group: action.group,
           date,
           type: action.type,
-          users: [action.user],
+          users: {},
         };
       }
+      groupedActions[key].users[action.user.uid] = action.user;
+      groupedActions[key].activities[action.activity.uid] = action.activity;
     }
   });
 
