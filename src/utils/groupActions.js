@@ -46,6 +46,7 @@ const groupActions = (actions, userData) => {
           date,
           type: action.type,
           users: {},
+          uid: action.uid,
         };
       }
       groupedActions[key].users[action.user.uid] = action.user;

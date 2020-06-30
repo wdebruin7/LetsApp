@@ -16,7 +16,11 @@ const Activity = () => {
       <FlatList
         data={groupedActions}
         renderItem={({item}) => <ActivityRow groupedAction={item} />}
-        keyExtractor={(item) => item.uid}
+        keyExtractor={(item) => {
+          console.log(item);
+          item.uid;
+        }}
+        style={styles.flex}
       />
     </SafeAreaView>
   );
@@ -26,6 +30,9 @@ const styles = StyleSheet.create({
   safeView: {
     flex: 1,
     backgroundColor: '#FCFEFF',
+  },
+  list: {
+    flex: 1,
   },
 });
 

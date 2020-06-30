@@ -1,6 +1,5 @@
 const getActivityActorsString = (groupedAction) => {
   const userNames = Object.values(groupedAction.users).map((user) => {
-    console.log(user);
     const names = user.name.split(' ');
     const first = names[0];
     const last = names[names.length - 1];

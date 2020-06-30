@@ -1,6 +1,13 @@
 import React from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
-import {Avatar, Divider} from 'react-native-elements';
+import {useNavigation} from '@react-navigation/native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
+import {Avatar} from 'react-native-elements';
 import {getActivityActorsString, getActionString} from '../../utils';
 import {fonts, colors} from '../../constants';
 
@@ -9,7 +16,6 @@ const ActivityRow = ({groupedAction}) => {
   const actionString = getActionString(groupedAction);
   const users = Object.values(groupedAction.users);
   const firstUserNames = users[0].name.split(' ');
-
   const initials =
     firstUserNames.length > 1
       ? firstUserNames[0]
@@ -21,8 +27,9 @@ const ActivityRow = ({groupedAction}) => {
               .toUpperCase(),
           )
       : firstUserNames[0].substring(0, 1).toUpperCase();
+  const {navigate} = useNavigation();
 
-  function getTimeDifference() {
+  const getTimeDifference = () => {
     const currentDateTime = new Date().getTime();
     const actionDateTime = groupedAction.date.getTime();
 
@@ -47,10 +54,18 @@ const ActivityRow = ({groupedAction}) => {
     } else {
       return `${Math.round(elapsed / msPerYear)}y`;
     }
-  }
+  };
+
+  const onPress = () => {
+    navigate('Groups', {
+      screen: 'GroupInfo',
+      params: {groupUID: groupedAction.group.uid},
+      initial: false,
+    });
+  };
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       {users.length > 1 ? (
         <Avatar
           rounded
@@ -66,7 +81,7 @@ const ActivityRow = ({groupedAction}) => {
         />
       )}
       <View style={styles.textContainer}>
-        <View>
+        <View style={styles.leftTextContainer}>
           <Text
             numberOfLines={1}
             ellipsizeMode="tail"
@@ -82,7 +97,7 @@ const ActivityRow = ({groupedAction}) => {
         </View>
         <Text style={styles.timeDifferenceText}>{getTimeDifference()}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -102,6 +117,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 11,
     marginRight: 17,
+  },
+  leftTextContainer: {
+    justifyContent: 'space-between',
   },
   actorsText: {
     fontFamily: fonts.body_semi_bold,
