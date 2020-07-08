@@ -7,6 +7,7 @@ import {
   Switch,
   TouchableOpacity,
   Image,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {Avatar} from 'react-native-elements';
 import {useSelector} from 'react-redux';
@@ -33,6 +34,11 @@ const ActivityTile = ({activity, group}) => {
       params: {groupUID: activity.group.uid},
       initial: false,
     });
+  };
+
+  const toggleSwitch = () => {
+    if (!userData || userData === {}) return;
+    toggleUserIsParticipant(userData, activity);
   };
 
   useEffect(() => {
@@ -72,14 +78,18 @@ const ActivityTile = ({activity, group}) => {
             {getActivityParticipantsString(activity, userData, undefined, true)}
           </Text>
         </View>
-        <Switch
-          trackColor={{false: colors.darkGrey, true: colors.brightGreen}}
-          thumbColor="white"
-          ios_backgroundColor={colors.darkGrey}
-          onValueChange={handleSwitchToggle}
-          value={userIsParticipant}
-          style={styles.switch}
-        />
+        <TouchableWithoutFeedback onPress={toggleSwitch}>
+          <View style={styles.switchContainer}>
+            <Switch
+              trackColor={{false: colors.darkGrey, true: colors.brightGreen}}
+              thumbColor="white"
+              ios_backgroundColor={colors.darkGrey}
+              onValueChange={handleSwitchToggle}
+              value={userIsParticipant}
+              style={styles.switch}
+            />
+          </View>
+        </TouchableWithoutFeedback>
       </View>
     </TouchableOpacity>
   );
@@ -148,6 +158,9 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     borderRadius: 50,
+  },
+  switchContainer: {
+    padding: 10,
   },
 });
 
