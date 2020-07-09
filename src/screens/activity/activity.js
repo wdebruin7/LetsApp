@@ -13,7 +13,9 @@ import {groupActions} from '../../utils';
 const filterActions = (groupedActions, filterString) => {
   const normalizedString = filterString.toLowerCase().trim();
 
-  return groupedActions.filter((action) => {});
+  return groupedActions.filter((action) => {
+    const normalizedMonth = action.date.getMonth();
+  });
 };
 
 const Activity = () => {
