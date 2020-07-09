@@ -10,6 +10,12 @@ import {useSelector} from 'react-redux';
 import {AppHeader, ActivityRow, TextBox} from '../../components';
 import {groupActions} from '../../utils';
 
+const filterActions = (groupedActions, filterString) => {
+  const normalizedString = filterString.toLowerCase().trim();
+
+  return groupedActions.filter((action) => {});
+};
+
 const Activity = () => {
   const actions = useSelector((state) => state.actions);
   const userData = useSelector((state) => state.user.data);
@@ -26,7 +32,8 @@ const Activity = () => {
   useEffect(() => {
     if (!searchString) return;
     if (!groupedActions) return;
-    const filteredActions = groupedActions.filter((action) => {});
+    const newFilteredActions = filterActions(groupedActions, searchString);
+    setFilteredActions(newFilteredActions);
   }, [searchString, groupedActions]);
 
   return (
