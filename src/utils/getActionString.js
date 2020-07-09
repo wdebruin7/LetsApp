@@ -1,3 +1,25 @@
+const getDateString = (firestoreTimestamp) => {
+  const date = firestoreTimestamp.toDate();
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  const ordinalIndicator = date.getDate() === 1 ? 'st' : 'th';
+
+  return `${months[date.getMonth()]} ${date.getDate()}${ordinalIndicator}`;
+};
+
 const getActionString = (groupedAction) => {
   const {action, type} = groupedAction;
   let actionString = '';
@@ -6,7 +28,9 @@ const getActionString = (groupedAction) => {
     case 'JOIN':
       switch (type) {
         case 'ACTIVITY':
-          actionString = 'Added availability in ';
+          actionString = `Added availability on ${getDateString(
+            Object.values(groupedAction.activities)[0].date,
+          )} in `;
           break;
         case 'GROUP':
           actionString = 'Joined ';

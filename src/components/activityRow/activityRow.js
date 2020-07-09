@@ -29,6 +29,8 @@ const ActivityRow = ({groupedAction}) => {
       : firstUserNames[0].substring(0, 1).toUpperCase();
   const {navigate} = useNavigation();
 
+  console.log(groupedAction);
+
   const getTimeDifference = () => {
     const currentDateTime = new Date().getTime();
     const actionDateTime = groupedAction.date.getTime();
