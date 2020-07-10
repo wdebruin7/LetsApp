@@ -1,5 +1,4 @@
 import firestore from '@react-native-firebase/firestore';
-import {BackHandler} from 'react-native';
 
 // groupUID: uid of group to be updated
 // groupName: updated name of group
