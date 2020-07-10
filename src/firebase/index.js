@@ -7,6 +7,6 @@ export {
   getFirestoreListener,
   listenerTypes,
   addUserToGroup,
-  leaveGroup,
+  removeUserFromGroup,
 } from './firestore';
 export {useSession, useAuth} from './auth';

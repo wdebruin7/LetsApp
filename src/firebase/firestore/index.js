@@ -10,4 +10,4 @@ export {
   activityActionTypes,
   groupActionTypes,
 } from './actionTypes';
-export {default as leaveGroup} from './leaveGroup';
+export {default as removeUserFromGroup} from './removeUserFromGroup';
