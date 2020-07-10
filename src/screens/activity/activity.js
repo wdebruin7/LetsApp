@@ -11,10 +11,16 @@ import {AppHeader, ActivityRow, TextBox} from '../../components';
 import {groupActions} from '../../utils';
 
 const filterActions = (groupedActions, filterString) => {
-  const normalizedString = filterString.toLowerCase().trim();
+  const normalizedSearch = filterString.toLowerCase().trim();
 
   return groupedActions.filter((action) => {
-    return true;
+    const userMatch = Object.values(action.users).some((user) => {
+      const normalizedName = user.name.toLowerCase().trim();
+      return normalizedName.includes(normalizedSearch);
+    });
+    const normalizedGroup = action.group.name.toLowerCase().trim();
+    const groupMatch = normalizedGroup.includes(normalizedSearch);
+    return userMatch || groupMatch;
   });
 };
 
