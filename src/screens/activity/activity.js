@@ -14,7 +14,7 @@ const filterActions = (groupedActions, filterString) => {
   const normalizedString = filterString.toLowerCase().trim();
 
   return groupedActions.filter((action) => {
-    const normalizedMonth = action.date.getMonth();
+    return true;
   });
 };
 
@@ -32,9 +32,10 @@ const Activity = () => {
   }, [actions, userData]);
 
   useEffect(() => {
-    if (!searchString) return;
     if (!groupedActions) return;
-    const newFilteredActions = filterActions(groupedActions, searchString);
+    const newFilteredActions = searchString
+      ? filterActions(groupedActions, searchString)
+      : groupedActions;
     setFilteredActions(newFilteredActions);
   }, [searchString, groupedActions]);
 
@@ -50,7 +51,7 @@ const Activity = () => {
         />
       </View>
       <FlatList
-        data={groupedActions}
+        data={filteredActions}
         renderItem={({item}) => <ActivityRow groupedAction={item} />}
         keyExtractor={(item) => item.uid}
         style={styles.flex}
