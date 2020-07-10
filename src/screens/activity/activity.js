@@ -1,28 +1,66 @@
-import React from 'react';
-import {SafeAreaView, Text, StyleSheet, FlatList, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  FlatList,
+  Dimensions,
+  View,
+} from 'react-native';
 import {useSelector} from 'react-redux';
-import {AppHeader} from '../../components';
+import {AppHeader, ActivityRow, TextBox} from '../../components';
+import {groupActions} from '../../utils';
+
+const filterActions = (groupedActions, filterString) => {
+  const normalizedSearch = filterString.toLowerCase().trim();
+
+  return groupedActions.filter((action) => {
+    const userMatch = Object.values(action.users).some((user) => {
+      const normalizedName = user.name.toLowerCase().trim();
+      return normalizedName.includes(normalizedSearch);
+    });
+    const normalizedGroup = action.group.name.toLowerCase().trim();
+    const groupMatch = normalizedGroup.includes(normalizedSearch);
+    return userMatch || groupMatch;
+  });
+};
 
 const Activity = () => {
   const actions = useSelector((state) => state.actions);
+  const userData = useSelector((state) => state.user.data);
+  const [searchString, setSearchString] = useState('');
+  const [groupedActions, setGroupedActions] = useState([]);
+  const [filteredActions, setFilteredActions] = useState([]);
 
-  const actionsArray =
-    actions !== {} ? Object.values(actions).filter((item) => !item.hidden) : [];
+  useEffect(() => {
+    if (!actions) return;
+    if (!userData) return;
+    setGroupedActions(groupActions(actions, userData));
+  }, [actions, userData]);
+
+  useEffect(() => {
+    if (!groupedActions) return;
+    const newFilteredActions = searchString
+      ? filterActions(groupedActions, searchString)
+      : groupedActions;
+    setFilteredActions(newFilteredActions);
+  }, [searchString, groupedActions]);
 
   return (
     <SafeAreaView style={styles.safeView}>
       <AppHeader />
+      <View style={styles.textBoxContainer}>
+        <TextBox
+          style={styles.textBox}
+          placeholder="Search Activity"
+          value={searchString}
+          onChangeText={setSearchString}
+        />
+      </View>
       <FlatList
-        data={actionsArray}
-        renderItem={({item}) => (
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text>{item.group.name}</Text>
-            <Text>{item.user.name}</Text>
-            <Text>{item.action}</Text>
-            <Text>{item.type}</Text>
-          </View>
-        )}
+        data={filteredActions}
+        renderItem={({item}) => <ActivityRow groupedAction={item} />}
         keyExtractor={(item) => item.uid}
+        style={styles.flex}
       />
     </SafeAreaView>
   );
@@ -32,6 +70,21 @@ const styles = StyleSheet.create({
   safeView: {
     flex: 1,
     backgroundColor: '#FCFEFF',
+    alignItems: 'center',
+  },
+  textBoxContainer: {
+    borderBottomWidth: 1,
+    borderColor: '#EBF0F3',
+    width: Dimensions.get('window').width,
+    alignItems: 'center',
+  },
+  textBox: {
+    width: Dimensions.get('window').width * 0.8,
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  list: {
+    flex: 1,
   },
 });
 

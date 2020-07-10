@@ -49,7 +49,6 @@ const Groups = () => {
   useEffect(() => {
     if (params.groupUID && groups[params.groupUID]) {
       navigate('GroupInfo', {groupUID: params.groupUID});
-      console.log('here');
       setAwaitingNavigation(false);
     }
   }, [awaitingNavigation]);
