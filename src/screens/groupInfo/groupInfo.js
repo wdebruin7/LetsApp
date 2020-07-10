@@ -188,6 +188,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     paddingTop: 6,
     width: 200,
+    minHeight: 40,
   },
   bottomGroup: {
     flexDirection: 'row',
