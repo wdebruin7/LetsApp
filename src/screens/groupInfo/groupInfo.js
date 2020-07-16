@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   Image,
+  Dimensions,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
@@ -106,16 +107,16 @@ const GroupInfo = () => {
               <Icon name="group" type="material-icons" size={30} />
             )}
           </View>
-          <TouchableOpacity>
-            <View style={styles.groupDetails}>
+          <View style={styles.groupDetails}>
+            <TouchableOpacity>
               <Text style={styles.groupName}>{group.name}</Text>
               <Text style={styles.groupMembers}>
                 {showTapHere
                   ? 'Tap here for details!'
                   : getGroupMembersString(group, userData)}
               </Text>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.bottomGroup}>
           {showLinkCopied ? (
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
   },
   topGroup: {
     height: 140,
-    width: '100%',
+    width: Dimensions.get('window').width,
     backgroundColor: 'white',
     shadowColor: 'black',
     shadowOffset: {width: 0, height: 4},
@@ -170,6 +171,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
     marginLeft: 20,
+    width: Dimensions.get('window').width - 80,
   },
   groupPhoto: {
     height: 70,
@@ -212,6 +214,7 @@ const styles = StyleSheet.create({
   },
   groupDetails: {
     marginLeft: 15,
+    marginRight: 15,
   },
   emptyStateImage: {
     width: 278,
