@@ -11,3 +11,4 @@ export {default as TileHeader} from './tileHeader';
 export {default as TileBody} from './tileBody';
 export {default as GroupInfoTile} from './groupInfoTile';
 export {default as ActivityRow} from './activityRow';
+export {default as ActivityAdderHeader} from './activityAdderHeader';

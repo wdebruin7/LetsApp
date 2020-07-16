@@ -14,7 +14,7 @@ import {Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import {cloneDeep} from 'lodash';
 import {submitNewActivity} from '../../firebase';
-import {Button} from '../../components';
+import {Button, ActivityAdderHeader} from '../../components';
 import {colors, fonts} from '../../constants';
 
 const getDateTimeString = (date) => {
@@ -116,15 +116,11 @@ const ActivityAdder = () => {
     <SafeAreaView style={styles.safeView}>
       <TouchableWithoutFeedback onPress={onRemoveFocus}>
         <View style={styles.container}>
-          <View style={styles.header}>
-            <TouchableWithoutFeedback onPress={onPressBack}>
-              <View style={styles.backButton}>
-                <Icon name="chevron-left" type="entypo" />
-              </View>
-            </TouchableWithoutFeedback>
-            <Text style={styles.headerText}>Create an activity</Text>
-            <Text style={styles.headerSubText}>Choose dates and groups</Text>
-          </View>
+          <ActivityAdderHeader
+            onPressBack={onPressBack}
+            headerText="Create an activity"
+            headerSubText="Choose dates and groups"
+          />
           <View style={styles.rowItem}>
             <View
               style={
@@ -214,32 +210,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-  },
-  backButton: {
-    height: 50,
-    width: 30,
-    paddingTop: 10,
-  },
-  chevron: {
-    height: 16,
-    width: 16,
-  },
-  header: {
-    height: 150,
-    width: '100%',
-    backgroundColor: '#D9E8FF',
-    justifyContent: 'center',
-    padding: 30,
-  },
-  headerText: {
-    fontSize: 24,
-    fontFamily: fonts.body_medium,
-    marginBottom: 5,
-  },
-  headerSubText: {
-    fontSize: 16,
-    fontFamily: fonts.body_regular,
-    color: colors.darkGrey,
   },
   rowItem: {
     flexDirection: 'row',
