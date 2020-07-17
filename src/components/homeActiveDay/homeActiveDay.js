@@ -8,7 +8,7 @@ const HomeActiveDay = ({date, activities, setActiveDate}) => {
   const groups = useSelector((state) => state.groups);
 
   return (
-    <View>
+    <View style={styles.container}>
       <DateHeader date={date} setActiveDate={setActiveDate} />
       <FlatList
         data={activities}
@@ -24,7 +24,7 @@ const HomeActiveDay = ({date, activities, setActiveDate}) => {
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
+  container: {
     flex: 1,
   },
 });
