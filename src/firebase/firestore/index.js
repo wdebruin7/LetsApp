@@ -10,3 +10,5 @@ export {
   activityActionTypes,
   groupActionTypes,
 } from './actionTypes';
+export {default as removeUserFromGroup} from './removeUserFromGroup';
+export {default as updateGroup} from './updateGroup';
