@@ -5,6 +5,7 @@ import TileBody from '../tileBody';
 import {getDisplayDate, getActivityParticipantsString} from '../../utils';
 import {toggleUserIsParticipant} from '../../firebase';
 import {colors, fonts} from '../../constants';
+import ReactionSelector from '../reactionSelector/reactionSelector';
 
 const GroupInfoTile = ({activity, userData}) => {
   const [isParticipant, setIsParticipant] = useState(false);
@@ -43,6 +44,7 @@ const GroupInfoTile = ({activity, userData}) => {
           <Text style={styles.participants}>
             {getActivityParticipantsString(activity, userData, undefined, true)}
           </Text>
+          <ReactionSelector style={styles.reactionSelector} />
         </View>
       </TileBody>
     </View>
@@ -73,6 +75,11 @@ const styles = StyleSheet.create({
     fontFamily: fonts.bodyItalic,
     color: colors.mediumGrey,
     padding: 15,
+  },
+  reactionSelector: {
+    alignSelf: 'flex-end',
+    paddingBottom: 4,
+    paddingRight: 6,
   },
 });
 

@@ -9,5 +9,6 @@ export {
   addUserToGroup,
   removeUserFromGroup,
   updateGroup,
+  addActivityReaction,
 } from './firestore';
 export {useSession, useAuth} from './auth';
