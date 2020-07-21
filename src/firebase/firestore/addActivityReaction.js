@@ -34,7 +34,7 @@ const addActivityReaction = (emoji, activityData, userData) => {
   const activityRef = db.collection('activities').doc(activityData.uid);
 
   return db.runTransaction((transaction) => {
-    transaction.get(activityRef).then((docSnapshot) => {
+    return transaction.get(activityRef).then((docSnapshot) => {
       const data = docSnapshot.data();
 
       const reactions = data.reactions || {};
@@ -44,7 +44,7 @@ const addActivityReaction = (emoji, activityData, userData) => {
       const newCount = count ? count + 1 : 1;
       const newUsers = users || {};
       newUsers[userData.uid] = {
-        name: userData.name,
+        name: userData.displayName,
         uid: userData.uid,
         timeStamp: firestore.Timestamp.now(),
       };
