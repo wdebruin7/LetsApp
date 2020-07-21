@@ -44,7 +44,11 @@ const GroupInfoTile = ({activity, userData}) => {
           <Text style={styles.participants}>
             {getActivityParticipantsString(activity, userData, undefined, true)}
           </Text>
-          <ReactionSelector style={styles.reactionSelector} />
+          <ReactionSelector
+            style={styles.reactionSelector}
+            activityData={activity}
+            userData={userData}
+          />
         </View>
       </TileBody>
     </View>

@@ -31,13 +31,15 @@ const addActivityReaction = (emoji, activityData, userData) => {
     );
   }
 
-  const activityRef = db.collection('activities').doc(activityRef.uid);
+  const activityRef = db.collection('activities').doc(activityData.uid);
 
   return db.runTransaction((transaction) => {
     transaction.get(activityRef).then((docSnapshot) => {
       const data = docSnapshot.data();
 
-      const {count, users} = data.reactions[emoji] || {};
+      const reactions = data.reactions || {};
+
+      const {count, users} = reactions[emoji] || {};
 
       const newCount = count ? count + 1 : 1;
       const newUsers = users || {};
