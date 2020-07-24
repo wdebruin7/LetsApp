@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   reactionSelector: {
     alignSelf: 'flex-end',
     paddingBottom: 4,
-    paddingRight: 6,
+    paddingRight: 10,
   },
 });
 
