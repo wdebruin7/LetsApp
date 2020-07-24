@@ -92,6 +92,7 @@ const GroupInfo = () => {
   };
 
   const onPressDetails = () => {
+    console.log(group);
     navigate('GroupDetails', {group});
   };
 
@@ -111,16 +112,16 @@ const GroupInfo = () => {
               <Icon name="group" type="material-icons" size={30} />
             )}
           </View>
-          <View style={styles.groupDetails}>
-            <TouchableOpacity>
+          <TouchableOpacity onPress={onPressDetails}>
+            <View style={styles.groupDetails}>
               <Text style={styles.groupName}>{group.name}</Text>
               <Text style={styles.groupMembers}>
                 {showTapHere
                   ? 'Tap here for details!'
                   : getGroupMembersString(group, userData)}
               </Text>
-            </TouchableOpacity>
-          </View>
+            </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.bottomGroup}>
           {showLinkCopied ? (

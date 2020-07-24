@@ -69,7 +69,6 @@ const Activity = () => {
 const styles = StyleSheet.create({
   safeView: {
     flex: 1,
-<<<<<<< HEAD
     backgroundColor: '#FCFEFF',
     alignItems: 'center',
   },
@@ -86,9 +85,6 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 1,
-=======
-    backgroundColor: colors.offwhite,
->>>>>>> add offWhite color constant
   },
 });
 
