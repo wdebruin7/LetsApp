@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, Switch, Text, StyleSheet} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
 import TileHeader from '../tileHeader';
 import TileBody from '../tileBody';
 import {getDisplayDate, getActivityParticipantsString} from '../../utils';
@@ -44,11 +45,17 @@ const GroupInfoTile = ({activity, userData}) => {
           <Text style={styles.participants}>
             {getActivityParticipantsString(activity, userData, undefined, true)}
           </Text>
-          <ReactionSelector
-            style={styles.reactionSelector}
-            activityData={activity}
-            userData={userData}
-          />
+          <View>
+            <FlatList
+              data={activity.reactions}
+              renderItem={({item}) => <Text>{item}</Text>}
+            />
+            <ReactionSelector
+              style={styles.reactionSelector}
+              activityData={activity}
+              userData={userData}
+            />
+          </View>
         </View>
       </TileBody>
     </View>

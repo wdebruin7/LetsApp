@@ -50,7 +50,7 @@ const addActivityReaction = (emoji, activityData, userData) => {
       };
 
       const update = {};
-      update[`reactions.${emoji}`] = {count: newCount, users: newUsers};
+      update[`reactions.${emoji}`] = {count: newCount, users: newUsers, emoji};
 
       transaction.update(activityRef, update);
     });

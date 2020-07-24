@@ -15,7 +15,7 @@ const ReactionSelector = ({activityData, userData, style}) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const onEmojiSelected = (emoji) => {
-    console.log(emoji);
+    setModalVisible(false);
     addActivityReaction(emoji, activityData, userData).then((result) =>
       console.log(result),
     );
