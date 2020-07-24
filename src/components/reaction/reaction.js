@@ -20,6 +20,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'grey',
     borderRadius: 5,
+    height: 20,
+    width: 30,
   },
 });
 
