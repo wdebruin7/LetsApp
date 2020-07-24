@@ -45,8 +45,10 @@ const GroupInfoTile = ({activity, userData}) => {
           <Text style={styles.participants}>
             {getActivityParticipantsString(activity, userData, undefined, true)}
           </Text>
-          <View>
+          <View style={styles.reactionRow}>
             <FlatList
+              numColumns={8}
+              inverted={true}
               data={Object.values(activity.reactions || {}).filter(
                 (reaction) => reaction.count > 0,
               )}
@@ -58,11 +60,9 @@ const GroupInfoTile = ({activity, userData}) => {
                 />
               )}
               keyExtractor={(item) => item.emoji}
-            />
-            <ReactionSelector
-              style={styles.reactionSelector}
-              activityData={activity}
-              userData={userData}
+              ListHeaderComponent={
+                <ReactionSelector activityData={activity} userData={userData} />
+              }
             />
           </View>
         </View>
@@ -96,10 +96,9 @@ const styles = StyleSheet.create({
     color: colors.mediumGrey,
     padding: 15,
   },
-  reactionSelector: {
-    alignSelf: 'flex-end',
-    paddingBottom: 4,
-    paddingRight: 10,
+  reactionRow: {
+    backgroundColor: 'red',
+    justifyContent: 'center',
   },
 });
 
