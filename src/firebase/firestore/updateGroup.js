@@ -1,4 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 
 // groupUID: uid of group to be updated
 // groupName: updated name of group
@@ -23,7 +24,12 @@ const updateGroup = (groupUID, groupName, groupImagePath, removedMembers) => {
   }
 
   if (groupImagePath) {
-    batch.update(groupRef, {thumbnailImagePath: groupImagePath});
+    storage()
+      .ref(`${groupUID}/thumbnail`)
+      .putFile(groupImagePath)
+      .then(() => {
+        batch.update(groupRef, {thumbnailImagePath: groupImagePath});
+      });
   }
 
   if (removedMembers) {

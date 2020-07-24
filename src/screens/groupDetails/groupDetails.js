@@ -14,6 +14,7 @@ import ImagePicker from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import {Button, TextBox} from '../../components';
 import {fonts, colors} from '../../constants';
+import {updateGroup} from '../../firebase';
 
 const GroupDetails = () => {
   const {params} = useRoute();
@@ -44,7 +45,10 @@ const GroupDetails = () => {
   const onPressBack = () => {
     navigation.goBack();
   };
-  const onPressSave = () => {};
+  const onPressSave = () => {
+    updateGroup(group.uid, group.name, localFilepath, null);
+    setLocalFilepath('');
+  };
 
   const hanldeImagePicker = () => {
     const options = {
