@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, Switch, Text, StyleSheet} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
+import {View, Switch, Text, StyleSheet, FlatList} from 'react-native';
 import TileHeader from '../tileHeader';
 import TileBody from '../tileBody';
 import {getDisplayDate, getActivityParticipantsString} from '../../utils';
 import {toggleUserIsParticipant} from '../../firebase';
 import {colors, fonts} from '../../constants';
 import ReactionSelector from '../reactionSelector/reactionSelector';
+import Reaction from '../reaction/reaction';
 
 const GroupInfoTile = ({activity, userData}) => {
   const [isParticipant, setIsParticipant] = useState(false);
@@ -47,8 +47,17 @@ const GroupInfoTile = ({activity, userData}) => {
           </Text>
           <View>
             <FlatList
-              data={activity.reactions}
-              renderItem={({item}) => <Text>{item}</Text>}
+              data={Object.values(activity.reactions || {}).filter(
+                (reaction) => reaction.count > 0,
+              )}
+              renderItem={({item}) => (
+                <Reaction
+                  reactionObject={item}
+                  userData={userData}
+                  activityUID={activity.uid}
+                />
+              )}
+              keyExtractor={(item) => item.emoji}
             />
             <ReactionSelector
               style={styles.reactionSelector}

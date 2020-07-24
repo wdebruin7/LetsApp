@@ -21,7 +21,7 @@ const toggleUserReact = (reaction, activityUID, userData) => {
   usersUpdate[
     `reactions.${reaction.emoji}.users.${userData.uid}`
   ] = userHasReacted
-    ? firestore.FieldValue.delete
+    ? firestore.FieldValue.delete()
     : {
         name: userData.displayName,
         timestamp: firestore.Timestamp.now(),

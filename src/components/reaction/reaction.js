@@ -1,18 +1,26 @@
 import React from 'react';
-import StyleSheet, {Text, TouchableOpacity} from 'react-native';
+import {Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {toggleUserReact} from '../../firebase';
 
-const reaction = ({reaction}) => {
+const Reaction = ({reactionObject, activityUID, userData}) => {
   const onPressReaction = () => {
-    toggleUserReact(reaction);
+    toggleUserReact(reactionObject, activityUID, userData);
   };
 
   return (
-    <TouchableOpacity>
-      <Text>{reaction.emoji}</Text>
+    <TouchableOpacity onPress={onPressReaction} style={styles.touchable}>
+      <Text>{reactionObject.emoji}</Text>
+      <Text>{reactionObject.count}</Text>
     </TouchableOpacity>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  touchable: {
+    flexDirection: 'row',
+    backgroundColor: 'grey',
+    borderRadius: 5,
+  },
+});
 
-export default reaction;
+export default Reaction;
