@@ -24,7 +24,7 @@ const GroupTile = ({group}) => {
   }, [group.thumbnailImagePath, group.uid]);
 
   const onPress = () => {
-    navigate('GroupInfo', {group});
+    navigate('GroupInfo', {group, groupUID: undefined});
   };
 
   return (

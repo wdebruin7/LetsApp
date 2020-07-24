@@ -23,7 +23,7 @@ const ActivityList = ({activity}) => {
   const onPress = () => {
     navigate('Groups', {
       screen: 'GroupInfo',
-      params: {groupUID: activity.group.uid},
+      params: {groupUID: activity.group.uid, group: undefined},
       initial: false,
     });
   };
