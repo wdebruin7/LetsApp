@@ -2,7 +2,7 @@ const validatePhoneNumber = (value) => {
   let error = '';
   if (!value) {
     error = 'Required!';
-  } else if (value.length !== 15) {
+  } else if (value.length < 15) {
     error = 'Invalid Format';
   }
   return error;

@@ -27,6 +27,7 @@ const PhoneSignIn = () => {
   };
 
   const handleSubmit = () => {
+    console.log(phoneNumber);
     const validationError = validatePhoneNumber(phoneNumber);
     setError(validationError);
     if (!validationError) {
@@ -36,6 +37,7 @@ const PhoneSignIn = () => {
 
   // Handle the button press
   async function signInWithPhoneNumber() {
+    console.log(phoneNumber);
     try {
       navigate('Verify', {phoneNumber});
     } catch (err) {

@@ -23,7 +23,7 @@ const normalizePhoneNumber = (value, previousValue) => {
     return `+${currentValue.slice(0, 1)} ${currentValue.slice(
       1,
       4,
-    )}-${currentValue.slice(4, 7)}-${currentValue.slice(7, 11)}`;
+    )}-${currentValue.slice(4, 7)}-${currentValue.slice(7, 13)}`;
   }
 };
 
