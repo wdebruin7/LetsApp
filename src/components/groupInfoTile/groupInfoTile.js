@@ -21,6 +21,10 @@ const GroupInfoTile = ({activity, userData}) => {
     }
   }, [activity, userData]);
 
+  const activityData = Object.values(activity.reactions || {}).filter(
+    (reaction) => reaction.count > 0,
+  );
+
   return (
     <View style={styles.container}>
       <TileHeader
@@ -45,27 +49,23 @@ const GroupInfoTile = ({activity, userData}) => {
           <Text style={styles.participants}>
             {getActivityParticipantsString(activity, userData, undefined, true)}
           </Text>
-          <View style={styles.reactionRow}>
-            <FlatList
-              numColumns={8}
-              inverted={true}
-              data={Object.values(activity.reactions || {}).filter(
-                (reaction) => reaction.count > 0,
-              )}
-              renderItem={({item}) => (
+          <View style={styles.reactions}>
+            <View style={styles.reactionStyle}>
+              <ReactionSelector activityData={activity} userData={userData} />
+            </View>
+            {activityData.map((item) => (
+              <View style={styles.reactionStyle}>
                 <Reaction
                   reactionObject={item}
                   userData={userData}
                   activityUID={activity.uid}
                 />
-              )}
-              keyExtractor={(item) => item.emoji}
-              ListHeaderComponent={
-                <ReactionSelector activityData={activity} userData={userData} />
-              }
-            />
+              </View>
+            ))}
           </View>
+          <View />
         </View>
+        <View />
       </TileBody>
     </View>
   );
@@ -96,9 +96,14 @@ const styles = StyleSheet.create({
     color: colors.mediumGrey,
     padding: 15,
   },
-  reactionRow: {
-    backgroundColor: 'red',
-    justifyContent: 'center',
+  reactions: {
+    flexDirection: 'row-reverse',
+    flexWrap: 'wrap-reverse',
+    paddingLeft: 5,
+  },
+  reactionStyle: {
+    marginLeft: 5,
+    marginTop: 5,
   },
 });
 
