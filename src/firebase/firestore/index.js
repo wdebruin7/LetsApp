@@ -12,3 +12,5 @@ export {
 } from './actionTypes';
 export {default as removeUserFromGroup} from './removeUserFromGroup';
 export {default as updateGroup} from './updateGroup';
+export {default as addActivityReaction} from './addActivityReaction';
+export {default as toggleUserReact} from './toggleUserReact';

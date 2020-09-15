@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, Switch, Text, StyleSheet} from 'react-native';
+import {View, Switch, Text, StyleSheet, FlatList} from 'react-native';
 import TileHeader from '../tileHeader';
 import TileBody from '../tileBody';
 import {getDisplayDate, getActivityParticipantsString} from '../../utils';
 import {toggleUserIsParticipant} from '../../firebase';
 import {colors, fonts} from '../../constants';
+import ReactionSelector from '../reactionSelector/reactionSelector';
+import Reaction from '../reaction/reaction';
 
 const GroupInfoTile = ({activity, userData}) => {
   const [isParticipant, setIsParticipant] = useState(false);
@@ -18,6 +20,10 @@ const GroupInfoTile = ({activity, userData}) => {
       setIsParticipant(!!activity.participants[userData.uid]);
     }
   }, [activity, userData]);
+
+  const activityData = Object.values(activity.reactions || {}).filter(
+    (reaction) => reaction.count > 0,
+  );
 
   return (
     <View style={styles.container}>
@@ -43,7 +49,23 @@ const GroupInfoTile = ({activity, userData}) => {
           <Text style={styles.participants}>
             {getActivityParticipantsString(activity, userData, undefined, true)}
           </Text>
+          <View style={styles.reactions}>
+            <View style={styles.reactionStyle}>
+              <ReactionSelector activityData={activity} userData={userData} />
+            </View>
+            {activityData.map((item) => (
+              <View style={styles.reactionStyle}>
+                <Reaction
+                  reactionObject={item}
+                  userData={userData}
+                  activityUID={activity.uid}
+                />
+              </View>
+            ))}
+          </View>
+          <View />
         </View>
+        <View />
       </TileBody>
     </View>
   );
@@ -73,6 +95,15 @@ const styles = StyleSheet.create({
     fontFamily: fonts.bodyItalic,
     color: colors.mediumGrey,
     padding: 15,
+  },
+  reactions: {
+    flexDirection: 'row-reverse',
+    flexWrap: 'wrap-reverse',
+    paddingLeft: 5,
+  },
+  reactionStyle: {
+    marginLeft: 5,
+    marginTop: 5,
   },
 });
 
